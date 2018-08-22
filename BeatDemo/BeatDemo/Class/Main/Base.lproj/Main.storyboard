@@ -128,6 +128,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="SCA-Gv-fb7"/>
+                    <connections>
+                        <outlet property="beatViewHeight" destination="cgE-5z-IQF" id="vc1-Lv-hj5"/>
+                        <outlet property="beatViewWidth" destination="Hyq-FX-d4x" id="kuU-9L-Ka7"/>
+                        <outlet property="operationViewHeight" destination="8DH-2s-cvb" id="1vj-Sc-FWr"/>
+                        <outlet property="operationViewWidth" destination="baW-BO-p4m" id="yWH-ii-8FN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

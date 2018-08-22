@@ -11,11 +11,15 @@ import ChameleonFramework
 import AudioKitUI
 
 class ViewController: UIViewController {
-
+    @IBOutlet var operationViewWidth: NSLayoutConstraint!
+    @IBOutlet var operationViewHeight: NSLayoutConstraint!
+    @IBOutlet var beatViewWidth: NSLayoutConstraint!
+    @IBOutlet var beatViewHeight: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.setUI()
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,7 +33,11 @@ extension ViewController {
     
     /// 设置UI
     func setUI() -> Void {
-//        self.view.backgroundColor = UIColor.flatWhite
+        operationViewWidth.constant = FrameStandard.universalWidth
+        operationViewHeight.constant = FrameStandard.universalHeight
+        beatViewWidth.constant = FrameStandard.universalWidth
+        beatViewHeight.constant = FrameStandard.universalHeight
+        
     }// funcEnd
 }
 
