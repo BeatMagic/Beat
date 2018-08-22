@@ -1,0 +1,54 @@
+PODS:
+  - AudioKit (4.2.4):
+    - AudioKit/UI (= 4.2.4)
+  - AudioKit/UI (4.2.4)
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
+  - Hero (1.2.0)
+  - SnapKit (4.0.0)
+  - SwiftMessages (4.1.2)
+  - XLActionController (4.0.1):
+    - XLActionController/Core (= 4.0.1)
+  - XLActionController/Core (4.0.1)
+  - XLActionController/Skype (4.0.1):
+    - XLActionController/Core
+
+DEPENDENCIES:
+  - AudioKit (~> 4.0)
+  - AudioKit/UI
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - Hero
+  - SnapKit (~> 4.0.0)
+  - SwiftMessages
+  - XLActionController
+  - XLActionController/Skype
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AudioKit
+    - Hero
+    - SnapKit
+    - SwiftMessages
+    - XLActionController
+
+EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: 6dd284bde21ea2e7f9fd89bc36f40df16e16369d
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+SPEC CHECKSUMS:
+  AudioKit: 90ed0de2bc50ab68306f4b424ae1622fc9149b8e
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftMessages: d81f48c1f8b6bc1dbebdfffe11226f0344f937ca
+  XLActionController: 007868251c0eed70d649d06c1625259b73b3a600
+
+PODFILE CHECKSUM: 478a7e5f861f4937901967f36153ef0804e68dd0
+
+COCOAPODS: 1.5.0

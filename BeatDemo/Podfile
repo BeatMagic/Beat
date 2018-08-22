@@ -1,0 +1,21 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '11.0'
+use_frameworks!
+
+target 'BeatDemo' do
+
+    # 信息
+    pod 'XLActionController'                                    # 底部选择
+    pod 'XLActionController/Skype'                              # 底部选择(Skype)
+    pod 'SwiftMessages'                                         # 信息提示
+
+    # 界面
+    pod 'Hero'                                                  # 转场
+    pod 'SnapKit', '~> 4.0.0'                                   # 布局
+    pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git' # 颜色扩展
+
+    # 音频处理
+    pod 'AudioKit', '~> 4.0'
+    pod 'AudioKit/UI'
+
+end
