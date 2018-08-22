@@ -36,7 +36,7 @@ extension ViewController {
         operationViewWidth.constant = FrameStandard.universalWidth
         operationViewHeight.constant = FrameStandard.universalHeight
         beatViewWidth.constant = FrameStandard.universalWidth
-        beatViewHeight.constant = FrameStandard.universalHeight
+        beatViewHeight.constant = FrameStandard.beatViewHeight
         
     }// funcEnd
 }

@@ -15,4 +15,9 @@ class FrameStandard: NSObject {
     /// 主页面通用View高
     static var universalHeight: CGFloat = 180
     
+    /// 节拍View高
+    static var beatViewHeight: CGFloat = universalHeight / 4 * 3
+    
+    
+    
 }

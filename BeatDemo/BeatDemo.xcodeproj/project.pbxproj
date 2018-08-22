@@ -20,6 +20,7 @@
 		7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C1D736F212D470C00144822 /* LaunchScreen.storyboard */; };
 		7C888E73212D69000094DC85 /* BaseMusicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E72212D69000094DC85 /* BaseMusicKey.swift */; };
 		7C888E75212D69730094DC85 /* EnumStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E74212D69730094DC85 /* EnumStandard.swift */; };
+		7C888E77212D6D3B0094DC85 /* MusicKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		7C1D7372212D470C00144822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C888E72212D69000094DC85 /* BaseMusicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMusicKey.swift; sourceTree = "<group>"; };
 		7C888E74212D69730094DC85 /* EnumStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumStandard.swift; sourceTree = "<group>"; };
+		7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKeyBoard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				7C888E72212D69000094DC85 /* BaseMusicKey.swift */,
+				7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */,
 			);
 			path = BaseClass;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 				7C1D735D212D470B00144822 /* Frameworks */,
 				7C1D735E212D470B00144822 /* Resources */,
 				FF1E9366B47A704ACCBA8399 /* [CP] Embed Pods Frameworks */,
+				7C888E79212D7B050094DC85 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -242,6 +246,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7C888E79212D7B050094DC85 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
 		D149C439ACA27CCB71D09FE5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -295,6 +312,7 @@
 			files = (
 				7C15E125212D65C500077573 /* FrameStandard.swift in Sources */,
 				7C15E122212D4CC800077573 /* ToolClass.swift in Sources */,
+				7C888E77212D6D3B0094DC85 /* MusicKeyBoard.swift in Sources */,
 				7C888E73212D69000094DC85 /* BaseMusicKey.swift in Sources */,
 				7C1D7366212D470B00144822 /* ViewController.swift in Sources */,
 				7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */,
