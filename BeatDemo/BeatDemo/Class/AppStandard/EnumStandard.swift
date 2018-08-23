@@ -19,4 +19,21 @@ class EnumStandard: NSObject {
     enum ScaleNotes: Int {
         case C = 0, D = 2, E = 4, F = 5, G = 7, A = 9, B = 11
     }
+    
+    /// 图片名枚举
+    enum ImageName: String {
+        /// 重置
+        case reset = "reset"
+        /// 暂停
+        case cause = "cause"
+        /// 播放
+        case play = "play"
+        /// 删除
+        case delete = "delete"
+        /// 编辑
+        case edit = "edit"
+        /// 所有音乐
+        case allMusic = "all_music"
+    }
+    
 }

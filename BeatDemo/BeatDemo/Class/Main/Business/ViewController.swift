@@ -17,6 +17,9 @@ class ViewController: UIViewController {
     @IBOutlet var beatViewWidth: NSLayoutConstraint!
     @IBOutlet var beatViewHeight: NSLayoutConstraint!
     
+//    lazy private var deleteItem = UIBarButtonItem.init(customView: ToolClass.createButton(EnumStandard.ImageName.delete.rawValue, tintColor: UIColor.flatRed, action: #selector(self.deleteMusicEvent)))
+//    lazy private var allMusicItem = UIBarButtonItem.init(customView: ToolClass.createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.flatGray, action: #selector(self.allMusicEvent)))
+    
     @IBOutlet var keyBoardView: MusicKeyBoard!
     
     var sampler:AVAudioUnitSampler!
@@ -66,6 +69,19 @@ extension ViewController {
             return
         }
         
+//        navigationItem.leftBarButtonItem = deleteItem
+//        navigationItem.rightBarButtonItem = allMusicItem
+        
+    }// funcEnd
+    
+    /// 删除音乐点击事件
+    @objc func deleteMusicEvent() -> Void {
+        printWithMessage("删除当前")
+    }// funcEnd
+    
+    /// 音乐管理点击事件
+    @objc func allMusicEvent() -> Void {
+        printWithMessage("音乐管理")
     }// funcEnd
 }
 
