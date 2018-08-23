@@ -196,6 +196,8 @@
                         <outlet property="keyBoardView" destination="1MP-VX-TOo" id="7Ra-BO-KRn"/>
                         <outlet property="operationViewHeight" destination="8DH-2s-cvb" id="1vj-Sc-FWr"/>
                         <outlet property="operationViewWidth" destination="baW-BO-p4m" id="yWH-ii-8FN"/>
+                        <outlet property="playButton" destination="y2k-lE-vMh" id="rFA-5K-U5b"/>
+                        <outlet property="playButtonTitleLabel" destination="dzv-Ob-gat" id="ovf-c3-XqY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

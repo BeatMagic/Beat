@@ -10,19 +10,6 @@ import UIKit
 
 public class ToolClass: NSObject {
     
-    /// 创造一个Button [图片名, 点击时间] ->
-    static func createButton(_ imageName: String, tintColor: UIColor , action: Selector) -> UIButton {
-        let button = UIButton.init(type: .system)
-        button.setImage(UIImage.init(named: imageName), for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 2.5, bottom: 0, right: 0)
-        button.contentHorizontalAlignment = .left
-        button.frame = CGRect.init(x: 0, y: 0, width: 30, height: 44)
-        button.tintColor = tintColor
-        button.addTarget(self, action: action, for: .touchUpInside)
-        
-        return button
-    }// funcEnd
-    
     // MARK: - GCD相关
     /// 1.GCD回到主线程
     static func GCDMain() -> Void {

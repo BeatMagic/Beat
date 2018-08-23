@@ -17,19 +17,49 @@ class ViewController: UIViewController {
     @IBOutlet var beatViewWidth: NSLayoutConstraint!
     @IBOutlet var beatViewHeight: NSLayoutConstraint!
     
-//    lazy private var deleteItem = UIBarButtonItem.init(customView: ToolClass.createButton(EnumStandard.ImageName.delete.rawValue, tintColor: UIColor.flatRed, action: #selector(self.deleteMusicEvent)))
-//    lazy private var allMusicItem = UIBarButtonItem.init(customView: ToolClass.createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.flatGray, action: #selector(self.allMusicEvent)))
+    /// 删除ButtonItem
+    lazy private var deleteItem: UIBarButtonItem = {
+        let button = createButton(EnumStandard.ImageName.delete.rawValue, tintColor: UIColor.flatRed, action: #selector(deleteMusicEvent))
+        button.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        
+        return UIBarButtonItem.init(customView: button)
+    }()
+    
+    /// 全部音乐ButtonItem
+    lazy private var allMusicItem: UIBarButtonItem = {
+        let button = createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.black, action: #selector(allMusicEvent))
+        button.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        
+        return UIBarButtonItem.init(customView: button)
+    }()
     
     @IBOutlet var keyBoardView: MusicKeyBoard!
+    @IBOutlet var playButton: UIButton!
+    @IBOutlet var playButtonTitleLabel: UILabel!
     
     var sampler:AVAudioUnitSampler!
     var engine: AVAudioEngine!
     
+    /// 音乐播放状态
+    var musicState: EnumStandard.MusicPlayStates = .caused {
+        didSet {
+            setUpButtonMessageWithState(musicState)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUI()
         setData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        musicState = .caused
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,13 +71,18 @@ class ViewController: UIViewController {
 
 extension ViewController {
     
-    /// 设置UI
+    /// 设置UI && 绑定点击事件
     func setUI() -> Void {
         operationViewWidth.constant = FrameStandard.universalWidth
         operationViewHeight.constant = FrameStandard.universalHeight
         beatViewWidth.constant = FrameStandard.universalWidth
         beatViewHeight.constant = FrameStandard.beatViewHeight
         
+        navigationItem.leftBarButtonItem = deleteItem
+        navigationItem.rightBarButtonItem = allMusicItem
+        
+        playButton.tintColor = UIColor.black
+        playButton.addTarget(self, action: #selector(playButtonEvent), for: .touchUpInside)
     }// funcEnd
     
     /// 设置Data
@@ -68,10 +103,7 @@ extension ViewController {
             print("set up failed")
             return
         }
-        
-//        navigationItem.leftBarButtonItem = deleteItem
-//        navigationItem.rightBarButtonItem = allMusicItem
-        
+
     }// funcEnd
     
     /// 删除音乐点击事件
@@ -82,6 +114,31 @@ extension ViewController {
     /// 音乐管理点击事件
     @objc func allMusicEvent() -> Void {
         printWithMessage("音乐管理")
+    }// funcEnd
+    
+    /// 播放按钮点击事件
+    @objc func playButtonEvent() -> Void {
+        if musicState == .caused {
+            musicState = .played
+            printWithMessage("开始播放")
+            
+        } else {
+            musicState = .caused
+            printWithMessage("播放暂停")
+            
+        }
+    }// funcEnd
+    
+    /// 设置当前按钮信息 ( 音乐当前状态 )
+    func setUpButtonMessageWithState(_ state: EnumStandard.MusicPlayStates) -> Void {
+        if state == .caused {
+            playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.play.rawValue), for: .normal)
+            playButtonTitleLabel.text = "播放"
+            
+        }else {
+            playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.cause.rawValue), for: .normal)
+            playButtonTitleLabel.text = "暂停"
+        }
     }// funcEnd
 }
 

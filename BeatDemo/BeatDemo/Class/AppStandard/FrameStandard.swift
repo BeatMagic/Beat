@@ -10,10 +10,10 @@ import UIKit
 
 class FrameStandard: NSObject {
     /// 主页面通用View宽
-    static var universalWidth: CGFloat = 300
+    static var universalWidth: CGFloat = 300 / 375 * ToolClass.getScreenWidth()
     
     /// 主页面通用View高
-    static var universalHeight: CGFloat = 180
+    static var universalHeight: CGFloat = 180 / 667 * ToolClass.getScreenHeight()
     
     /// 节拍View高
     static var beatViewHeight: CGFloat = universalHeight / 4 * 3
