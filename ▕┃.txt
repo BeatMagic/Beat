@@ -1,0 +1,48 @@
+1.先点A 抬起再点B[
+    {
+        初始78notPressed
+        按下78
+        处理后78pressed
+        初始78pressed
+        松开78
+        处理后78notPressed
+    },
+
+    {
+        初始79notPressed
+        按下79
+        处理后79pressed
+        初始79pressed
+        松开79
+        处理后79notPressed
+    },
+]
+
+
+2.从A滑到B[
+    {
+        初始78notPressed
+        按下78
+        处理后78pressed
+    },
+
+    {
+        初始79notPressed
+        按下79
+        处理后79pressed
+    },
+
+    [78] touches at[79],
+
+    {
+        初始78pressed
+        松开78
+        处理后78notPressed
+    },
+
+    {
+        初始79pressed
+        松开79
+        处理后79notPressed
+    },
+]

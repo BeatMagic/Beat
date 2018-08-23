@@ -10,6 +10,68 @@ import UIKit
 
 public class ToolClass: NSObject {
     
+    // MARK: - GCD相关
+    /// 1.GCD回到主线程
+    static func GCDMain() -> Void {
+        // 1.GCD回到主线程
+        DispatchQueue.main.async {
+            
+        }
+        
+    }
+    
+    /// 2.Dispatch Group的使用
+    static func dispatchGroup() -> Void {
+        let queueGroup = DispatchGroup.init()
+        
+        for i in 0 ..< 9 {
+            let basicQueue = DispatchQueue(label: "basicQueue")
+            basicQueue.async(group: queueGroup, execute: {
+                // 进行操作
+                printWithMessage("这是\(i)")
+            })
+        }
+        
+        queueGroup.notify(queue: DispatchQueue.main) {
+            printWithMessage("最后一步")
+        }
+        
+    }
+    
+    /// 3.Dispatch Barrier的使用
+    static func dispatchBarrier() -> Void {
+        let growUpQueue = DispatchQueue(label: "growUpQueue")
+        growUpQueue.async {
+            printWithMessage("1")
+        }
+        
+        growUpQueue.async(group: nil, qos: .default, flags: .barrier) {
+            printWithMessage("虎落平阳")
+        }
+        
+        growUpQueue.async {
+            printWithMessage("东山再起")
+        }
+    }
+    
+    /// 4.Dispatch Semaphore的使用
+    static func dispatchSemaphore() -> Void {
+        let queueGroup = DispatchGroup.init()
+        let testSemaphore = DispatchSemaphore.init(value: 10)
+        let globalQueue = DispatchQueue.global()
+        
+        for i in 0 ..< 50 {
+            testSemaphore.wait()
+            globalQueue.async(group: queueGroup, execute: DispatchWorkItem.init(block: {
+                printWithMessage("这是第\(i)个")
+                sleep(3)
+                testSemaphore.signal()
+            }))
+        }
+        
+    }
+    
+    
     /// 获取本地语言
     static func getCurrentLanguage() -> String {
         

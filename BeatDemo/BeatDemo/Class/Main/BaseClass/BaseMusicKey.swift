@@ -21,7 +21,7 @@ class BaseMusicKey: UIButton {
         self.midiNoteNumber = midiNoteNumber
         self.isMainKey = isMainKey
         super.init(frame: frame)
-        isUserInteractionEnabled = false
+        setUp()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,6 +34,14 @@ class BaseMusicKey: UIButton {
 
 // MARK: - Respond to key presses
 extension BaseMusicKey {
+    /// 设定键样式
+    func setUp() -> Void {
+        isUserInteractionEnabled = false
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.flatBlue.cgColor
+        
+    }
+    
     func pressed() -> Bool {
         if keyState != .pressed {
             keyState = .pressed
@@ -57,4 +65,5 @@ extension BaseMusicKey {
             return false
         }
     }
+    
 }
