@@ -8,6 +8,7 @@ target 'BeatDemo' do
     pod 'XLActionController'                                    # 底部选择
     pod 'XLActionController/Skype'                              # 底部选择(Skype)
     pod 'SwiftMessages'                                         # 信息提示
+    pod 'SVProgressHUD'                                         # 加载中菊花
 
     # 界面
     pod 'Hero'                                                  # 转场

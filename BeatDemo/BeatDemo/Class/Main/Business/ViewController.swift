@@ -9,6 +9,7 @@
 import UIKit
 import ChameleonFramework
 import AudioKitUI
+import SVProgressHUD
 
 class ViewController: UIViewController {
     @IBOutlet var operationViewWidth: NSLayoutConstraint!
@@ -37,6 +38,7 @@ extension ViewController {
         operationViewHeight.constant = FrameStandard.universalHeight
         beatViewWidth.constant = FrameStandard.universalWidth
         beatViewHeight.constant = FrameStandard.beatViewHeight
+        
         
     }// funcEnd
 }

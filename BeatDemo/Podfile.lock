@@ -7,6 +7,7 @@ PODS:
     - ChameleonFramework/Default
   - Hero (1.2.0)
   - SnapKit (4.0.0)
+  - SVProgressHUD (2.2.5)
   - SwiftMessages (4.1.2)
   - XLActionController (4.0.1):
     - XLActionController/Core (= 4.0.1)
@@ -20,6 +21,7 @@ DEPENDENCIES:
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - Hero
   - SnapKit (~> 4.0.0)
+  - SVProgressHUD
   - SwiftMessages
   - XLActionController
   - XLActionController/Skype
@@ -29,6 +31,7 @@ SPEC REPOS:
     - AudioKit
     - Hero
     - SnapKit
+    - SVProgressHUD
     - SwiftMessages
     - XLActionController
 
@@ -46,9 +49,10 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftMessages: d81f48c1f8b6bc1dbebdfffe11226f0344f937ca
   XLActionController: 007868251c0eed70d649d06c1625259b73b3a600
 
-PODFILE CHECKSUM: 478a7e5f861f4937901967f36153ef0804e68dd0
+PODFILE CHECKSUM: 7220f79d9f2a36bf376d9c3c0a4b8e2c69b10f6d
 
 COCOAPODS: 1.5.0
