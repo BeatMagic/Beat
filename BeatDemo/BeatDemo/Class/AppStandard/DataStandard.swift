@@ -14,4 +14,16 @@ class DataStandard: NSObject {
     
     /// 音高
     static let root: UInt8 = octave * 12
+    
+    /// 一秒多少拍子
+    static let oneBeatWithTime: Double = 16 / 3
+}
+
+extension DataStandard {
+    /// 输入时间(Double)返回拍子数
+    static func getBeat(_ time: Double) -> UInt8 {
+        let tmpBeat = lroundf(Float(time * DataStandard.oneBeatWithTime))
+        return UInt8.init(tmpBeat)
+        
+    }// funcEnd
 }

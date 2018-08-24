@@ -275,9 +275,9 @@
                                             <constraint firstAttribute="width" constant="30" id="Ccc-Yi-YzQ"/>
                                             <constraint firstAttribute="height" constant="30" id="kHg-qT-7CM"/>
                                         </constraints>
-                                        <state key="normal" backgroundImage="close"/>
+                                        <state key="normal" backgroundImage="reset"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关闭" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etM-ni-XTm">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="重置" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etM-ni-XTm">
                                         <rect key="frame" x="129" y="40" width="35" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="5Ui-jq-JFg"/>
@@ -385,17 +385,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="z1p-Om-Vb1"/>
                     </view>
-                    <navigationItem key="navigationItem" title="编辑" id="mrW-Fe-YiD"/>
+                    <navigationItem key="navigationItem" title="编辑" id="mrW-Fe-YiD">
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="g5l-eO-38j">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="beatViewHeight" destination="A1e-4g-wCk" id="m4T-CD-MI7"/>
                         <outlet property="beatViewWidth" destination="XO4-9y-ipT" id="etq-fD-fqI"/>
-                        <outlet property="closeButton" destination="Ck7-px-OCE" id="MHL-3C-BNO"/>
                         <outlet property="editButton" destination="xqv-HU-Uz2" id="XSx-Md-2S3"/>
                         <outlet property="keyBoardView" destination="uIe-Iu-b7e" id="9h1-2o-GIy"/>
                         <outlet property="operationViewHeight" destination="2ku-c1-9g2" id="XzJ-64-Uyy"/>
                         <outlet property="operationViewWidth" destination="cCg-75-Ytj" id="pYa-8I-Wv9"/>
                         <outlet property="playButton" destination="Xcm-t3-5RZ" id="qTR-O7-l8j"/>
                         <outlet property="playButtonTitleLabel" destination="f6x-pg-EkL" id="X98-uS-OIp"/>
+                        <outlet property="resetButton" destination="Ck7-px-OCE" id="gnn-i4-9J8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qhd-S7-keo" sceneMemberID="firstResponder"/>
@@ -404,7 +408,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="close" width="67" height="67"/>
         <image name="edit" width="67" height="67"/>
         <image name="play" width="67" height="67"/>
         <image name="reset" width="67" height="67"/>

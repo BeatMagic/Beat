@@ -18,25 +18,27 @@ class EditViewController: UIViewController {
     @IBOutlet var beatViewWidth: NSLayoutConstraint!
     @IBOutlet var beatViewHeight: NSLayoutConstraint!
 
-    /// 返回ButtonItem
-    lazy private var backItem: UIBarButtonItem = {
-        let button = createButton(EnumStandard.ImageName.back.rawValue, tintColor: UIColor.black, action: #selector(backEvent))
-        button.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 35).isActive = true
+    /// 关闭ButtonItem
+    lazy private var closeItem: UIBarButtonItem = {
+        let button = createButton(EnumStandard.ImageName.close.rawValue, tintColor: UIColor.black, action: #selector(closeEvent))
+        button.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 25).isActive = true
 
         return UIBarButtonItem.init(customView: button)
     }()
     
     /// 全部音乐ButtonItem
-    lazy private var allMusicItem: UIBarButtonItem = {
-        let button = createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.black, action: #selector(allMusicEvent))
-        button.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        
-        return UIBarButtonItem.init(customView: button)
-    }()
+    /**
+     lazy private var allMusicItem: UIBarButtonItem = {
+     let button = createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.black, action: #selector(allMusicEvent))
+     button.widthAnchor.constraint(equalToConstant: 35).isActive = true
+     button.heightAnchor.constraint(equalToConstant: 35).isActive = true
+     
+     return UIBarButtonItem.init(customView: button)
+     }()
+     */
     
-    @IBOutlet var closeButton: UIButton!
+    @IBOutlet var resetButton: UIButton!
     @IBOutlet var keyBoardView: MusicKeyBoard!
     @IBOutlet var playButton: UIButton!
     @IBOutlet var playButtonTitleLabel: UILabel!
@@ -81,10 +83,10 @@ extension EditViewController {
         beatViewWidth.constant = FrameStandard.universalWidth
         beatViewHeight.constant = FrameStandard.beatViewHeight
         
-        navigationItem.leftBarButtonItem = backItem
-        navigationItem.rightBarButtonItem = allMusicItem
+        navigationItem.leftBarButtonItem = closeItem
+//        navigationItem.rightBarButtonItem = allMusicItem
         
-        closeButton.addTarget(self, action: #selector(closeEvent), for: .touchUpInside)
+        resetButton.addTarget(self, action: #selector(resetEvent), for: .touchUpInside)
         playButton.tintColor = UIColor.black
         playButton.addTarget(self, action: #selector(playButtonEvent), for: .touchUpInside)
         editButton.addTarget(self, action: #selector(editEvent), for: .touchUpInside)
@@ -111,14 +113,20 @@ extension EditViewController {
         
     }// funcEnd
     
-    /// 返回音乐点击事件
-    @objc func backEvent() -> Void {
-        navigationController?.popViewController(animated: true)
+    /// 关闭按钮点击事件
+    @objc func closeEvent() -> Void {
+        navigationController?.dismiss(animated: true, completion: nil)
+        
     }// funcEnd
     
     /// 音乐管理点击事件
     @objc func allMusicEvent() -> Void {
         printWithMessage("音乐管理")
+    }// funcEnd
+    
+    /// 重置点击事件
+    @objc func resetEvent() -> Void {
+        printWithMessage("重置")
     }// funcEnd
     
     /// 播放按钮点击事件
@@ -136,14 +144,8 @@ extension EditViewController {
     
     /// 编辑按钮点击事件
     @objc func editEvent() -> Void {
-        let newVC = UIViewController.initVControllerFromStoryboard("EditViewController")
-        navigationController?.pushViewController(newVC, animated: true)
-        
-    }// funcEnd
-    
-    /// 关闭按钮点击事件
-    @objc func closeEvent() -> Void {
-        navigationController?.dismiss(animated: true, completion: nil)
+//        let newVC = UIViewController.initVControllerFromStoryboard("EditViewController")
+//        navigationController?.pushViewController(newVC, animated: true)
         
     }// funcEnd
     
@@ -158,6 +160,12 @@ extension EditViewController {
             playButtonTitleLabel.text = "暂停"
         }
     }// funcEnd
+    
+    /// 返回音乐点击事件
+    @objc func backEvent() -> Void {
+        navigationController?.popViewController(animated: true)
+    }// funcEnd
+    
 }
 
 extension EditViewController: MusicKeyDelegate {

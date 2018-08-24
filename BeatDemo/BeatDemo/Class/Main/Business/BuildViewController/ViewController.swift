@@ -20,8 +20,8 @@ class ViewController: UIViewController {
     /// 删除ButtonItem
     lazy private var deleteItem: UIBarButtonItem = {
         let button = createButton(EnumStandard.ImageName.delete.rawValue, tintColor: UIColor.flatRed, action: #selector(deleteMusicEvent))
-        button.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         return UIBarButtonItem.init(customView: button)
     }()
@@ -29,8 +29,8 @@ class ViewController: UIViewController {
     /// 全部音乐ButtonItem
     lazy private var allMusicItem: UIBarButtonItem = {
         let button = createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.black, action: #selector(allMusicEvent))
-        button.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         return UIBarButtonItem.init(customView: button)
     }()
@@ -54,6 +54,10 @@ class ViewController: UIViewController {
         
         setUI()
         setData()
+        
+//        let model = NoteEvent.init(startNoteNumber: 2, startTime: 3.5, endTime: 6, passedNotes: nil)
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

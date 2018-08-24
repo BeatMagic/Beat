@@ -39,7 +39,6 @@ extension BaseMusicKey {
         isUserInteractionEnabled = false
         layer.borderWidth = 1
         layer.borderColor = UIColor.flatBlue.cgColor
-        
     }
     
     func pressed() -> Bool {
