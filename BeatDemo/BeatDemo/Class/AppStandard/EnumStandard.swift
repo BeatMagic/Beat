@@ -20,6 +20,11 @@ class EnumStandard: NSObject {
         case C = 0, D = 2, E = 4, F = 5, G = 7, A = 9, B = 11
     }
     
+    //// 音乐计时器状态
+    enum MusicTimerState {
+        case initState, timing, caused
+    }
+    
     /// 音乐播放状态
     enum MusicPlayStates {
         case played, caused

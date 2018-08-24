@@ -37,6 +37,11 @@ class MusicKeyBoard: UIView {
     /// 按下的键Set
     var pressedMusicKeys = Set<UInt8>()
     
+    //MARK:- 重要数据
+    var pressedTmpNote: [TmpNote] = []
+    var noteEventModelList: [NoteEvent] = []
+    //MARK:-
+    
     /// 所有键ViewModel
     var musicKeysViewModel: [CGRect] = [CGRect]()
     /// 外部代理
@@ -205,6 +210,8 @@ extension MusicKeyBoard {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if let key = getKeyFromLocation(loc: touch.location(in: self)) {
+                delegate?.startTranscribe()
+                
                 pressAdded(newKey: key)
                 verifyTouches(touches: event?.allTouches ?? Set<UITouch>())
             }
@@ -244,6 +251,13 @@ extension MusicKeyBoard {
         
         let allTouches = event?.allTouches ?? Set<UITouch>()
         verifyTouches(touches: allTouches)
+        
+        if let noteEvent = NoteEvent.getNoteEventFromTmpNoteArray(self.pressedTmpNote) {
+            self.noteEventModelList.append(noteEvent)
+        }
+        
+        self.pressedTmpNote = []
+        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>?, with event: UIEvent?) {
@@ -253,21 +267,30 @@ extension MusicKeyBoard {
     }
     
     private func pressAdded(newKey: BaseMusicKey) {
-        printWithMessage("初始\(newKey.midiNoteNumber!)\(newKey.keyState)")
-        
         if newKey.pressed() {
+            
+            /// 开始记录单个音
+            self.pressedTmpNote.append(TmpNote.init(newKey.midiNoteNumber, pressedTime: MusicTimer.getpresentTime()))
+            
             delegate?.noteOn(note: newKey.midiNoteNumber)
             pressedMusicKeys.insert(newKey.midiNoteNumber)
             printWithMessage("按下\(newKey.midiNoteNumber!)")
+            
+            
             
             printWithMessage("处理后\(newKey.midiNoteNumber!)\(newKey.keyState)")
         }
     }
     
     private func pressRemoved(key: BaseMusicKey) {
-        printWithMessage("初始\(key.midiNoteNumber!)\(key.keyState)")
-        
         if key.released() {
+            /// 根据音音阶为Key 遍历查找并设定抬起时间
+            for tmpNote in self.pressedTmpNote {
+                if tmpNote.midiNoteNumber == key.midiNoteNumber {
+                    tmpNote.unPressedTime = MusicTimer.getpresentTime()
+                }
+            }
+            
             delegate?.noteOff(note: key.midiNoteNumber)
             pressedMusicKeys.remove(key.midiNoteNumber)
             printWithMessage("松开\(key.midiNoteNumber!)")
@@ -303,4 +326,5 @@ extension MusicKeyBoard {
 protocol MusicKeyDelegate: class {
     func noteOn(note: UInt8)
     func noteOff(note: UInt8)
+    func startTranscribe()
 }

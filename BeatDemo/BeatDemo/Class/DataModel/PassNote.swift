@@ -14,14 +14,22 @@ class PassNote: NSObject {
     /// 音阶
     let midiNoteNumber : UInt8!
     /// 进入时间
-    let enterTime: Double!
+    var enterTime: Double! {
+        didSet {
+            enterBeat = DataStandard.getBeat(enterTime)
+        }
+    }
     /// 退出时间
-    let exitTime: Double!
+    var exitTime: Double! {
+        didSet {
+            exitBeat = DataStandard.getBeat(exitTime)
+        }
+    }
     
     /// 进入拍子
-    let enterBeat: UInt8!
+    var enterBeat: UInt8!
     /// 退出拍子
-    let exitBeat: UInt8!
+    var exitBeat: UInt8!
     
     init(midiNoteNumber: UInt8,
          enterTime: double_t,
@@ -36,3 +44,4 @@ class PassNote: NSObject {
         super.init()
     }
 }
+

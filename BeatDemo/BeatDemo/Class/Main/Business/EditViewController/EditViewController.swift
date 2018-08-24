@@ -169,6 +169,10 @@ extension EditViewController {
 }
 
 extension EditViewController: MusicKeyDelegate {
+    func startTranscribe() {
+        
+    }
+    
     func noteOn(note: UInt8) {
         sampler.startNote(note, withVelocity: 120, onChannel: 0)
     }

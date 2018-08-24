@@ -48,15 +48,13 @@ class ViewController: UIViewController {
             setUpButtonMessageWithState(musicState)
         }
     }
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUI()
         setData()
-        
-//        let model = NoteEvent.init(startNoteNumber: 2, startTime: 3.5, endTime: 6, passedNotes: nil)
-        
         
     }
     
@@ -135,18 +133,62 @@ extension ViewController {
     
     /// 设置当前按钮信息 ( 音乐当前状态 )
     func setUpButtonMessageWithState(_ state: EnumStandard.MusicPlayStates) -> Void {
+
         if state == .caused {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.play.rawValue), for: .normal)
             playButtonTitleLabel.text = "播放"
             
+            switch MusicTimer.timerState {
+            case .initState:
+                return
+                
+            case .timing:
+                MusicTimer.causeTimer()
+                
+            case .caused:
+                return
+            }
+            
         }else {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.cause.rawValue), for: .normal)
             playButtonTitleLabel.text = "暂停"
+            
+            switch MusicTimer.timerState {
+            case .initState:
+                return
+                
+            case .timing:
+                return
+                
+            case .caused:
+                MusicTimer.startTiming()
+            }
         }
     }// funcEnd
+    
+    
+    @IBAction func testPlayMusic(_ sender: Any) {
+        let basicSequencer = BasicSequencer.init()
+        basicSequencer.SetNoteEventSeq(noteEventSeq: self.keyBoardView.noteEventModelList)
+        basicSequencer.playMidi(from: 8)
+        
+    }
 }
 
 extension ViewController: MusicKeyDelegate {
+    func startTranscribe() {
+        if self.musicState == .played {
+            if MusicTimer.shared == nil {
+                MusicTimer.createOneTimer {
+                    SVProgressHUD.showSuccess(withStatus: "已经成功录制")
+                    self.musicState = .played
+                }
+                
+                MusicTimer.startTiming()
+            }
+        }
+    }
+    
     func noteOn(note: UInt8) {
         sampler.startNote(note, withVelocity: 120, onChannel: 0)
     }

@@ -17,6 +17,8 @@ class DataStandard: NSObject {
     
     /// 一秒多少拍子
     static let oneBeatWithTime: Double = 16 / 3
+    
+    /// 
 }
 
 extension DataStandard {
