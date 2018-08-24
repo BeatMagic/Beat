@@ -39,6 +39,10 @@ class EnumStandard: NSObject {
         case edit = "edit"
         /// 所有音乐
         case allMusic = "all_music"
+        /// 返回
+        case back = "back"
+        /// 关闭
+        case close = "close"
     }
     
 }

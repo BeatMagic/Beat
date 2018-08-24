@@ -18,6 +18,7 @@
 		7C1D736C212D470B00144822 /* BeatDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C1D736A212D470B00144822 /* BeatDemo.xcdatamodeld */; };
 		7C1D736E212D470C00144822 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C1D736D212D470C00144822 /* Assets.xcassets */; };
 		7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C1D736F212D470C00144822 /* LaunchScreen.storyboard */; };
+		7C842665212F979C0070FD69 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842664212F979C0070FD69 /* EditViewController.swift */; };
 		7C888E73212D69000094DC85 /* BaseMusicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E72212D69000094DC85 /* BaseMusicKey.swift */; };
 		7C888E75212D69730094DC85 /* EnumStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E74212D69730094DC85 /* EnumStandard.swift */; };
 		7C888E77212D6D3B0094DC85 /* MusicKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */; };
@@ -40,6 +41,7 @@
 		7C1D736D212D470C00144822 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C1D7370212D470C00144822 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C1D7372212D470C00144822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C842664212F979C0070FD69 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		7C888E72212D69000094DC85 /* BaseMusicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMusicKey.swift; sourceTree = "<group>"; };
 		7C888E74212D69730094DC85 /* EnumStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumStandard.swift; sourceTree = "<group>"; };
 		7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKeyBoard.swift; sourceTree = "<group>"; };
@@ -91,7 +93,8 @@
 		7C15E118212D4C7D00077573 /* Business */ = {
 			isa = PBXGroup;
 			children = (
-				7C1D7365212D470B00144822 /* ViewController.swift */,
+				7C842662212F977D0070FD69 /* BuildViewController */,
+				7C842663212F977D0070FD69 /* EditViewController */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -171,6 +174,22 @@
 				7C15E117212D4C7D00077573 /* Main */,
 			);
 			path = Class;
+			sourceTree = "<group>";
+		};
+		7C842662212F977D0070FD69 /* BuildViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7C1D7365212D470B00144822 /* ViewController.swift */,
+			);
+			path = BuildViewController;
+			sourceTree = "<group>";
+		};
+		7C842663212F977D0070FD69 /* EditViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7C842664212F979C0070FD69 /* EditViewController.swift */,
+			);
+			path = EditViewController;
 			sourceTree = "<group>";
 		};
 		A1E6A2DF3EF7B207B633A981 /* Frameworks */ = {
@@ -326,6 +345,7 @@
 				7C1D7366212D470B00144822 /* ViewController.swift in Sources */,
 				7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */,
 				7C15E121212D4CC800077573 /* ExtensionForSomeClass.swift in Sources */,
+				7C842665212F979C0070FD69 /* EditViewController.swift in Sources */,
 				7C1D736C212D470B00144822 /* BeatDemo.xcdatamodeld in Sources */,
 				7C888E75212D69730094DC85 /* EnumStandard.swift in Sources */,
 				7C1D7364212D470B00144822 /* AppDelegate.swift in Sources */,
