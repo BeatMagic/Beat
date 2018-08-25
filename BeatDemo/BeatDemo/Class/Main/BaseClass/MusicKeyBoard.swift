@@ -40,6 +40,20 @@ class MusicKeyBoard: UIView {
     //MARK:- 重要数据
     var pressedTmpNote: [TmpNote] = []
     var noteEventModelList: [NoteEvent] = []
+    var sectionArray: [Section] = {
+        var tmpSectionArray: [Section] = []
+        for index in 0 ..< 9 {
+            let sectionModel = Section.init(startTime: Double(index * 3),
+                                            endTime: Double((index + 1) * 3),
+                                            passNoteEventArray: nil,
+                                            delayTime: nil)
+            
+            tmpSectionArray.append(sectionModel)
+        }
+        
+        return tmpSectionArray
+    }()
+    
     //MARK:-
     
     /// 所有键ViewModel

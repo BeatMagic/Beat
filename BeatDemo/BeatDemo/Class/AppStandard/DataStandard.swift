@@ -23,9 +23,9 @@ class DataStandard: NSObject {
 
 extension DataStandard {
     /// 输入时间(Double)返回拍子数
-    static func getBeat(_ time: Double) -> UInt8 {
-        let tmpBeat = lroundf(Float(time * DataStandard.oneBeatWithTime))
-        return UInt8.init(tmpBeat)
+    static func getBeat(_ time: Double) -> Int {
+        
+        return lroundf(Float(time * DataStandard.oneBeatWithTime))
         
     }// funcEnd
 }

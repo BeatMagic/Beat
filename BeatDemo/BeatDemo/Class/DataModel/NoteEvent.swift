@@ -18,10 +18,18 @@ class NoteEvent: NSObject {
     /// 经过音阶
     var passedNotes: [PassNote]?
     
+    /// 所属小节
+    var belongToSection: Int = 0
+    /// 是否超车
+    var isTooLong: Bool = false
+    /// 超车时间
+    var tooLongTime: Double = 0
+
+
     /// 开始拍子
-    var startBeat: UInt8!
+    var startBeat: Int!
     /// 结束拍子
-    var endbeat: UInt8!
+    var endbeat: Int!
     
     init(startNoteNumber: UInt8,
          startTime: Double,
@@ -31,6 +39,12 @@ class NoteEvent: NSObject {
         self.startTime = startTime
         self.endTime = endTime
         self.passedNotes = passedNotes
+        
+        self.belongToSection = Int.init(startTime) / 3
+        if self.endTime > Double.init(self.belongToSection * 3) {
+            self.isTooLong = true
+            self.tooLongTime = self.endTime - Double.init((self.belongToSection + 1) * 3)
+        }
         
         self.startBeat = DataStandard.getBeat(startTime)
         self.endbeat = DataStandard.getBeat(endTime)

@@ -45,6 +45,7 @@ class MusicTimer: NSObject {
             } else {
                 DispatchQueue.main.async {
                     MusicTimer.presentTime += 0.01
+                    ProgressButtonManager.presentTime = MusicTimer.presentTime
                 }
             }
         })

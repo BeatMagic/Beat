@@ -27,9 +27,9 @@ class PassNote: NSObject {
     }
     
     /// 进入拍子
-    var enterBeat: UInt8!
+    var enterBeat: Int!
     /// 退出拍子
-    var exitBeat: UInt8!
+    var exitBeat: Int!
     
     init(midiNoteNumber: UInt8,
          enterTime: double_t,

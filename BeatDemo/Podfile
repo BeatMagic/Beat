@@ -9,6 +9,7 @@ target 'BeatDemo' do
     pod 'XLActionController/Skype'                              # 底部选择(Skype)
     pod 'SwiftMessages'                                         # 信息提示
     pod 'SVProgressHUD'                                         # 加载中菊花
+    pod 'ButtonProgressBar-iOS'                                 # 进度条按钮
 
     # 界面
     pod 'Hero'                                                  # 转场
@@ -18,5 +19,9 @@ target 'BeatDemo' do
     # 音频处理
     pod 'AudioKit', '~> 4.0'
     pod 'AudioKit/UI'
+    
+    # 数据处理
+    pod 'RxSwift',    '~> 4.0'
+    pod 'RxCocoa',    '~> 4.0'
 
 end

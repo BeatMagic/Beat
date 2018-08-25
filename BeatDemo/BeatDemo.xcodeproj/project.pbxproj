@@ -19,6 +19,9 @@
 		7C1D736E212D470C00144822 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C1D736D212D470C00144822 /* Assets.xcassets */; };
 		7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C1D736F212D470C00144822 /* LaunchScreen.storyboard */; };
 		7C2E982521312E9900BBCD75 /* SegmentedProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982421312E9900BBCD75 /* SegmentedProgressBar.swift */; };
+		7C2E9827213145F100BBCD75 /* ProgressButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */; };
+		7C2E982921316B2F00BBCD75 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982821316B2F00BBCD75 /* Sequence.swift */; };
+		7C2E982B21316C3C00BBCD75 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982A21316C3C00BBCD75 /* Section.swift */; };
 		7C842665212F979C0070FD69 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842664212F979C0070FD69 /* EditViewController.swift */; };
 		7C84266B212FB1230070FD69 /* NoteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842668212FB1230070FD69 /* NoteEvent.swift */; };
 		7C84266C212FB1230070FD69 /* BasicSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842669212FB1230070FD69 /* BasicSequencer.swift */; };
@@ -49,6 +52,9 @@
 		7C1D7370212D470C00144822 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C1D7372212D470C00144822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C2E982421312E9900BBCD75 /* SegmentedProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedProgressBar.swift; sourceTree = "<group>"; };
+		7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButtonManager.swift; sourceTree = "<group>"; };
+		7C2E982821316B2F00BBCD75 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		7C2E982A21316C3C00BBCD75 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		7C842664212F979C0070FD69 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		7C842668212FB1230070FD69 /* NoteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEvent.swift; sourceTree = "<group>"; };
 		7C842669212FB1230070FD69 /* BasicSequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSequencer.swift; sourceTree = "<group>"; };
@@ -87,6 +93,7 @@
 		7C15E116212D4C7D00077573 /* AppStandard */ = {
 			isa = PBXGroup;
 			children = (
+				7C2E982821316B2F00BBCD75 /* Sequence.swift */,
 				7C888E74212D69730094DC85 /* EnumStandard.swift */,
 				7C15E124212D65C500077573 /* FrameStandard.swift */,
 				7C888E7D212E53D70094DC85 /* DataStandard.swift */,
@@ -116,6 +123,9 @@
 		7C15E119212D4C7D00077573 /* BaseClass */ = {
 			isa = PBXGroup;
 			children = (
+				7C84267421300B180070FD69 /* BasicPlayer.swift */,
+				7C842669212FB1230070FD69 /* BasicSequencer.swift */,
+				7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */,
 				7C888E72212D69000094DC85 /* BaseMusicKey.swift */,
 				7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */,
 				7C842670212FDDBF0070FD69 /* MusicTimer.swift */,
@@ -136,8 +146,7 @@
 		7C15E11B212D4C7D00077573 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				7C84267421300B180070FD69 /* BasicPlayer.swift */,
-				7C842669212FB1230070FD69 /* BasicSequencer.swift */,
+				7C2E982A21316C3C00BBCD75 /* Section.swift */,
 				7C842668212FB1230070FD69 /* NoteEvent.swift */,
 				7C84266A212FB1230070FD69 /* PassNote.swift */,
 				7C842672212FFAF40070FD69 /* TmpNote.swift */,
@@ -338,8 +347,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BeatDemo/Pods-BeatDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ButtonProgressBar-iOS/ButtonProgressBar_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
@@ -347,8 +359,11 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ButtonProgressBar_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
@@ -368,6 +383,7 @@
 			files = (
 				7C842673212FFAF40070FD69 /* TmpNote.swift in Sources */,
 				7C15E125212D65C500077573 /* FrameStandard.swift in Sources */,
+				7C2E982921316B2F00BBCD75 /* Sequence.swift in Sources */,
 				7C15E122212D4CC800077573 /* ToolClass.swift in Sources */,
 				7C84266D212FB1230070FD69 /* PassNote.swift in Sources */,
 				7C888E7E212E53D70094DC85 /* DataStandard.swift in Sources */,
@@ -376,9 +392,11 @@
 				7C84266B212FB1230070FD69 /* NoteEvent.swift in Sources */,
 				7C1D7366212D470B00144822 /* ViewController.swift in Sources */,
 				7C2E982521312E9900BBCD75 /* SegmentedProgressBar.swift in Sources */,
+				7C2E9827213145F100BBCD75 /* ProgressButtonManager.swift in Sources */,
 				7C84267521300B180070FD69 /* BasicPlayer.swift in Sources */,
 				7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */,
 				7C84266C212FB1230070FD69 /* BasicSequencer.swift in Sources */,
+				7C2E982B21316C3C00BBCD75 /* Section.swift in Sources */,
 				7C15E121212D4CC800077573 /* ExtensionForSomeClass.swift in Sources */,
 				7C842665212F979C0070FD69 /* EditViewController.swift in Sources */,
 				7C842671212FDDBF0070FD69 /* MusicTimer.swift in Sources */,

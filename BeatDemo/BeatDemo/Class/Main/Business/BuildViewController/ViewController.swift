@@ -40,13 +40,13 @@ class ViewController: UIViewController {
     // MARK: - 进度条相关
     @IBOutlet var progressBackgroundView: UIView!
     /// 进度条
-    var progressBar: SegmentedProgressBar? {
-        didSet {
-            if progressBar != nil {
-                progressBackgroundView.addSubview(progressBar!)
-            }
-        }
-    }
+//    var progressBar: SegmentedProgressBar? {
+//        didSet {
+//            if progressBar != nil {
+//                progressBackgroundView.addSubview(progressBar!)
+//            }
+//        }
+//    }
     
     // MARK: - 键盘View
     @IBOutlet var keyBoardView: MusicKeyBoard!
@@ -58,6 +58,7 @@ class ViewController: UIViewController {
     // MARK: - 其他
     var sampler:AVAudioUnitSampler!
     var engine: AVAudioEngine!
+    let basicSequencer = BasicSequencer()
     
     /// 音乐播放状态
     var musicState: EnumStandard.MusicPlayStates = .caused {
@@ -103,7 +104,7 @@ extension ViewController {
         navigationItem.rightBarButtonItem = allMusicItem
         
         // 进度条
-        progressBar = initProgressBar()
+        ProgressButtonManager.getButtonsArray(clickButtonEvent: #selector(sectionButtonEvent), superView: progressBackgroundView)
         
         // 底部按钮
         playButton.tintColor = UIColor.black
@@ -132,6 +133,8 @@ extension ViewController {
             print("set up failed")
             return
         }
+        
+        basicSequencer.setupMelodyTrack()
 
     }// funcEnd
     
@@ -143,6 +146,12 @@ extension ViewController {
     /// 音乐管理点击事件
     @objc func allMusicEvent() -> Void {
         printWithMessage("音乐管理")
+    }// funcEnd
+    
+    /// 小节点击事件
+    @objc func sectionButtonEvent(_ sender: Any) -> Void {
+        printWithMessage("点击了第\((sender as! UIButton).tag)小节")
+        printWithMessage("现在录制到第\(ProgressButtonManager.getPresentButtonIndex())小节")
     }// funcEnd
     
     /// 播放按钮点击事件
@@ -171,7 +180,6 @@ extension ViewController {
                 
             case .timing:
                 MusicTimer.causeTimer()
-                progressBar!.isPaused = true
                 
             case .caused:
                 return
@@ -190,7 +198,6 @@ extension ViewController {
                 
             case .caused:
                 MusicTimer.startTiming()
-                progressBar!.isPaused = false
             }
         }
     }// funcEnd
@@ -208,11 +215,19 @@ extension ViewController {
 
     }// funcEnd
     
-    
+    /// 测试播放按钮
     @IBAction func testPlayMusic(_ sender: Any) {
-        let basicSequencer = BasicSequencer.init()
+        //basicSequencer.setupTracks()
+        
+        Section.getSectionModel(noteEventArray: keyBoardView.noteEventModelList, tmpSectionModelArray: keyBoardView.sectionArray)
+        
+//        for sectionModel in keyBoardView.sectionArray {
+//            if 
+//        }
+        
+        
         basicSequencer.SetNoteEventSeq(noteEventSeq: self.keyBoardView.noteEventModelList)
-        basicSequencer.playMidi(from: 8)
+        basicSequencer.playMelody()
         
     }
 }
@@ -238,14 +253,9 @@ extension ViewController: MusicKeyDelegate {
                     self.musicState = .played
                     self.musicState = .caused
                     
-                    self.progressBar!.removeFromSuperview()
-                    self.progressBar = nil
-                    self.progressBar = self.initProgressBar()
-                    
                 }
                 
                 MusicTimer.startTiming()
-                progressBar!.startAnimation()
             }
         }
     }
