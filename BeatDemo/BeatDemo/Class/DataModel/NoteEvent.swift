@@ -42,7 +42,17 @@ class NoteEvent: NSObject {
 
 extension NoteEvent {
     
-    /// 从TmpNoteArray转换为NoteEvent
+    /// 从TmpNote转换为NoteEvent (不带滑音)
+    static func getNoteEventFromTmpNote(_ tmpNote: TmpNote) -> NoteEvent {
+        return NoteEvent.init(startNoteNumber: tmpNote.midiNoteNumber,
+                              startTime: tmpNote.pressedTime,
+                              endTime: tmpNote.unPressedTime,
+                              passedNotes: nil)
+        
+        
+    }// funcEnd
+    
+    /// 从TmpNoteArray转换为NoteEvent (带滑音)
     static func getNoteEventFromTmpNoteArray(_ tmpNoteArray: [TmpNote]) -> NoteEvent? {
         switch tmpNoteArray.count {
         case 0:

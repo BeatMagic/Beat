@@ -12,11 +12,13 @@ import AudioKitUI
 import SVProgressHUD
 
 class ViewController: UIViewController {
+    // MARK: - 布局
     @IBOutlet var operationViewWidth: NSLayoutConstraint!
     @IBOutlet var operationViewHeight: NSLayoutConstraint!
     @IBOutlet var beatViewWidth: NSLayoutConstraint!
     @IBOutlet var beatViewHeight: NSLayoutConstraint!
     
+    // MARK: - 导航栏按钮
     /// 删除ButtonItem
     lazy private var deleteItem: UIBarButtonItem = {
         let button = createButton(EnumStandard.ImageName.delete.rawValue, tintColor: UIColor.flatRed, action: #selector(deleteMusicEvent))
@@ -35,10 +37,25 @@ class ViewController: UIViewController {
         return UIBarButtonItem.init(customView: button)
     }()
     
+    // MARK: - 进度条相关
+    @IBOutlet var progressBackgroundView: UIView!
+    /// 进度条
+    var progressBar: SegmentedProgressBar? {
+        didSet {
+            if progressBar != nil {
+                progressBackgroundView.addSubview(progressBar!)
+            }
+        }
+    }
+    
+    // MARK: - 键盘View
     @IBOutlet var keyBoardView: MusicKeyBoard!
+    
+    // MARK: - 底部按钮
     @IBOutlet var playButton: UIButton!
     @IBOutlet var playButtonTitleLabel: UILabel!
     
+    // MARK: - 其他
     var sampler:AVAudioUnitSampler!
     var engine: AVAudioEngine!
     
@@ -75,16 +92,26 @@ extension ViewController {
     
     /// 设置UI && 绑定点击事件
     func setUI() -> Void {
+        // 布局
         operationViewWidth.constant = FrameStandard.universalWidth
         operationViewHeight.constant = FrameStandard.universalHeight
         beatViewWidth.constant = FrameStandard.universalWidth
         beatViewHeight.constant = FrameStandard.beatViewHeight
         
+        // 导航栏按钮
         navigationItem.leftBarButtonItem = deleteItem
         navigationItem.rightBarButtonItem = allMusicItem
         
+        // 进度条
+        progressBar = initProgressBar()
+        
+        // 底部按钮
         playButton.tintColor = UIColor.black
         playButton.addTarget(self, action: #selector(playButtonEvent), for: .touchUpInside)
+        
+        
+        
+        
     }// funcEnd
     
     /// 设置Data
@@ -144,12 +171,13 @@ extension ViewController {
                 
             case .timing:
                 MusicTimer.causeTimer()
+                progressBar!.isPaused = true
                 
             case .caused:
                 return
             }
             
-        }else {
+        }else if state == .played  {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.cause.rawValue), for: .normal)
             playButtonTitleLabel.text = "暂停"
             
@@ -162,8 +190,22 @@ extension ViewController {
                 
             case .caused:
                 MusicTimer.startTiming()
+                progressBar!.isPaused = false
             }
         }
+    }// funcEnd
+    
+    /// 初始化一个进度条
+    func initProgressBar() -> SegmentedProgressBar {
+        let tmpProgressBar = SegmentedProgressBar.init(numberOfSegments: 9, duration: MusicTimer.totalTime / 9)
+        tmpProgressBar.frame = CGRect.init(x: FrameStandard.progressBarX, y: FrameStandard.progressBarY, width: FrameStandard.progressBarWidth, height: FrameStandard.progressBarHeight)
+        tmpProgressBar.topColor = UIColor.flatGreen
+        tmpProgressBar.bottomColor = UIColor.flatGreen.withAlphaComponent(0.25)
+        tmpProgressBar.padding = 2
+        tmpProgressBar.delegate = self
+
+        return tmpProgressBar
+
     }// funcEnd
     
     
@@ -175,6 +217,18 @@ extension ViewController {
     }
 }
 
+extension ViewController: SegmentedProgressBarDelegate {
+    func segmentedProgressBarChangedIndex(index: Int) {
+        printWithMessage(index)
+    }
+    
+    func segmentedProgressBarFinished() {
+        printWithMessage("完成")
+    }
+    
+    
+}
+
 extension ViewController: MusicKeyDelegate {
     func startTranscribe() {
         if self.musicState == .played {
@@ -182,9 +236,16 @@ extension ViewController: MusicKeyDelegate {
                 MusicTimer.createOneTimer {
                     SVProgressHUD.showSuccess(withStatus: "已经成功录制")
                     self.musicState = .played
+                    self.musicState = .caused
+                    
+                    self.progressBar!.removeFromSuperview()
+                    self.progressBar = nil
+                    self.progressBar = self.initProgressBar()
+                    
                 }
                 
                 MusicTimer.startTiming()
+                progressBar!.startAnimation()
             }
         }
     }

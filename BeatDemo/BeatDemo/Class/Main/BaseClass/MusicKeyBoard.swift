@@ -252,8 +252,14 @@ extension MusicKeyBoard {
         let allTouches = event?.allTouches ?? Set<UITouch>()
         verifyTouches(touches: allTouches)
         
-        if let noteEvent = NoteEvent.getNoteEventFromTmpNoteArray(self.pressedTmpNote) {
-            self.noteEventModelList.append(noteEvent)
+//        if let noteEvent = NoteEvent.getNoteEventFromTmpNoteArray(self.pressedTmpNote) {
+//            self.noteEventModelList.append(noteEvent)
+//        }
+        if self.pressedTmpNote.count != 0 {
+            for tmpNote in self.pressedTmpNote {
+                let noteEvent = NoteEvent.getNoteEventFromTmpNote(tmpNote)
+                self.noteEventModelList.append(noteEvent)
+            }
         }
         
         self.pressedTmpNote = []
