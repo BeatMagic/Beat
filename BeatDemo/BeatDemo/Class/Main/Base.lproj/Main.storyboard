@@ -193,6 +193,7 @@
                         <outlet property="playButton" destination="y2k-lE-vMh" id="rFA-5K-U5b"/>
                         <outlet property="playButtonTitleLabel" destination="dzv-Ob-gat" id="ovf-c3-XqY"/>
                         <outlet property="progressBackgroundView" destination="ewx-Mu-9f2" id="wQC-WK-eb5"/>
+                        <outlet property="resetButton" destination="kJH-ya-u1A" id="749-ol-9WC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -9,7 +9,7 @@
 import UIKit
 import AudioKit
 
-class BasicSequencer{
+class BasicSequencer: NSObject{
     var fmOscillator = AKFMOscillatorBank()
     var melodicSound: AKMIDINode!
     var verb: AKReverb2!
@@ -36,7 +36,7 @@ class BasicSequencer{
     var noteEventSeq : [NoteEvent]!
     let sequenceLength = AKDuration(beats: 4.0)
     
-    init() {
+    override init() {
         fmOscillator.modulatingMultiplier = 3
         fmOscillator.modulationIndex = 0.3
         
@@ -68,6 +68,8 @@ class BasicSequencer{
         } catch {
             AKLog("AudioKit did not start!")
         }
+        
+        super.init()
     }
     
     func SetNoteEventSeq(noteEventSeq:[NoteEvent]){
@@ -106,7 +108,6 @@ class BasicSequencer{
     }
     
     func playMelody(){
-        
         
         if !sequencer.isPlaying{
             sequencer.rewind()

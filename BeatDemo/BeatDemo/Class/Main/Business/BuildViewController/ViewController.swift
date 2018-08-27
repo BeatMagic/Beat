@@ -39,23 +39,18 @@ class ViewController: UIViewController {
     
     // MARK: - 进度条相关
     @IBOutlet var progressBackgroundView: UIView!
-    /// 进度条
-//    var progressBar: SegmentedProgressBar? {
-//        didSet {
-//            if progressBar != nil {
-//                progressBackgroundView.addSubview(progressBar!)
-//            }
-//        }
-//    }
     
     // MARK: - 键盘View
     @IBOutlet var keyBoardView: MusicKeyBoard!
     
     // MARK: - 底部按钮
+    @IBOutlet var resetButton: UIButton!
     @IBOutlet var playButton: UIButton!
     @IBOutlet var playButtonTitleLabel: UILabel!
     
     // MARK: - 其他
+    // 选择了哪一小节
+    var selectedSection: Int? = nil
     var sampler:AVAudioUnitSampler!
     var engine: AVAudioEngine!
     let basicSequencer = BasicSequencer()
@@ -107,6 +102,7 @@ extension ViewController {
         ProgressButtonManager.getButtonsArray(clickButtonEvent: #selector(sectionButtonEvent), superView: progressBackgroundView)
         
         // 底部按钮
+        resetButton.addTarget(self, action: #selector(resetMusicEvent), for: .touchUpInside)
         playButton.tintColor = UIColor.black
         playButton.addTarget(self, action: #selector(playButtonEvent), for: .touchUpInside)
         
@@ -147,11 +143,55 @@ extension ViewController {
     @objc func allMusicEvent() -> Void {
         printWithMessage("音乐管理")
     }// funcEnd
-    
+
     /// 小节点击事件
     @objc func sectionButtonEvent(_ sender: Any) -> Void {
-        printWithMessage("点击了第\((sender as! UIButton).tag)小节")
-        printWithMessage("现在录制到第\(ProgressButtonManager.getPresentButtonIndex())小节")
+        SVProgressHUD.showSuccess(withStatus: "已从第\((sender as! UIButton).tag)小节开始播放")
+        self.selectedSection = (sender as! UIButton).tag
+        
+        self.playMusic(self.selectedSection!)
+
+    }// funcEnd
+    
+    /// 重置音乐点击事件
+    @objc func resetMusicEvent() -> Void {
+        
+        if let selectedSection = self.selectedSection {
+            
+            
+            let alertController = SimpleAlertController.getSimpleAlertController(title: "重置第\(selectedSection)小节?", message: "第\(selectedSection)小节的音符会被清空") {
+                
+                MusicTimer.setPresentTime(selectedSection * 3)
+                self.keyBoardView.sectionArray[selectedSection].passNoteEventArray = []
+                
+//                for index in selectedSection ..< 9 {
+//                    self.keyBoardView.sectionArray[index].passNoteEventArray = []
+//                }
+                
+                SVProgressHUD.showSuccess(withStatus: "重置成功")
+            }
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+            
+        }else {
+            let alertController = SimpleAlertController.getSimpleAlertController(title: "重置当前小节?", message: "当前小节的音符会被清空") {
+                
+                MusicTimer.setPresentTime(ProgressButtonManager.getPresentButtonIndex() * 3)
+                self.keyBoardView.sectionArray[ProgressButtonManager.getPresentButtonIndex()].passNoteEventArray = []
+                
+//                for index in ProgressButtonManager.getPresentButtonIndex() ..< 9 {
+//                    self.keyBoardView.sectionArray[index].passNoteEventArray = []
+//                }
+                
+                SVProgressHUD.showSuccess(withStatus: "重置成功")
+            }
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        
+        
     }// funcEnd
     
     /// 播放按钮点击事件
@@ -171,6 +211,10 @@ extension ViewController {
     func setUpButtonMessageWithState(_ state: EnumStandard.MusicPlayStates) -> Void {
 
         if state == .caused {
+            
+            Section.getSectionModel(noteEventArray: keyBoardView.noteEventModelList, tmpSectionModelArray: keyBoardView.sectionArray)
+            keyBoardView.noteEventModelList = []
+            
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.play.rawValue), for: .normal)
             playButtonTitleLabel.text = "播放"
             
@@ -182,12 +226,24 @@ extension ViewController {
                 MusicTimer.causeTimer()
                 
             case .caused:
-                return
+                break;
             }
             
         }else if state == .played  {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.cause.rawValue), for: .normal)
             playButtonTitleLabel.text = "暂停"
+            
+            
+            if MusicTimer.shared == nil {
+                MusicTimer.createOneTimer {
+                    SVProgressHUD.showSuccess(withStatus: "已经成功录制")
+                    self.musicState = .played
+                    self.musicState = .caused
+
+                }
+
+                MusicTimer.startTiming()
+            }
             
             switch MusicTimer.timerState {
             case .initState:
@@ -217,19 +273,42 @@ extension ViewController {
     
     /// 测试播放按钮
     @IBAction func testPlayMusic(_ sender: Any) {
-        //basicSequencer.setupTracks()
         
-        Section.getSectionModel(noteEventArray: keyBoardView.noteEventModelList, tmpSectionModelArray: keyBoardView.sectionArray)
-        
-//        for sectionModel in keyBoardView.sectionArray {
-//            if 
-//        }
-        
-        
-        basicSequencer.SetNoteEventSeq(noteEventSeq: self.keyBoardView.noteEventModelList)
-        basicSequencer.playMelody()
-        
+        var sectionModelIndex = 0
+        for sectionModel in keyBoardView.sectionArray {
+
+            if sectionModelIndex <= ProgressButtonManager.getPresentButtonIndex() {
+                
+                DelayTask.createTaskWith(name: "第\(sectionModelIndex)小节", workItem: {
+                    self.basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
+                    self.basicSequencer.playMelody()
+
+                }, delayTime: sectionModelIndex * 3 + sectionModel.delayTime)
+
+                sectionModelIndex += 1
+            }
+        }
     }
+    
+    /// 从某小节处开始播放
+    func playMusic(_ fromSectionIndex: Int) -> Void {
+        let nextSectionIndex = ProgressButtonManager.getPresentButtonIndex() + 1
+        // 开始小节的Model
+        let fromSectionModel = self.keyBoardView.sectionArray[fromSectionIndex]
+        
+        for sectionIndex in fromSectionIndex ..< nextSectionIndex {
+            // 获得播放的Model
+            let sectionModel = self.keyBoardView.sectionArray[sectionIndex]
+            
+            DelayTask.createTaskWith(name: "第\(sectionIndex)小节", workItem: {
+                self.basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
+                self.basicSequencer.playMelody()
+                
+            }, delayTime: (sectionIndex - fromSectionIndex) * 3 + sectionModel.delayTime - fromSectionModel.delayTime)
+            
+        }
+    
+    }// funcEnd
 }
 
 extension ViewController: SegmentedProgressBarDelegate {
@@ -246,18 +325,7 @@ extension ViewController: SegmentedProgressBarDelegate {
 
 extension ViewController: MusicKeyDelegate {
     func startTranscribe() {
-        if self.musicState == .played {
-            if MusicTimer.shared == nil {
-                MusicTimer.createOneTimer {
-                    SVProgressHUD.showSuccess(withStatus: "已经成功录制")
-                    self.musicState = .played
-                    self.musicState = .caused
-                    
-                }
-                
-                MusicTimer.startTiming()
-            }
-        }
+
     }
     
     func noteOn(note: UInt8) {

@@ -294,28 +294,28 @@ extension MusicKeyBoard {
             
             delegate?.noteOn(note: newKey.midiNoteNumber)
             pressedMusicKeys.insert(newKey.midiNoteNumber)
-            printWithMessage("按下\(newKey.midiNoteNumber!)")
-            
-            
-            
-            printWithMessage("处理后\(newKey.midiNoteNumber!)\(newKey.keyState)")
         }
     }
     
     private func pressRemoved(key: BaseMusicKey) {
         if key.released() {
-            /// 根据音音阶为Key 遍历查找并设定抬起时间
+            // 根据音音阶为Key 遍历查找最后一个并设定抬起时间
+            var index = 0
+            var indexRecord = 0
+            
             for tmpNote in self.pressedTmpNote {
                 if tmpNote.midiNoteNumber == key.midiNoteNumber {
-                    tmpNote.unPressedTime = MusicTimer.getpresentTime()
+                    indexRecord = index
                 }
+                
+                index += 1
             }
             
+            let tmpNote = self.pressedTmpNote[indexRecord]
+            tmpNote.unPressedTime = MusicTimer.getpresentTime()
+            printWithMessage("音阶\(tmpNote.midiNoteNumber!)按下时间\(tmpNote.pressedTime!)抬起时间\(tmpNote.unPressedTime!)")
             delegate?.noteOff(note: key.midiNoteNumber)
             pressedMusicKeys.remove(key.midiNoteNumber)
-            printWithMessage("松开\(key.midiNoteNumber!)")
-            
-            printWithMessage("处理后\(key.midiNoteNumber!)\(key.keyState)")
         }
     }
     

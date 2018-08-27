@@ -53,33 +53,23 @@ extension Section {
         
         // 将所有音存入所属小节
         for noteEvent in noteEventArray {
-            tmpSectionModelArray[noteEvent.belongToSection].passNoteEventArray.append(noteEvent)
-        }
-        
-        
-        for index in 0 ..< 9 {
+            let tmpSection = tmpSectionModelArray[noteEvent.belongToSection]
             
-            let sectionModel = tmpSectionModelArray[index]
-            
-            // 经过两个及以上音符的时候
-            if sectionModel.passNoteEventArray.count != 0 {
+            tmpSection.passNoteEventArray.append(noteEvent)
+            /// 如果最后一个音的EndTime不在该小节内
+            if tmpSection.endTime < noteEvent.endTime {
+                // 需要延后的时间
+                let needDelayTime = noteEvent.endTime - tmpSection.endTime
+                // 需要延后的小节数
+                let needDelaySection = Int.init(needDelayTime / 3)
                 
-                // 检查最末一个音是否超车
-                if sectionModel.passNoteEventArray.last?.isTooLong == true {
-                    
-                    // 超车时间大于3秒
-                    let tooLongTime = sectionModel.passNoteEventArray.last?.tooLongTime
-                    let needDelaySection = Int.init(tooLongTime! / 3)
-                    
-                    for needDelaySectionIndex in 0 ..< needDelaySection {
-                        tmpSectionModelArray[index + needDelaySectionIndex + 1].delayTime = 3
-                    }
-                    
-                    tmpSectionModelArray[index + needDelaySection + 1].delayTime = tooLongTime! - Double.init(exactly: needDelaySection * 3)!
-                    
+                
+                tmpSectionModelArray[noteEvent.belongToSection + 1 + needDelaySection].delayTime = needDelayTime - Double.init(needDelaySection * 3)
+                for index in 0 ..< needDelaySection {
+                    tmpSectionModelArray[noteEvent.belongToSection + index].delayTime = 3
                 }
-                
             }
+            
         }
     
     }// funcEnd

@@ -18,6 +18,7 @@
 		7C1D736C212D470B00144822 /* BeatDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C1D736A212D470B00144822 /* BeatDemo.xcdatamodeld */; };
 		7C1D736E212D470C00144822 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C1D736D212D470C00144822 /* Assets.xcassets */; };
 		7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C1D736F212D470C00144822 /* LaunchScreen.storyboard */; };
+		7C1E4C442133D590003BE6EC /* SimpleAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1E4C432133D590003BE6EC /* SimpleAlertController.swift */; };
 		7C2E982521312E9900BBCD75 /* SegmentedProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982421312E9900BBCD75 /* SegmentedProgressBar.swift */; };
 		7C2E9827213145F100BBCD75 /* ProgressButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */; };
 		7C2E982921316B2F00BBCD75 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982821316B2F00BBCD75 /* Sequence.swift */; };
@@ -51,6 +52,7 @@
 		7C1D736D212D470C00144822 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C1D7370212D470C00144822 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C1D7372212D470C00144822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C1E4C432133D590003BE6EC /* SimpleAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAlertController.swift; sourceTree = "<group>"; };
 		7C2E982421312E9900BBCD75 /* SegmentedProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedProgressBar.swift; sourceTree = "<group>"; };
 		7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButtonManager.swift; sourceTree = "<group>"; };
 		7C2E982821316B2F00BBCD75 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
@@ -125,10 +127,11 @@
 			children = (
 				7C84267421300B180070FD69 /* BasicPlayer.swift */,
 				7C842669212FB1230070FD69 /* BasicSequencer.swift */,
-				7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */,
 				7C888E72212D69000094DC85 /* BaseMusicKey.swift */,
 				7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */,
+				7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */,
 				7C842670212FDDBF0070FD69 /* MusicTimer.swift */,
+				7C1E4C432133D590003BE6EC /* SimpleAlertController.swift */,
 			);
 			path = BaseClass;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				7C1D7366212D470B00144822 /* ViewController.swift in Sources */,
 				7C2E982521312E9900BBCD75 /* SegmentedProgressBar.swift in Sources */,
 				7C2E9827213145F100BBCD75 /* ProgressButtonManager.swift in Sources */,
+				7C1E4C442133D590003BE6EC /* SimpleAlertController.swift in Sources */,
 				7C84267521300B180070FD69 /* BasicPlayer.swift in Sources */,
 				7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */,
 				7C84266C212FB1230070FD69 /* BasicSequencer.swift in Sources */,

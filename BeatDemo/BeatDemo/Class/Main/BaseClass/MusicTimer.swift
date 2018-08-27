@@ -20,7 +20,12 @@ class MusicTimer: NSObject {
     static let totalTime: Double = 27
     
     /// 目前时间
-    private static var presentTime: Double = 0
+    private static var presentTime: Double = 0 {
+        didSet {
+            ProgressButtonManager.presentTime = MusicTimer.presentTime
+            print("\(MusicTimer.presentTime)秒")
+        }
+    }
     
     
     /// 初始化
@@ -45,7 +50,6 @@ class MusicTimer: NSObject {
             } else {
                 DispatchQueue.main.async {
                     MusicTimer.presentTime += 0.01
-                    ProgressButtonManager.presentTime = MusicTimer.presentTime
                 }
             }
         })
@@ -56,10 +60,12 @@ class MusicTimer: NSObject {
     
     /// 开启计时器
     static func startTiming() -> Void {
-        if let timer = MusicTimer.shared {
-            timer.resume()
+        if MusicTimer.shared != nil {
+            
+            MusicTimer.shared!.resume()
             MusicTimer.timerState = .timing
         }
+
         
     }// funcEnd
     
@@ -99,6 +105,12 @@ class MusicTimer: NSObject {
     /// 获取当前时间点
     static func getpresentTime() -> Double {
         return MusicTimer.presentTime
+        
+    }// funcEnd
+    
+    /// 设置当前时间点
+    static func setPresentTime(_ presentTime: Double) -> Void {
+        MusicTimer.presentTime = presentTime
         
     }// funcEnd
 }

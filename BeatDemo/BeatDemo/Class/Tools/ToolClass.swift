@@ -337,25 +337,39 @@ public class ToolClass: NSObject {
 /// 延时执行类
 public class DelayTask: NSObject {
     
-    static var workItemClosure: DispatchWorkItem = DispatchWorkItem.init {}
+    /// 单一任务
+    private static var workItemClosure: DispatchWorkItem = DispatchWorkItem.init {}
     
-    /// 创建一个延时执行任务 [任务内容, 延时时间] -> Void
-    static func createTaskWith(workItem: @escaping ()->(), delayTime: TimeInterval) -> Void {
-        
-        self.workItemClosure = DispatchWorkItem.init(block: {
-            
+    /// 任务字典
+    static var workItemDict: Dictionary<String, DispatchWorkItem> = Dictionary<String, DispatchWorkItem>.init()
+    
+    /// 任务数组
+    static var workItemArray: [DispatchWorkItem] = []
+    
+    /// 创建一个延时执行任务并加入任务字典
+    static func createTaskWith(name: String, workItem: @escaping ()->(), delayTime: TimeInterval) -> Void {
+        let workItem = DispatchWorkItem.init(block: {
             workItem()
         })
         DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) {
-            self.workItemClosure.perform()
+            workItem.perform()
         }
         
+//        self.workItemDict[name] = workItem
+        
+//        return workItem
     }// funcEnd
     
-    /// 取消该任务
-    static func cancelTask() -> Void {
-        self.workItemClosure.cancel()
-    }
+    /// 根据key取消相应字典
+    static func cancelTaskFromDict(name: String) -> Bool {
+        if let workItem = workItemDict[name] {
+            workItem.cancel()
+            return true
+        }
+        
+        return false
+    }// funcEnd
+    
 }
 
 /// 打印对象及信息
