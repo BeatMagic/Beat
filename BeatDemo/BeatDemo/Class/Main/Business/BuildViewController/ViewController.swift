@@ -162,8 +162,7 @@ extension ViewController {
     @objc func sectionButtonEvent(_ sender: Any) -> Void {
         SVProgressHUD.showSuccess(withStatus: "已选择第\((sender as! UIButton).tag)小节")
         self.selectedSection = (sender as! UIButton).tag
-        
-//        self.playMusic(self.selectedSection!)
+        self.musicState = .caused
 
     }// funcEnd
     
@@ -283,21 +282,6 @@ extension ViewController {
         
     }// funcEnd
     
-    /// 测试播放按钮
-    @IBAction func testPlayMusic(_ sender: Any) {
-        
-        for sectionModelIndex in 0 ..< ProgressButtonManager.getPresentButtonIndex() + 1 {
-            let sectionModel = keyBoardView.sectionArray[sectionModelIndex]
-            
-            DelayTask.createTaskWith(name: "\(sectionModelIndex)", workItem: {
-                 printWithMessage("第\(sectionModelIndex)小节开始播放")
-                self.basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
-                self.basicSequencer.playMelody()
-                
-            }, delayTime: sectionModelIndex * 3 + sectionModel.delayTime)
-        }
-    }
-    
     /// 从某小节处开始播放
     func playMusic(_ fromSectionIndex: Int) -> Void {
 //        let nextSectionIndex = ProgressButtonManager.getPresentButtonIndex() + 1
@@ -378,6 +362,9 @@ extension ViewController: TimerDelegate {
         nextNeedRecordTime = 3
         keyBoardView.noteEventModelList = []
         ProgressButtonManager.deleteAllPresentButtonProgress()
+        if self.musicState == .played {
+            self.playMusic(0)
+        }
     }
     
 }
