@@ -34,7 +34,7 @@ class BasicSequencer: NSObject{
     let scale2: [Int] = [0, 3, 5, 7, 10]
     
     var noteEventSeq : [NoteEvent]!
-    let sequenceLength = AKDuration(beats: 4.0)
+    let sequenceLength = AKDuration(beats: 36.0)
     
     override init() {
         fmOscillator.modulatingMultiplier = 3
@@ -42,11 +42,11 @@ class BasicSequencer: NSObject{
         
         melodicSound = AKMIDINode(node: fmOscillator)
         verb = AKReverb2(melodicSound)
-        verb.dryWetMix = 0.5
-        verb.decayTimeAt0Hz = 7
-        verb.decayTimeAtNyquist = 11
-        verb.randomizeReflections = 600
-        verb.gain = 1
+//        verb.dryWetMix = 0.5
+//        verb.decayTimeAt0Hz = 7
+//        verb.decayTimeAtNyquist = 11
+//        verb.randomizeReflections = 600
+//        verb.gain = 1
         
         [snareDrum, snareGhost] >>> snareMixer
         
@@ -62,6 +62,7 @@ class BasicSequencer: NSObject{
         
         [verb, bassDrum, snareDrum, snareGhost, snareVerb] >>> mixer
         
+        
         AudioKit.output = pumper
         do {
             try AudioKit.start()
@@ -72,9 +73,15 @@ class BasicSequencer: NSObject{
         super.init()
     }
     
+    
+    func GetOscillatorBank() -> AKFMOscillatorBank {
+        return self.fmOscillator
+    }
+    
     func SetNoteEventSeq(noteEventSeq:[NoteEvent]){
         self.noteEventSeq = noteEventSeq
         
+        sequencer.stop()
         generateRecordSeq()
     }
     
@@ -105,18 +112,28 @@ class BasicSequencer: NSObject{
         _ = sequencer.newTrack()
         sequencer.setLength(sequenceLength)
         sequencer.tracks[Sequence.melody.rawValue].setMIDIOutput(melodicSound.midiIn)
+        sequencer.setTempo(100)
     }
     
     func playMelody(){
         
-        if !sequencer.isPlaying{
+        //print("player"+String(sequencer.isPlaying))
+        
+        //print(String(sequencer.tracks[Sequence.melody.rawValue].isEmpty))
+        
+        //if !sequencer.isPlaying{
             sequencer.rewind()
-            sequencer.setTempo(100)
+            //sequencer.preroll()
             sequencer.play()
-        }else{
-            sequencer.stop()
-        }
+        //}else{
+            //sequencer.stop()
+        //}
     }
+    
+    /// 停止播放
+    func stopPlayMelody() -> Void {
+        sequencer.stop()
+    }// funcEnd
     
     func generateNewMelodicSequence(_ stepSize: Float = 1 / 8, minor: Bool = false, clear: Bool = true) {
         if clear { sequencer.tracks[Sequence.melody.rawValue].clear() }
@@ -210,13 +227,20 @@ class BasicSequencer: NSObject{
     func generateRecordSeq(clear: Bool = true){
         if clear { sequencer.tracks[Sequence.melody.rawValue].clear() }
         sequencer.setLength(sequenceLength)
+        var fbPosition = -0.1
         for noteEvent in noteEventSeq{
+            print(String(noteEvent.startBeat)+" set "+String(noteEvent.endbeat))
             let velocity: UInt8 = 95
             let channel:UInt8 = 1
             //速度给的是每小节4拍的速度，我们量化是用16分音符，所以这里要有个转换
             var beats = Double(noteEvent.endbeat - noteEvent.startBeat)/4.0
+            print("realbeate"+String(beats))
             let duration = AKDuration(beats: beats)
             beats = Double(noteEvent.startBeat)/4.0
+            if fbPosition<0{
+                fbPosition = beats
+            }
+            beats -= fbPosition
             let position = AKDuration(beats: beats)
             sequencer.tracks[Sequence.melody.rawValue].add(noteNumber:noteEvent.startNoteNumber,velocity:velocity,position:position, duration:duration, channel:channel)
             

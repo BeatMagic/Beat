@@ -27,6 +27,9 @@ class MusicTimer: NSObject {
         }
     }
     
+    /// 外部代理
+    weak static var delegate: TimerDelegate?
+    
     
     /// 初始化
     static func createOneTimer(_ actionClosures: @escaping (() -> Void)) -> Void {
@@ -34,22 +37,30 @@ class MusicTimer: NSObject {
         MusicTimer.presentTime = 0
         MusicTimer.timerState = .initState
         
-        var timer: DispatchSourceTimer? = DispatchSource.makeTimerSource()
+        let timer: DispatchSourceTimer? = DispatchSource.makeTimerSource()
         timer!.schedule(deadline: DispatchTime.now(),
                         repeating: 0.01,
                         leeway: DispatchTimeInterval.seconds(0))
         
         timer!.setEventHandler(handler: {
             if MusicTimer.presentTime >= MusicTimer.totalTime {
-                timer!.cancel()
-                timer = nil
-                MusicTimer.shared = nil
-                MusicTimer.actionClosures!()
-                MusicTimer.actionClosures = nil
+                
+                let queueGroup = DispatchGroup.init()
+                DispatchQueue.main.async(group: queueGroup, execute: {
+                    MusicTimer.delegate?.doThingsWhenEnd()
+                    
+                })
+                
+                queueGroup.notify(queue: DispatchQueue.main, execute: {
+                    MusicTimer.presentTime = 0
+                })
+                
+                
                 
             } else {
                 DispatchQueue.main.async {
                     MusicTimer.presentTime += 0.01
+                    MusicTimer.delegate?.doThingsWhenTiming()
                 }
             }
         })
@@ -113,4 +124,9 @@ class MusicTimer: NSObject {
         MusicTimer.presentTime = presentTime
         
     }// funcEnd
+}
+
+protocol TimerDelegate: class {
+    func doThingsWhenTiming()
+    func doThingsWhenEnd()
 }

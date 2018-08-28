@@ -10,15 +10,9 @@ import UIKit
 
 // MARK: - Init
 class MusicKeyBoard: UIView {
-    /// 最低音阶
-    var lowestWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.G {
-        didSet {
-            setUp()
-        }
-    }
     
     /// 最高音阶
-    var highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.D {
+    var highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.B {
         didSet {
             setUp()
         }
@@ -166,7 +160,7 @@ extension MusicKeyBoard {
             
             musicKeysArray.append(musicKey)
             pitchToKeyDict[midiNote] = musicKey
-            absoluteNum -= 1
+            absoluteNum -= 2
             index += 1
         }
         
