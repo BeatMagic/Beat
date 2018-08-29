@@ -148,8 +148,14 @@ extension ProgressButtonManager {
     /// 获取当前按钮
     private static func getPresentButtonIndex(_ presentTime: Double) -> Int {
         let presentTimeInt = Int.init(presentTime)
+        let tmpTimeInt = (presentTimeInt - presentTimeInt % 3) / 3
         
-        return (presentTimeInt - presentTimeInt % 3) / 3
+        if tmpTimeInt <= 8 {
+            return tmpTimeInt
+            
+        }else {
+            return 8
+        }
     }
     
     /// 生成9个Button的ViewModelArray

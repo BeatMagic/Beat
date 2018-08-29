@@ -10,15 +10,41 @@ import UIKit
 
 class DataStandard: NSObject {
     /// 八度
-    static let octave: UInt8 = 7
+    static let octave: UInt8 = 5
     
     /// 音高
-    static let root: UInt8 = octave * 12
+    static let root: UInt8 = octave * 12 + UInt8(EnumStandard.ScaleNotes.B.rawValue)
     
     /// 一秒多少拍子
     static let oneBeatWithTime: Double = 16 / 3
     
-    /// 
+    /// 生成音乐键的规则 前四小节
+    static let MusicKeysRulesA: [Int] = [
+        0, -2, -3, -5, -6, -9, -10, -12, -14, -15, -17, -18
+    ]
+    
+    /// 生成音乐键的规则 前四小节
+    static let MusicKeysRulesB: [Int] = [
+        0, -2, -3, -5, -7, -9, -10, -12, -14, -15, -17, -19
+    ]
+    
+    /// 音乐键标题
+    static let MusicKeysTitle: [String] = [
+        "2", "1", "7", "6", "5", "4", "3", "2", "1", "7", "6", "5",
+    ]
+    
+    /// 稳定音
+    static let MusicStabileKeysIndexArray: [ [Int] ] = [
+        [],
+        [1, 3, 5, 8, 10],
+        [0, 2, 7, 9],
+        [2, 4, 6, 9, 11],
+        [1, 3, 6, 8, 10],
+        [0, 3, 5, 7, 10],
+        [0, 2, 4, 7, 9, 11],
+        [1, 4, 6, 8, 11],
+        [0, 2, 4, 7, 9, 11],
+    ]
 }
 
 extension DataStandard {

@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import AudioKitUI
 import SVProgressHUD
+import AVFoundation
 
 class ViewController: UIViewController {
     // MARK: - 布局
@@ -64,6 +65,16 @@ class ViewController: UIViewController {
 
     
     let basicSequencer = BasicSequencer()
+    
+    let localMusicPlayer: AVAudioPlayer = {
+        let pathStr = Bundle.main.path(forResource: "9小节输入伴奏.mp3", ofType: nil)
+        let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
+        player.prepareToPlay()
+        player.numberOfLoops = -1
+        
+        return player
+    }()
+    
     
     /// 音乐播放状态
     var musicState: EnumStandard.MusicPlayStates = .caused {
@@ -221,6 +232,7 @@ extension ViewController {
         if state == .caused {
             
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.play.rawValue), for: .normal)
+            localMusicPlayer.pause()
             
             switch MusicTimer.timerState {
             case .initState:
@@ -245,22 +257,35 @@ extension ViewController {
                 self.keyBoardView.noteEventModelList = []
             }
             
+            self.basicSequencer.stopPlayMelody()
+            
         }else if state == .played  {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.cause.rawValue), for: .normal)
             
             
             if MusicTimer.shared == nil {
                 MusicTimer.createOneTimer {
-                    SVProgressHUD.showSuccess(withStatus: "已经成功录制")
-                    self.musicState = .played
-                    self.musicState = .caused
+//                    SVProgressHUD.showSuccess(withStatus: "已经成功录制")
+//                    self.musicState = .played
+//                    self.musicState = .caused
 
                 }
 
                 MusicTimer.startTiming()
             }
             
-            
+            if self.selectedSection == nil {
+                localMusicPlayer.play()
+                
+            }else {
+                localMusicPlayer.currentTime = TimeInterval.init(selectedSection! * 3)
+                localMusicPlayer.play()
+                
+                MusicTimer.setPresentTime(selectedSection! * 3)
+                self.playMusic(selectedSection!)
+                
+                self.selectedSection = nil
+            }
             
             switch MusicTimer.timerState {
             case .initState:
@@ -273,11 +298,8 @@ extension ViewController {
                 MusicTimer.startTiming()
             }
             
-            if let selectedSection = self.selectedSection {
-                
-                MusicTimer.setPresentTime(selectedSection * 3)
-                self.playMusic(selectedSection)
-            }
+
+            
         }
         
     }// funcEnd
@@ -315,6 +337,7 @@ extension ViewController {
 }
 
 extension ViewController: MusicKeyDelegate {
+    
     func startTranscribe() {
 
     }
@@ -334,7 +357,11 @@ extension ViewController: TimerDelegate {
     func doThingsWhenTiming() {
         // 下一小节需要记录的时间节点
         if MusicTimer.getpresentTime() >= nextNeedRecordTime {
-            nextNeedRecordTime += 3
+            
+            if nextNeedRecordTime != 27 {
+                
+                nextNeedRecordTime += 3
+            }
             
             let presentSectionIndex = ProgressButtonManager.getPresentButtonIndex()
             let queueGroup = DispatchGroup.init()
@@ -346,10 +373,17 @@ extension ViewController: TimerDelegate {
             })
             
             queueGroup.notify(queue: basicQueue) {
-                self.keyBoardView.noteEventModelList = []
+                
+                VariousSetFunc.setMusicStabileKeysUI(musicKeysArray: self.keyBoardView.musicKeysArray, rulesArray: DataStandard.MusicStabileKeysIndexArray[presentSectionIndex])
+                
                 if self.keyBoardView.sectionArray[presentSectionIndex - 1].isHaveNoteEvent == true {
+                    
                     DispatchQueue.main.async {
                         ProgressButtonManager.hasNotesArray[presentSectionIndex - 1] = true
+                        if self.nextNeedRecordTime == 18 {
+                            self.keyBoardView.keyRules = DataStandard.MusicKeysRulesB
+                        }
+                        
                     }
                 }
             }
@@ -359,13 +393,19 @@ extension ViewController: TimerDelegate {
     }
     
     func doThingsWhenEnd() {
+        self.keyBoardView.keyRules = DataStandard.MusicKeysRulesA
+        VariousSetFunc.setMusicStabileKeysUI(musicKeysArray: self.keyBoardView.musicKeysArray, rulesArray: DataStandard.MusicStabileKeysIndexArray[0])
+        
         nextNeedRecordTime = 3
         keyBoardView.noteEventModelList = []
         ProgressButtonManager.deleteAllPresentButtonProgress()
         if self.musicState == .played {
             self.playMusic(0)
         }
+        
+        localMusicPlayer.currentTime = 0
     }
     
 }
+
 

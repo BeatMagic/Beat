@@ -6,6 +6,7 @@
 //  Copyright © 2018年 X Young. All rights reserved.
 //
 
+
 import UIKit
 
 // MARK: - Init
@@ -24,6 +25,16 @@ class MusicKeyBoard: UIView {
             setUp()
         }
     }
+    
+    /// 生成规则
+    var keyRules = DataStandard.MusicKeysRulesA {
+        didSet {
+            setUp()
+        }
+    }
+    
+//    var musicStabileKeysIndexArray: [Int] = []
+    
     /// 音乐键数组
     var musicKeysArray = [BaseMusicKey]()
     /// 音高对应字典
@@ -89,19 +100,19 @@ extension MusicKeyBoard {
     
     /// 封装所有键盘设定
     func setUp() -> Void {
-        isMultipleTouchEnabled = true
-        addMusicKeysWithViewModel(musicKeysViewModel)
-        addMusicKey()
+        
+        self.addMusicKeysWithViewModel(self.musicKeysViewModel, rules: self.keyRules)
+        self.addMusicKey()
     }
     
     override func layoutSubviews() {
-        addMusicKeysWithViewModel(musicKeysViewModel)
-        addMusicKey()
+            self.addMusicKeysWithViewModel(self.musicKeysViewModel, rules: self.keyRules)
+            self.addMusicKey()
     }
     
     override func draw(_ rect: CGRect) {
-        addMusicKeysWithViewModel(musicKeysViewModel)
-        addMusicKey()
+            self.addMusicKeysWithViewModel(self.musicKeysViewModel, rules: self.keyRules)
+            self.addMusicKey()
     }
     
     /// 生成所有键的ViewModel -> [ CGRect ]
@@ -131,36 +142,47 @@ extension MusicKeyBoard {
     }// funcEnd
 
     /// 根据所有键的ViewModel生成键 [[CGRect]] -> Void
-    private func addMusicKeysWithViewModel(_ viewModel: [CGRect]) -> Void {
+    private func addMusicKeysWithViewModel(_ viewModel: [CGRect], rules: [Int]) -> Void {
         // 先清空
-        for key in musicKeysArray {
+        for key in self.musicKeysArray {
             key.removeFromSuperview()
         }
+        
         musicKeysArray = [BaseMusicKey]()
 
         var index = 0
-        var absoluteNum = highWhiteNote.rawValue
+        let absoluteNum = highWhiteNote.rawValue
         for item in viewModel {
             var midiNote: UInt8
             
-            if absoluteNum < 0 {
-                midiNote = DataStandard.root - UInt8(-absoluteNum)
-                
-            }else {
-                midiNote = DataStandard.root + UInt8(absoluteNum)
-            }
+//            if absoluteNum < 0 {
+//                midiNote = DataStandard.root - UInt8(-absoluteNum)
+//
+//            }else {
+//                midiNote = DataStandard.root + UInt8(absoluteNum)
+//            }
             
+            midiNote = DataStandard.root - UInt8(-rules[index] + absoluteNum)
             let musicKey: BaseMusicKey = {
-                if index == mainMusicKeyIndex {
+                
+                if index == self.mainMusicKeyIndex {
                     return BaseMusicKey.init(frame: item, midiNoteNumber: midiNote, isMainKey: true)
+                    
                 }else {
                     return BaseMusicKey.init(frame: item, midiNoteNumber: midiNote, isMainKey: false)
+                    
                 }
+                
             }()
             
-            musicKeysArray.append(musicKey)
-            pitchToKeyDict[midiNote] = musicKey
-            absoluteNum -= 2
+
+            
+            musicKey.title = DataStandard.MusicKeysTitle[index]
+            
+            self.musicKeysArray.append(musicKey)
+            self.pitchToKeyDict[midiNote] = musicKey
+
+            
             index += 1
         }
         

@@ -53,6 +53,9 @@ class EnumStandard: NSObject {
         case finished = "finished"
         /// 未完成
         case unfinished = "unfinished"
+        
+        /// 狗音
+        case mainMusicKey = "main_note"
     }
     
 }

@@ -169,6 +169,7 @@ extension EditViewController {
 }
 
 extension EditViewController: MusicKeyDelegate {
+    
     func startTranscribe() {
         
     }
