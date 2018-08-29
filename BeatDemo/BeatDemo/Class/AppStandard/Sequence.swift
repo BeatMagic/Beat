@@ -6,5 +6,5 @@
 //  Copyright © 2018 AudioKit. All rights reserved.
 //
 enum Sequence: Int {
-    case melody = 0, bassDrum, snareDrum, snareGhost
+    case paino1 = 0, paino2, koto, flute, pad, bass
 }

@@ -10,60 +10,44 @@ import UIKit
 import AudioKit
 
 class BasicSequencer: NSObject{
-    var fmOscillator = AKFMOscillatorBank()
-    var melodicSound: AKMIDINode!
-    var verb: AKReverb2!
-    
-    var bassDrum = AKSynthKick()
-    var snareDrum = AKSynthSnare()
-    var snareGhost = AKSynthSnare(duration: 0.06, resonance: 0.3)
-    var snareMixer = AKMixer()
-    var snareVerb: AKReverb!
     
     var sequencer = AKSequencer()
-    var mixer = AKMixer()
-    var pumper: AKCompressor!
     
+    //用于规则生成存放midi
+    var bgmSequencer = AKSequencer()
+    
+    //bgmSampler
+    var paino1Sampler = AKMIDISampler()
+    
+    var fluteSampler = AKMIDISampler()
+    
+    var midiSampler = AKMIDISampler()
+    var mixer = AKMixer()
     var currentTempo = 110.0 {
         didSet {
             sequencer.setTempo(currentTempo)
         }
     }
     
-    let scale1: [Int] = [0, 2, 4, 7, 9]
-    let scale2: [Int] = [0, 3, 5, 7, 10]
-    
     var noteEventSeq : [NoteEvent]!
     let sequenceLength = AKDuration(beats: 36.0)
     
+    let bgmSeqLength = AKDuration(beats:8.0)
+    
     override init() {
-        fmOscillator.modulatingMultiplier = 3
-        fmOscillator.modulationIndex = 0.3
-        
-        melodicSound = AKMIDINode(node: fmOscillator)
-        verb = AKReverb2(melodicSound)
-//        verb.dryWetMix = 0.5
-//        verb.decayTimeAt0Hz = 7
-//        verb.decayTimeAtNyquist = 11
-//        verb.randomizeReflections = 600
-//        verb.gain = 1
-        
-        [snareDrum, snareGhost] >>> snareMixer
-        
-        snareVerb = AKReverb(snareMixer)
-        
-        pumper = AKCompressor(mixer)
-        
-        pumper.headRoom = 0.10
-        pumper.threshold = -15
-        pumper.masterGain = 10
-        pumper.attackTime = 0.01
-        pumper.releaseTime = 0.3
-        
-        [verb, bassDrum, snareDrum, snareGhost, snareVerb] >>> mixer
         
         
-        AudioKit.output = pumper
+        try! midiSampler.loadMelodicSoundFont("GeneralUser", preset: 5)
+        
+        //bgm 音色
+        try! paino1Sampler.loadMelodicSoundFont("GeneralUser", preset: 3)
+        
+        try! fluteSampler.loadMelodicSoundFont("GeneralUser", preset: 8)
+        
+        
+        [midiSampler,paino1Sampler,fluteSampler] >>> mixer
+        
+        AudioKit.output = mixer
         do {
             try AudioKit.start()
         } catch {
@@ -74,8 +58,8 @@ class BasicSequencer: NSObject{
     }
     
     
-    func GetOscillatorBank() -> AKFMOscillatorBank {
-        return self.fmOscillator
+    func GetSampler() -> AKAppleSampler{
+        return self.midiSampler
     }
     
     func SetNoteEventSeq(noteEventSeq:[NoteEvent]){
@@ -85,34 +69,49 @@ class BasicSequencer: NSObject{
         generateRecordSeq()
     }
     
-    func setupTracks() {
-        _ = sequencer.newTrack()
-        sequencer.setLength(sequenceLength)
-        sequencer.tracks[Sequence.melody.rawValue].setMIDIOutput(melodicSound.midiIn)
-        generateNewMelodicSequence(minor: false)
-        
-        _ = sequencer.newTrack()
-        sequencer.tracks[Sequence.bassDrum.rawValue].setMIDIOutput(bassDrum.midiIn)
-        generateBassDrumSequence()
-        
-        _ = sequencer.newTrack()
-        sequencer.tracks[Sequence.snareDrum.rawValue].setMIDIOutput(snareDrum.midiIn)
-        generateSnareDrumSequence()
-        
-        _ = sequencer.newTrack()
-        sequencer.tracks[Sequence.snareGhost.rawValue].setMIDIOutput(snareGhost.midiIn)
-        generateSnareDrumGhostSequence()
-        
-        sequencer.enableLooping()
-        sequencer.setTempo(100)
-        sequencer.play()
-    }
     
     func setupMelodyTrack(){
         _ = sequencer.newTrack()
         sequencer.setLength(sequenceLength)
-        sequencer.tracks[Sequence.melody.rawValue].setMIDIOutput(melodicSound.midiIn)
-        sequencer.setTempo(100)
+        sequencer.tracks[0].setMIDIOutput(midiSampler.midiIn)
+        sequencer.setTempo(currentTempo)
+        
+        //test
+        //setupBgmTracks()
+    }
+    
+    func setupBgmTracks(){
+        
+        _ = bgmSequencer.newTrack()
+        bgmSequencer.setLength(bgmSeqLength)
+        bgmSequencer.tracks[Sequence.paino1.rawValue].setMIDIOutput(paino1Sampler.midiIn)
+        bgmSequencer.setTempo(currentTempo)
+        generateNewMelodicSequence()
+        
+        _ = bgmSequencer.newTrack()
+        bgmSequencer.setLength(bgmSeqLength)
+        bgmSequencer.tracks[Sequence.paino2.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.setTempo(currentTempo)
+        
+        _ = bgmSequencer.newTrack()
+        bgmSequencer.setLength(bgmSeqLength)
+        bgmSequencer.tracks[Sequence.koto.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.setTempo(currentTempo)
+        
+        _ = bgmSequencer.newTrack()
+        bgmSequencer.setLength(bgmSeqLength)
+        bgmSequencer.tracks[Sequence.flute.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.setTempo(currentTempo)
+        
+        _ = bgmSequencer.newTrack()
+        bgmSequencer.setLength(bgmSeqLength)
+        bgmSequencer.tracks[Sequence.pad.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.setTempo(currentTempo)
+        
+        _ = bgmSequencer.newTrack()
+        bgmSequencer.setLength(bgmSeqLength)
+        bgmSequencer.tracks[Sequence.bass.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.setTempo(currentTempo)
     }
     
     func playMelody(){
@@ -122,12 +121,15 @@ class BasicSequencer: NSObject{
         //print(String(sequencer.tracks[Sequence.melody.rawValue].isEmpty))
         
         //if !sequencer.isPlaying{
-            sequencer.rewind()
-            //sequencer.preroll()
-            sequencer.play()
+        sequencer.rewind()
+        //sequencer.preroll()
+        sequencer.play()
         //}else{
-            //sequencer.stop()
+        //sequencer.stop()
         //}
+        //test
+        //bgmSequencer.enableLooping()
+        //bgmSequencer.play()
     }
     
     /// 停止播放
@@ -136,14 +138,17 @@ class BasicSequencer: NSObject{
     }// funcEnd
     
     func generateNewMelodicSequence(_ stepSize: Float = 1 / 8, minor: Bool = false, clear: Bool = true) {
-        if clear { sequencer.tracks[Sequence.melody.rawValue].clear() }
-        sequencer.setLength(sequenceLength)
-        let numberOfSteps = Int(Float(sequenceLength.beats) / stepSize)
-        //print("steps in sequence: \(numberOfSteps)")
+        let scale1: [Int] = [0, 2, 4, 7, 9]
+        let scale2: [Int] = [0, 3, 5, 7, 10]
+        
+        if clear { bgmSequencer.tracks[Sequence.paino1.rawValue].clear() }
+        bgmSequencer.setLength(bgmSeqLength)
+        let numberOfSteps = Int(Float(bgmSeqLength.beats) / stepSize)
+        print("steps in sequence: \(numberOfSteps)")
         for i in 0 ..< numberOfSteps {
             if arc4random_uniform(17) > 12 {
                 let step = Double(i) * stepSize
-                //print("step is \(step)")
+                print("step is \(step)")
                 let scale = (minor ? scale2 : scale1)
                 let scaleOffset = arc4random_uniform(UInt32(scale.count) - 1)
                 var octaveOffset = 0
@@ -157,84 +162,35 @@ class BasicSequencer: NSObject{
                 }
                 //print("octave offset is \(octaveOffset)")
                 let noteToAdd = 60 + scale[Int(scaleOffset)] + octaveOffset
-                sequencer.tracks[Sequence.melody.rawValue].add(noteNumber: MIDINoteNumber(noteToAdd),
-                                                               velocity: 100,
-                                                               position: AKDuration(beats: step),
-                                                               duration: AKDuration(beats: 1))
+                bgmSequencer.tracks[Sequence.paino1.rawValue].add(noteNumber: MIDINoteNumber(noteToAdd),
+                                                                  velocity: 100,
+                                                                  position: AKDuration(beats: step),
+                                                                  duration: AKDuration(beats: 1))
             }
         }
-        sequencer.setLength(sequenceLength)
-    }
-    
-    func generateBassDrumSequence(_ stepSize: Float = 1, clear: Bool = true) {
-        if clear { sequencer.tracks[Sequence.bassDrum.rawValue].clear() }
-        let numberOfSteps = Int(Float(sequenceLength.beats) / stepSize)
-        for i in 0 ..< numberOfSteps {
-            let step = Double(i) * stepSize
-            
-            sequencer.tracks[Sequence.bassDrum.rawValue].add(noteNumber: 60,
-                                                             velocity: 100,
-                                                             position: AKDuration(beats: step),
-                                                             duration: AKDuration(beats: 1))
-        }
-    }
-    
-    func generateSnareDrumSequence(_ stepSize: Float = 1, clear: Bool = true) {
-        if clear { sequencer.tracks[Sequence.snareDrum.rawValue].clear() }
-        let numberOfSteps = Int(Float(sequenceLength.beats) / stepSize)
-        
-        for i in stride(from: 1, to: numberOfSteps, by: 2) {
-            let step = (Double(i) * stepSize)
-            sequencer.tracks[Sequence.snareDrum.rawValue].add(noteNumber: 60,
-                                                              velocity: 80,
-                                                              position: AKDuration(beats: step),
-                                                              duration: AKDuration(beats: 1))
-        }
-    }
-    
-    func generateSnareDrumGhostSequence(_ stepSize: Float = 1 / 8, clear: Bool = true) {
-        if clear { sequencer.tracks[Sequence.snareGhost.rawValue].clear() }
-        let numberOfSteps = Int(Float(sequenceLength.beats) / stepSize)
-        //print("steps in sequnce: \(numberOfSteps)")
-        for i in 0 ..< numberOfSteps {
-            if arc4random_uniform(17) > 14 {
-                let step = Double(i) * stepSize
-                sequencer.tracks[Sequence.snareGhost.rawValue].add(noteNumber: 60,
-                                                                   velocity: MIDIVelocity(arc4random_uniform(65) + 1),
-                                                                   position: AKDuration(beats: step),
-                                                                   duration: AKDuration(beats: 0.1))
-            }
-        }
-        sequencer.setLength(sequenceLength)
     }
     
     func randomBool() -> Bool {
         return arc4random_uniform(2) == 0 ? true : false
     }
     
-    func generateSequence() {
-        //        generateNewMelodicSequence(minor: randomBool())
-        //        generateBassDrumSequence()
-        //        generateSnareDrumSequence()
-        //        generateSnareDrumGhostSequence()
-        generateRecordSeq()
-    }
     
     func clear(_ typeOfSequence: Sequence) {
         sequencer.tracks[typeOfSequence.rawValue].clear()
     }
     
     func generateRecordSeq(clear: Bool = true){
-        if clear { sequencer.tracks[Sequence.melody.rawValue].clear() }
+        if clear { sequencer.tracks[0].clear() }
         sequencer.setLength(sequenceLength)
+        print("generate!!!!")
         var fbPosition = -0.1
         for noteEvent in noteEventSeq{
-            print(String(noteEvent.startBeat)+" set "+String(noteEvent.endbeat))
+            //print(String(noteEvent.startBeat)+" set "+String(noteEvent.endbeat))
             let velocity: UInt8 = 95
             let channel:UInt8 = 1
             //速度给的是每小节4拍的速度，我们量化是用16分音符，所以这里要有个转换
             var beats = Double(noteEvent.endbeat - noteEvent.startBeat)/4.0
-            print("realbeate"+String(beats))
+            //print("realbeate"+String(beats))
             let duration = AKDuration(beats: beats)
             beats = Double(noteEvent.startBeat)/4.0
             if fbPosition<0{
@@ -242,7 +198,7 @@ class BasicSequencer: NSObject{
             }
             beats -= fbPosition
             let position = AKDuration(beats: beats)
-            sequencer.tracks[Sequence.melody.rawValue].add(noteNumber:noteEvent.startNoteNumber,velocity:velocity,position:position, duration:duration, channel:channel)
+            sequencer.tracks[0].add(noteNumber:noteEvent.startNoteNumber,velocity:velocity,position:position, duration:duration, channel:channel)
             
         }
         sequencer.setLength(sequenceLength)

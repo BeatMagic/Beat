@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1F620CBC93B1561DD92E56F0 /* Pods_BeatDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690775DCC4F41B88F16A2F75 /* Pods_BeatDemo.framework */; };
+		7C0FDF5D21369994000200E2 /* BasicSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5C21369994000200E2 /* BasicSequencer.swift */; };
+		7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */; };
 		7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C15E11C212D4CC800077573 /* BasicKnowledge.swift */; };
 		7C15E121212D4CC800077573 /* ExtensionForSomeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C15E11D212D4CC800077573 /* ExtensionForSomeClass.swift */; };
 		7C15E122212D4CC800077573 /* ToolClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C15E11E212D4CC800077573 /* ToolClass.swift */; };
@@ -29,11 +31,11 @@
 		7C842671212FDDBF0070FD69 /* MusicTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842670212FDDBF0070FD69 /* MusicTimer.swift */; };
 		7C842673212FFAF40070FD69 /* TmpNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842672212FFAF40070FD69 /* TmpNote.swift */; };
 		7C84267521300B180070FD69 /* BasicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C84267421300B180070FD69 /* BasicPlayer.swift */; };
+		7C847DB12136CDB500A6EB1E /* Arrangement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C847DB02136CDB500A6EB1E /* Arrangement.swift */; };
 		7C888E73212D69000094DC85 /* BaseMusicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E72212D69000094DC85 /* BaseMusicKey.swift */; };
 		7C888E75212D69730094DC85 /* EnumStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E74212D69730094DC85 /* EnumStandard.swift */; };
 		7C888E77212D6D3B0094DC85 /* MusicKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */; };
 		7C888E7E212E53D70094DC85 /* DataStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E7D212E53D70094DC85 /* DataStandard.swift */; };
-		7CA64457213569030062CA58 /* BasicSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA64456213569020062CA58 /* BasicSequencer.swift */; };
 		7CA64459213593A00062CA58 /* 9小节输入伴奏.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CA64458213593A00062CA58 /* 9小节输入伴奏.mp3 */; };
 		7CA6445B21366BD00062CA58 /* VariousSetFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +44,8 @@
 		198DE31940DDDEBD09895E7B /* Pods-BeatDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeatDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeatDemo/Pods-BeatDemo.release.xcconfig"; sourceTree = "<group>"; };
 		3D780262589EA7F2CFC0DA1D /* Pods-BeatDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeatDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeatDemo/Pods-BeatDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		690775DCC4F41B88F16A2F75 /* Pods_BeatDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeatDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C0FDF5C21369994000200E2 /* BasicSequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSequencer.swift; sourceTree = "<group>"; };
+		7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = GeneralUser.sf2; sourceTree = "<group>"; };
 		7C15E11C212D4CC800077573 /* BasicKnowledge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicKnowledge.swift; sourceTree = "<group>"; };
 		7C15E11D212D4CC800077573 /* ExtensionForSomeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionForSomeClass.swift; sourceTree = "<group>"; };
 		7C15E11E212D4CC800077573 /* ToolClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolClass.swift; sourceTree = "<group>"; };
@@ -65,12 +69,12 @@
 		7C842670212FDDBF0070FD69 /* MusicTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTimer.swift; sourceTree = "<group>"; };
 		7C842672212FFAF40070FD69 /* TmpNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmpNote.swift; sourceTree = "<group>"; };
 		7C84267421300B180070FD69 /* BasicPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicPlayer.swift; sourceTree = "<group>"; };
+		7C847DB02136CDB500A6EB1E /* Arrangement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arrangement.swift; sourceTree = "<group>"; };
 		7C888E72212D69000094DC85 /* BaseMusicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMusicKey.swift; sourceTree = "<group>"; };
 		7C888E74212D69730094DC85 /* EnumStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumStandard.swift; sourceTree = "<group>"; };
 		7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKeyBoard.swift; sourceTree = "<group>"; };
 		7C888E7A212E47DC0094DC85 /* BeatDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BeatDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		7C888E7D212E53D70094DC85 /* DataStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStandard.swift; sourceTree = "<group>"; };
-		7CA64456213569020062CA58 /* BasicSequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicSequencer.swift; sourceTree = "<group>"; };
 		7CA64458213593A00062CA58 /* 9小节输入伴奏.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "9小节输入伴奏.mp3"; sourceTree = "<group>"; };
 		7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariousSetFunc.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,7 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				7C84267421300B180070FD69 /* BasicPlayer.swift */,
-				7CA64456213569020062CA58 /* BasicSequencer.swift */,
+				7C0FDF5C21369994000200E2 /* BasicSequencer.swift */,
 				7C888E72212D69000094DC85 /* BaseMusicKey.swift */,
 				7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */,
 				7C2E9826213145F100BBCD75 /* ProgressButtonManager.swift */,
@@ -158,6 +162,7 @@
 				7C842668212FB1230070FD69 /* NoteEvent.swift */,
 				7C84266A212FB1230070FD69 /* PassNote.swift */,
 				7C842672212FFAF40070FD69 /* TmpNote.swift */,
+				7C847DB02136CDB500A6EB1E /* Arrangement.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 				7C1D736F212D470C00144822 /* LaunchScreen.storyboard */,
 				7C1D7372212D470C00144822 /* Info.plist */,
 				7CA64458213593A00062CA58 /* 9小节输入伴奏.mp3 */,
+				7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */,
 				7C1D736A212D470B00144822 /* BeatDemo.xcdatamodeld */,
 				7C888E7A212E47DC0094DC85 /* BeatDemo-Bridging-Header.h */,
 			);
@@ -312,6 +318,7 @@
 				7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */,
 				7C1D736E212D470C00144822 /* Assets.xcassets in Resources */,
 				7CA64459213593A00062CA58 /* 9小节输入伴奏.mp3 in Resources */,
+				7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */,
 				7C1D7369212D470B00144822 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,7 +399,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C842673212FFAF40070FD69 /* TmpNote.swift in Sources */,
-				7CA64457213569030062CA58 /* BasicSequencer.swift in Sources */,
 				7C15E125212D65C500077573 /* FrameStandard.swift in Sources */,
 				7C2E982921316B2F00BBCD75 /* Sequence.swift in Sources */,
 				7C15E122212D4CC800077573 /* ToolClass.swift in Sources */,
@@ -405,6 +411,7 @@
 				7C1D7366212D470B00144822 /* ViewController.swift in Sources */,
 				7C2E982521312E9900BBCD75 /* SegmentedProgressBar.swift in Sources */,
 				7C2E9827213145F100BBCD75 /* ProgressButtonManager.swift in Sources */,
+				7C847DB12136CDB500A6EB1E /* Arrangement.swift in Sources */,
 				7C1E4C442133D590003BE6EC /* SimpleAlertController.swift in Sources */,
 				7C84267521300B180070FD69 /* BasicPlayer.swift in Sources */,
 				7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */,
@@ -412,6 +419,7 @@
 				7C15E121212D4CC800077573 /* ExtensionForSomeClass.swift in Sources */,
 				7C842665212F979C0070FD69 /* EditViewController.swift in Sources */,
 				7C842671212FDDBF0070FD69 /* MusicTimer.swift in Sources */,
+				7C0FDF5D21369994000200E2 /* BasicSequencer.swift in Sources */,
 				7C1D736C212D470B00144822 /* BeatDemo.xcdatamodeld in Sources */,
 				7C888E75212D69730094DC85 /* EnumStandard.swift in Sources */,
 				7C1D7364212D470B00144822 /* AppDelegate.swift in Sources */,

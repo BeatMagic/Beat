@@ -337,9 +337,6 @@ public class ToolClass: NSObject {
 /// 延时执行类
 public class DelayTask: NSObject {
     
-    /// 单一任务
-    private static var workItemClosure: DispatchWorkItem = DispatchWorkItem.init {}
-    
     /// 任务字典
     static var workItemDict: Dictionary<String, DispatchWorkItem> = Dictionary<String, DispatchWorkItem>.init()
     
@@ -348,6 +345,7 @@ public class DelayTask: NSObject {
     
     /// 创建一个延时执行任务并加入任务字典
     static func createTaskWith(name: String, workItem: @escaping ()->(), delayTime: TimeInterval) -> Void {
+        
         let workItem = DispatchWorkItem.init(block: {
             workItem()
         })
@@ -355,19 +353,15 @@ public class DelayTask: NSObject {
             workItem.perform()
         }
         
-//        self.workItemDict[name] = workItem
+        workItemArray.append(workItem)
         
-//        return workItem
     }// funcEnd
     
-    /// 根据key取消相应字典
-    static func cancelTaskFromDict(name: String) -> Bool {
-        if let workItem = workItemDict[name] {
+    static func cancelAllWorkItems() -> Void {
+        for workItem in workItemArray {
             workItem.cancel()
-            return true
         }
         
-        return false
     }// funcEnd
     
 }

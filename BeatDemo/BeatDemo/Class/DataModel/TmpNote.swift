@@ -16,7 +16,7 @@ class TmpNote: NSObject {
     var unPressedTime: Double! = 0
     
     /// 音调(主键)
-    let midiNoteNumber: UInt8!
+    var midiNoteNumber: UInt8!
     
     init(_ midiNoteNumber: UInt8, pressedTime: Double) {
         self.midiNoteNumber = midiNoteNumber

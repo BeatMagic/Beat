@@ -134,10 +134,15 @@ extension ProgressButtonManager {
             let isFinished = ProgressButtonManager.hasNotesArray[index]
             
             if isFinished == true {
-                finishedImage.image = UIImage.init(named: EnumStandard.ImageName.finished.rawValue)
+                DispatchQueue.main.async {
+                    finishedImage.image = UIImage.init(named: EnumStandard.ImageName.finished.rawValue)
+                }
                 
             }else {
-                finishedImage.image = UIImage.init(named: EnumStandard.ImageName.unfinished.rawValue)
+                DispatchQueue.main.async {
+                    finishedImage.image = UIImage.init(named: EnumStandard.ImageName.unfinished.rawValue)
+                }
+                
             }
             
             

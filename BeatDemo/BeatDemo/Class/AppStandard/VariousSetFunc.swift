@@ -9,11 +9,21 @@
 import UIKit
 
 class VariousSetFunc: NSObject {
-    static func setMusicStabileKeysUI(musicKeysArray: [BaseMusicKey], rulesArray: [Int]) -> Void {
+    
+    static let highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.B
+    
+    static func setMusicKeysEverySection(_ musicKeysArray: [BaseMusicKey],
+                                         stableKeysRulesArray: [Int],
+                                         musicKeyNotes: [Int]) -> Void {
         
+        let absoluteNum = highWhiteNote.rawValue
         var index = 0
+        
         for musicKey in musicKeysArray {
-            if rulesArray.contains(index) {
+            
+            musicKey.midiNoteNumber = DataStandard.root - UInt8(-musicKeyNotes[index] + absoluteNum)
+            
+            if stableKeysRulesArray.contains(index) {
                 
                 DispatchQueue.main.async {
                     musicKey.backgroundColor = UIColor.flatGreen
@@ -25,6 +35,7 @@ class VariousSetFunc: NSObject {
                     musicKey.backgroundColor = UIColor.white
                 }
             }
+            
             
             index += 1
         }

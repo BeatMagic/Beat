@@ -13,25 +13,21 @@ import UIKit
 class MusicKeyBoard: UIView {
     
     /// 最高音阶
-    var highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.B {
-        didSet {
-            setUp()
-        }
-    }
+//    var highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.B {
+//        didSet {
+//            setUp()
+//        }
+//    }
     
     /// 主音位置
-    var mainMusicKeyIndex = 8{
-        didSet {
-            setUp()
-        }
-    }
+    var mainMusicKeyIndex = 8
     
     /// 生成规则
-    var keyRules = DataStandard.MusicKeysRulesA {
-        didSet {
-            setUp()
-        }
-    }
+//    var keyRules = DataStandard.MusicKeysRulesA {
+//        didSet {
+//            setUp()
+//        }
+//    }
     
 //    var musicStabileKeysIndexArray: [Int] = []
     
@@ -69,27 +65,40 @@ class MusicKeyBoard: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let queueGroup = DispatchGroup.init()
-        DispatchQueue.main.async(group: queueGroup, execute: {
-            self.musicKeysViewModel = self.initMusicKeyFrame(ownHeight: frame.height)
-        })
+        self.musicKeysViewModel = {
+            if ToolClass.getIPhoneType() == "iPhone X" {
+                return self.initMusicKeyFrame(ownHeight: frame.height + 88)
+                
+            }else {
+                return self.initMusicKeyFrame(ownHeight: frame.height)
+                
+            }
+            
+        }()
         
-        queueGroup.notify(queue: DispatchQueue.main) {
-            self.setUp()
+        
+        DispatchQueue.main.async {
+            self.initKeyBoard()
         }
+        
         
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        let queueGroup = DispatchGroup.init()
-        DispatchQueue.main.async(group: queueGroup, execute: {
-            self.musicKeysViewModel = self.initMusicKeyFrame(ownHeight: self.getHeight())
-        })
+        self.musicKeysViewModel = {
+            if ToolClass.getIPhoneType() == "iPhone X" {
+                return self.initMusicKeyFrame(ownHeight: self.getHeight() + 88)
+                
+            }else {
+                return self.initMusicKeyFrame(ownHeight: self.getHeight())
+                
+            }
+        }()
         
-        queueGroup.notify(queue: DispatchQueue.main) {
-            self.setUp()
+        DispatchQueue.main.async {
+            self.initKeyBoard()
         }
     }
     
@@ -98,22 +107,22 @@ class MusicKeyBoard: UIView {
 // MARK: - SetUp
 extension MusicKeyBoard {
     
-    /// 封装所有键盘设定
-    func setUp() -> Void {
-        
-        self.addMusicKeysWithViewModel(self.musicKeysViewModel, rules: self.keyRules)
+    ///  初始化一个键盘
+    func initKeyBoard() -> Void {
+        self.addMusicKeysWithViewModel(self.musicKeysViewModel)
         self.addMusicKey()
+        
     }
     
-    override func layoutSubviews() {
-            self.addMusicKeysWithViewModel(self.musicKeysViewModel, rules: self.keyRules)
-            self.addMusicKey()
-    }
-    
-    override func draw(_ rect: CGRect) {
-            self.addMusicKeysWithViewModel(self.musicKeysViewModel, rules: self.keyRules)
-            self.addMusicKey()
-    }
+//    override func layoutSubviews() {
+//            self.addMusicKeysWithViewModel(self.musicKeysViewModel)
+//            self.addMusicKey()
+//    }
+//
+//    override func draw(_ rect: CGRect) {
+//            self.addMusicKeysWithViewModel(self.musicKeysViewModel)
+//            self.addMusicKey()
+//    }
     
     /// 生成所有键的ViewModel -> [ CGRect ]
     private func initMusicKeyFrame(ownHeight: CGFloat) -> [CGRect] {
@@ -142,7 +151,7 @@ extension MusicKeyBoard {
     }// funcEnd
 
     /// 根据所有键的ViewModel生成键 [[CGRect]] -> Void
-    private func addMusicKeysWithViewModel(_ viewModel: [CGRect], rules: [Int]) -> Void {
+    private func addMusicKeysWithViewModel(_ viewModel: [CGRect] ) -> Void {
         // 先清空
         for key in self.musicKeysArray {
             key.removeFromSuperview()
@@ -151,25 +160,16 @@ extension MusicKeyBoard {
         musicKeysArray = [BaseMusicKey]()
 
         var index = 0
-        let absoluteNum = highWhiteNote.rawValue
+        
         for item in viewModel {
-            var midiNote: UInt8
             
-//            if absoluteNum < 0 {
-//                midiNote = DataStandard.root - UInt8(-absoluteNum)
-//
-//            }else {
-//                midiNote = DataStandard.root + UInt8(absoluteNum)
-//            }
-            
-            midiNote = DataStandard.root - UInt8(-rules[index] + absoluteNum)
             let musicKey: BaseMusicKey = {
                 
                 if index == self.mainMusicKeyIndex {
-                    return BaseMusicKey.init(frame: item, midiNoteNumber: midiNote, isMainKey: true)
+                    return BaseMusicKey.init(frame: item, midiNoteNumber: 1, isMainKey: true)
                     
                 }else {
-                    return BaseMusicKey.init(frame: item, midiNoteNumber: midiNote, isMainKey: false)
+                    return BaseMusicKey.init(frame: item, midiNoteNumber: 1, isMainKey: false)
                     
                 }
                 
@@ -178,22 +178,26 @@ extension MusicKeyBoard {
 
             
             musicKey.title = DataStandard.MusicKeysTitle[index]
-            
+            self.pitchToKeyDict[DataStandard.root - UInt8(-DataStandard.MusicKeysRulesA[index] + VariousSetFunc.highWhiteNote.rawValue)] = musicKey
             self.musicKeysArray.append(musicKey)
-            self.pitchToKeyDict[midiNote] = musicKey
-
             
             index += 1
         }
+        
+        VariousSetFunc.setMusicKeysEverySection(self.musicKeysArray,
+                                                stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
+                                                musicKeyNotes: DataStandard.MusicKeysRulesA)
         
     }// funcEnd
     
     /// 添加键 -> Void
     private func addMusicKey() -> Void {
         for key in musicKeysArray {
-            key.removeFromSuperview()
+//            key.removeFromSuperview()
             addSubview(key)
         }
+        
+
         
     }// funcEnd
     
@@ -216,7 +220,15 @@ extension MusicKeyBoard {
     }
     
     private func getKeyFromMidiNote(midiNoteNumber: UInt8) -> BaseMusicKey? {
-        return pitchToKeyDict[midiNoteNumber]
+        if pitchToKeyDict.keys.contains(midiNoteNumber) {
+            return pitchToKeyDict[midiNoteNumber]
+            
+        }else {
+            let key: UInt8  = Array(pitchToKeyDict.keys).last!
+            return pitchToKeyDict[key]
+            
+        }
+
     }
     
     
@@ -288,7 +300,9 @@ extension MusicKeyBoard {
         if self.pressedTmpNote.count != 0 {
             for tmpNote in self.pressedTmpNote {
                 let noteEvent = NoteEvent.getNoteEventFromTmpNote(tmpNote)
-                self.noteEventModelList.append(noteEvent)
+                if noteEvent.startTime != noteEvent.endTime {
+                    self.noteEventModelList.append(noteEvent)
+                }
             }
         }
         
@@ -327,7 +341,19 @@ extension MusicKeyBoard {
                 index += 1
             }
             
-            let tmpNote = self.pressedTmpNote[indexRecord]
+            
+            let tmpNote: TmpNote = {
+                if indexRecord != 0 {
+                    return self.pressedTmpNote[indexRecord]
+                    
+                }else {
+                    return self.pressedTmpNote[index - 1]
+                    
+                }
+            }()
+            
+            
+            
             tmpNote.unPressedTime = MusicTimer.getpresentTime()
             printWithMessage("音阶\(tmpNote.midiNoteNumber!)按下时间\(tmpNote.pressedTime!)抬起时间\(tmpNote.unPressedTime!)")
             delegate?.noteOff(note: key.midiNoteNumber)

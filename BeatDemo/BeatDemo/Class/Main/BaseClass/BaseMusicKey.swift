@@ -10,7 +10,7 @@ import UIKit
 
 class BaseMusicKey: UIButton {
     /// 音阶
-    let midiNoteNumber: UInt8!
+    var midiNoteNumber: UInt8!
     /// 是否为主音键
     let isMainKey: Bool!
     /// 音乐键状态(是否被按下)

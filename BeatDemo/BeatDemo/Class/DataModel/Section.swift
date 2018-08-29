@@ -62,7 +62,7 @@ extension Section {
         
         // 将所有音存入所属小节
         for noteEvent in noteEventArray {
-            if noteEvent.startTime != noteEvent.endTime {
+            if noteEvent.startBeat != noteEvent.endbeat {
                 let tmpSection = tmpSectionModelArray[noteEvent.belongToSection]
                 
                 tmpSection.passNoteEventArray.append(noteEvent)
@@ -80,10 +80,10 @@ extension Section {
                     }
                 }
                 
-                /// 排序
-                tmpSection.passNoteEventArray = tmpSection.passNoteEventArray.sorted(by: { (note1, note2) -> Bool in
-                    return note1.startTime < note2.startTime
-                })
+//                /// 排序
+//                tmpSection.passNoteEventArray = tmpSection.passNoteEventArray.sorted(by: { (note1, note2) -> Bool in
+//                    return note1.startTime < note2.startTime
+//                })
             }
             
         
