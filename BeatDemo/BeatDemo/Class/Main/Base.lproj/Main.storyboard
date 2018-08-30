@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,9 +67,6 @@
                                             <constraint firstAttribute="height" constant="30" id="ZBN-eK-DHf"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="edit"/>
-                                        <connections>
-                                            <segue destination="Urx-d4-ht7" kind="show" id="7x9-Gh-xMc"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -140,6 +138,7 @@
                     <connections>
                         <outlet property="beatViewHeight" destination="cgE-5z-IQF" id="vc1-Lv-hj5"/>
                         <outlet property="beatViewWidth" destination="Hyq-FX-d4x" id="kuU-9L-Ka7"/>
+                        <outlet property="editButton" destination="OfC-Ze-a60" id="dHM-17-qNT"/>
                         <outlet property="keyBoardView" destination="1MP-VX-TOo" id="N67-5r-71u"/>
                         <outlet property="operationViewHeight" destination="8DH-2s-cvb" id="1vj-Sc-FWr"/>
                         <outlet property="operationViewWidth" destination="baW-BO-p4m" id="zTf-Rq-bCf"/>
@@ -155,13 +154,13 @@
         <!--Navigation Controller-->
         <scene sceneID="tha-Ry-Csu">
             <objects>
-                <navigationController id="Urx-d4-ht7" sceneMemberID="viewController">
+                <navigationController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Urx-d4-ht7" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="y7K-ml-n83">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="JBX-dH-Wpd" kind="relationship" relationship="rootViewController" id="BDo-Oh-xDe"/>
+                        <segue destination="JBX-dH-Wpd" kind="relationship" relationship="rootViewController" id="d2I-Xo-g2N"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c1P-7B-d8m" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -197,75 +196,30 @@
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xcm-t3-5RZ">
-                                        <rect key="frame" x="172" y="8" width="30" height="30"/>
+                                        <rect key="frame" x="172" y="15" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="fyk-at-gb3"/>
-                                            <constraint firstAttribute="width" constant="30" id="hg9-4H-laE"/>
+                                            <constraint firstAttribute="width" constant="30" id="1iC-ZL-wPV"/>
+                                            <constraint firstAttribute="height" constant="30" id="xyl-ex-Az8"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="play"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="播放" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6x-pg-EkL">
-                                        <rect key="frame" x="170" y="40" width="35" height="15"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="dTF-c1-7Ms"/>
-                                            <constraint firstAttribute="height" constant="15" id="hk2-8a-eZn"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ck7-px-OCE">
-                                        <rect key="frame" x="132" y="8" width="30" height="30"/>
+                                        <rect key="frame" x="97" y="15" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="Ccc-Yi-YzQ"/>
-                                            <constraint firstAttribute="height" constant="30" id="kHg-qT-7CM"/>
+                                            <constraint firstAttribute="width" constant="30" id="cdv-oZ-HOz"/>
+                                            <constraint firstAttribute="height" constant="30" id="jwU-NX-RF7"/>
                                         </constraints>
-                                        <state key="normal" backgroundImage="reset"/>
+                                        <state key="normal" backgroundImage="prev"/>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="重置" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etM-ni-XTm">
-                                        <rect key="frame" x="129" y="40" width="35" height="15"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="5Ui-jq-JFg"/>
-                                            <constraint firstAttribute="height" constant="15" id="7ZT-Ed-T9z"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqv-HU-Uz2">
-                                        <rect key="frame" x="212" y="8" width="30" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="2xK-Np-GPl"/>
-                                            <constraint firstAttribute="height" constant="30" id="E9h-5P-SQd"/>
-                                        </constraints>
-                                        <state key="normal" backgroundImage="edit"/>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="编辑" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTg-0T-rEY">
-                                        <rect key="frame" x="210" y="40" width="35" height="15"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="A7g-d6-tnj"/>
-                                            <constraint firstAttribute="height" constant="15" id="FOO-Ir-vQZ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="LTg-0T-rEY" firstAttribute="top" secondItem="xqv-HU-Uz2" secondAttribute="bottom" constant="2" id="2aw-ss-ItS"/>
-                                    <constraint firstItem="f6x-pg-EkL" firstAttribute="centerX" secondItem="nYO-mR-sqa" secondAttribute="centerX" id="39Q-eO-MwX"/>
-                                    <constraint firstItem="Xcm-t3-5RZ" firstAttribute="centerX" secondItem="nYO-mR-sqa" secondAttribute="centerX" id="5cI-yM-qr1"/>
-                                    <constraint firstItem="xqv-HU-Uz2" firstAttribute="top" secondItem="nYO-mR-sqa" secondAttribute="top" constant="8" id="86C-dB-hRO"/>
-                                    <constraint firstItem="etM-ni-XTm" firstAttribute="top" secondItem="Ck7-px-OCE" secondAttribute="bottom" constant="2" id="IbN-Q1-LjU"/>
+                                    <constraint firstItem="Ck7-px-OCE" firstAttribute="centerY" secondItem="nYO-mR-sqa" secondAttribute="centerY" id="0jX-Ee-6jd"/>
+                                    <constraint firstItem="Xcm-t3-5RZ" firstAttribute="centerX" secondItem="nYO-mR-sqa" secondAttribute="centerX" id="MXz-ce-Exx"/>
+                                    <constraint firstItem="Xcm-t3-5RZ" firstAttribute="leading" secondItem="Ck7-px-OCE" secondAttribute="trailing" constant="45" id="Q1W-9z-ojJ"/>
                                     <constraint firstAttribute="height" constant="60" id="RAN-RW-F2d"/>
-                                    <constraint firstItem="LTg-0T-rEY" firstAttribute="centerX" secondItem="xqv-HU-Uz2" secondAttribute="centerX" id="WFq-KT-Opx"/>
-                                    <constraint firstItem="etM-ni-XTm" firstAttribute="centerX" secondItem="Ck7-px-OCE" secondAttribute="centerX" id="ab3-7g-tQd"/>
-                                    <constraint firstItem="xqv-HU-Uz2" firstAttribute="leading" secondItem="Xcm-t3-5RZ" secondAttribute="trailing" constant="10" id="bvG-f7-ecI"/>
-                                    <constraint firstItem="Xcm-t3-5RZ" firstAttribute="top" secondItem="nYO-mR-sqa" secondAttribute="top" constant="8" id="fSG-UQ-x6t"/>
-                                    <constraint firstItem="Xcm-t3-5RZ" firstAttribute="leading" secondItem="Ck7-px-OCE" secondAttribute="trailing" constant="10" id="tSg-HE-hrI"/>
-                                    <constraint firstItem="Ck7-px-OCE" firstAttribute="top" secondItem="nYO-mR-sqa" secondAttribute="top" constant="8" id="v0E-vj-fB1"/>
-                                    <constraint firstItem="f6x-pg-EkL" firstAttribute="top" secondItem="Xcm-t3-5RZ" secondAttribute="bottom" constant="2" id="y3R-yJ-8sS"/>
+                                    <constraint firstItem="Xcm-t3-5RZ" firstAttribute="centerY" secondItem="nYO-mR-sqa" secondAttribute="centerY" id="qF0-DT-u07"/>
+                                    <constraint firstItem="Ck7-px-OCE" firstAttribute="centerY" secondItem="nYO-mR-sqa" secondAttribute="centerY" id="wsI-mV-JiY"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uIe-Iu-b7e" customClass="MusicKeyBoard" customModule="BeatDemo" customModuleProvider="target">
@@ -338,13 +292,11 @@
                     <connections>
                         <outlet property="beatViewHeight" destination="A1e-4g-wCk" id="m4T-CD-MI7"/>
                         <outlet property="beatViewWidth" destination="XO4-9y-ipT" id="etq-fD-fqI"/>
-                        <outlet property="editButton" destination="xqv-HU-Uz2" id="XSx-Md-2S3"/>
                         <outlet property="keyBoardView" destination="uIe-Iu-b7e" id="9h1-2o-GIy"/>
                         <outlet property="operationViewHeight" destination="2ku-c1-9g2" id="XzJ-64-Uyy"/>
                         <outlet property="operationViewWidth" destination="cCg-75-Ytj" id="pYa-8I-Wv9"/>
                         <outlet property="playButton" destination="Xcm-t3-5RZ" id="qTR-O7-l8j"/>
-                        <outlet property="playButtonTitleLabel" destination="f6x-pg-EkL" id="X98-uS-OIp"/>
-                        <outlet property="resetButton" destination="Ck7-px-OCE" id="gnn-i4-9J8"/>
+                        <outlet property="prevButton" destination="Ck7-px-OCE" id="Au4-A2-Ezx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qhd-S7-keo" sceneMemberID="firstResponder"/>
@@ -355,6 +307,7 @@
     <resources>
         <image name="edit" width="67" height="67"/>
         <image name="play" width="67" height="67"/>
+        <image name="prev" width="67" height="67"/>
         <image name="reset" width="67" height="67"/>
     </resources>
 </document>

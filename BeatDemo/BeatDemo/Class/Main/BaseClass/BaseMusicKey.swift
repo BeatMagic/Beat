@@ -9,6 +9,9 @@
 import UIKit
 
 class BaseMusicKey: UIButton {
+    /// 按钮Index
+    let keyIndex: Int
+    
     /// 音阶
     var midiNoteNumber: UInt8!
     /// 是否为主音键
@@ -36,15 +39,14 @@ class BaseMusicKey: UIButton {
     }
     
     /// 初始化
-    init(frame: CGRect, midiNoteNumber: UInt8, isMainKey: Bool) {
+    init(frame: CGRect, midiNoteNumber: UInt8, keyIndex: Int, isMainKey: Bool) {
         
         
         self.midiNoteNumber = midiNoteNumber
         self.isMainKey = isMainKey
+        self.keyIndex = keyIndex
         
         super.init(frame: frame)
-
-        
         setUp()
     }
     
@@ -52,6 +54,8 @@ class BaseMusicKey: UIButton {
         // will never call this
         self.isMainKey = false
         self.midiNoteNumber = 60
+        self.keyIndex = -1
+        
         super.init(coder: aDecoder)
     }
 }

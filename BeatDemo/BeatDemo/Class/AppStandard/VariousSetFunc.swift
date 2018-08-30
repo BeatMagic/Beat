@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VariousSetFunc: NSObject {
+class VariousOperateFunc: NSObject {
     
     static let highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.B
     
@@ -40,5 +40,29 @@ class VariousSetFunc: NSObject {
             index += 1
         }
         
+    }
+    
+    
+    static func playMIDI(sectionArray: [Section],
+                         totalDelayTime: Double,
+                         basicSequencer: BasicSequencer) -> Void {
+        
+        DelayTask.cancelAllWorkItems()
+        
+        for sectionModel in sectionArray {
+            // 小节Model里有音
+            if sectionModel.passNoteEventArray.count != 0 {
+                var playDelayTime: Double = 0
+                
+                playDelayTime = Double.init(sectionModel.passNoteEventArray.first!.startBeat) / DataStandard.oneBeatWithTime
+                
+                DelayTask.createTaskWith(name: "", workItem: {
+                    basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
+                    basicSequencer.playMelody()
+                    
+                }, delayTime: playDelayTime + totalDelayTime)
+                
+            }
+        }
     }
 }

@@ -362,6 +362,7 @@ public class DelayTask: NSObject {
             workItem.cancel()
         }
         
+        self.workItemArray = []
     }// funcEnd
     
 }

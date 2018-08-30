@@ -22,12 +22,14 @@ class BasicSequencer: NSObject{
     var fluteSampler = AKMIDISampler()
     
     var midiSampler = AKMIDISampler()
+    
     var mixer = AKMixer()
     var midiCompresser : AKCompressor
     var reverb : AKReverb?
     var reverbMixer : AKDryWetMixer?
     var delay : AKDelay?
     var delayMixer : AKDryWetMixer?
+    var booster : AKBooster?
     var currentTempo = 110.0 {
         didSet {
             sequencer.setTempo(currentTempo)
@@ -37,6 +39,7 @@ class BasicSequencer: NSObject{
     var noteEventSeq : [NoteEvent]!
     let sequenceLength = AKDuration(beats: 36.0)
     
+    //4 乘以小节数量
     let bgmSeqLength = AKDuration(beats:8.0)
     
     override init() {
@@ -48,7 +51,7 @@ class BasicSequencer: NSObject{
         
         
         //bgm 音色
-        try! paino1Sampler.loadMelodicSoundFont("GeneralUser", preset: 3)
+        try! paino1Sampler.loadMelodicSoundFont("GeneralUser", preset: 60)
         
         try! fluteSampler.loadMelodicSoundFont("GeneralUser", preset: 8)
         
@@ -62,7 +65,9 @@ class BasicSequencer: NSObject{
         delay?.time = 0.1
         delayMixer = AKDryWetMixer(reverb,delay)
         
-        AudioKit.output = delayMixer
+        booster = AKBooster(delayMixer)
+        booster?.gain = 3.0
+        AudioKit.output = booster
         do {
             try AudioKit.start()
         } catch {
@@ -143,8 +148,11 @@ class BasicSequencer: NSObject{
         //sequencer.stop()
         //}
         //test
-        //bgmSequencer.enableLooping()
-        //bgmSequencer.play()
+        //        if !bgmSequencer.isPlaying{
+        //            bgmSequencer.enableLooping()
+        //            bgmSequencer.play()
+        //        }
+        
     }
     
     /// 停止播放

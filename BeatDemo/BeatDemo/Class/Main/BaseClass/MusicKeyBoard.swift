@@ -12,35 +12,18 @@ import UIKit
 // MARK: - Init
 class MusicKeyBoard: UIView {
     
-    /// 最高音阶
-//    var highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.B {
-//        didSet {
-//            setUp()
-//        }
-//    }
     
     /// 主音位置
     var mainMusicKeyIndex = 8
     
-    /// 生成规则
-//    var keyRules = DataStandard.MusicKeysRulesA {
-//        didSet {
-//            setUp()
-//        }
-//    }
-    
-//    var musicStabileKeysIndexArray: [Int] = []
-    
-    /// 记录的上一个音
-    var lastNote: UInt8? = nil
-
     
     /// 音乐键数组
     var musicKeysArray = [BaseMusicKey]()
-    /// 音高对应字典
-    var pitchToKeyDict = [UInt8: BaseMusicKey]()
-    /// 按下的键Set
-    var pressedMusicKeys = Set<UInt8>()
+    /// 位置对应按钮字典
+    var pitchToKeyDict = [Int: BaseMusicKey]()
+
+    /// 上一次按下键的位置
+    var previousPressedMusicKeysArray: [BaseMusicKey] = []
     
     //MARK:- 重要数据
     var pressedTmpNote: [TmpNote] = []
@@ -123,16 +106,7 @@ extension MusicKeyBoard {
         self.addMusicKey()
         
     }
-    
-//    override func layoutSubviews() {
-//            self.addMusicKeysWithViewModel(self.musicKeysViewModel)
-//            self.addMusicKey()
-//    }
-//
-//    override func draw(_ rect: CGRect) {
-//            self.addMusicKeysWithViewModel(self.musicKeysViewModel)
-//            self.addMusicKey()
-//    }
+
     
     /// 生成所有键的ViewModel -> [ CGRect ]
     private func initMusicKeyFrame(ownHeight: CGFloat) -> [CGRect] {
@@ -176,10 +150,10 @@ extension MusicKeyBoard {
             let musicKey: BaseMusicKey = {
                 
                 if index == self.mainMusicKeyIndex {
-                    return BaseMusicKey.init(frame: item, midiNoteNumber: 1, isMainKey: true)
+                    return BaseMusicKey.init(frame: item, midiNoteNumber: 1, keyIndex: index, isMainKey: true)
                     
                 }else {
-                    return BaseMusicKey.init(frame: item, midiNoteNumber: 1, isMainKey: false)
+                    return BaseMusicKey.init(frame: item, midiNoteNumber: 1, keyIndex: index, isMainKey: false)
                     
                 }
                 
@@ -188,13 +162,13 @@ extension MusicKeyBoard {
 
             
             musicKey.title = DataStandard.MusicKeysTitle[index]
-            self.pitchToKeyDict[DataStandard.root - UInt8(-DataStandard.MusicKeysRulesA[index] + VariousSetFunc.highWhiteNote.rawValue)] = musicKey
+            self.pitchToKeyDict[index] = musicKey
             self.musicKeysArray.append(musicKey)
             
             index += 1
         }
         
-        VariousSetFunc.setMusicKeysEverySection(self.musicKeysArray,
+        VariousOperateFunc.setMusicKeysEverySection(self.musicKeysArray,
                                                 stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
                                                 musicKeyNotes: DataStandard.MusicKeysRulesA)
         
@@ -203,7 +177,6 @@ extension MusicKeyBoard {
     /// 添加键 -> Void
     private func addMusicKey() -> Void {
         for key in musicKeysArray {
-//            key.removeFromSuperview()
             addSubview(key)
         }
         
@@ -215,33 +188,9 @@ extension MusicKeyBoard {
 
 // MARK: - MusicKey SetUp
 extension MusicKeyBoard {
-    func turnKeyOn(midiNoteNumber: UInt8) {
-        let musicKey = getKeyFromMidiNote(midiNoteNumber: midiNoteNumber)
-        _ = musicKey?.pressed()
+    private func getKeyFromKeyIndex(keyIndex: Int) -> BaseMusicKey? {
+        return pitchToKeyDict[keyIndex]
     }
-    
-    func turnKeyOff(midiNoteNumber: UInt8) {
-        let musicKey = getKeyFromMidiNote(midiNoteNumber: midiNoteNumber)
-        _ = musicKey?.released()
-    }
-    
-    func turnAllKeysOff() {
-        musicKeysArray.forEach { _ = $0.released() }
-    }
-    
-    private func getKeyFromMidiNote(midiNoteNumber: UInt8) -> BaseMusicKey? {
-        if pitchToKeyDict.keys.contains(midiNoteNumber) {
-            return pitchToKeyDict[midiNoteNumber]
-            
-        }else {
-            let key: UInt8  = Array(pitchToKeyDict.keys).last!
-            return pitchToKeyDict[key]
-            
-        }
-
-    }
-    
-    
     
 }
 
@@ -264,124 +213,103 @@ extension MusicKeyBoard {
         for touch in touches {
             if let key = getKeyFromLocation(loc: touch.location(in: self)) {
                 
-                self.lastNote = key.midiNoteNumber
-                
-                printWithMessage("按下\(key.midiNoteNumber)")
-                
                 delegate?.startTranscribe()
                 
+                // 处理之前按下的键
+                if self.previousPressedMusicKeysArray.count != 0 {
+                    for key in self.previousPressedMusicKeysArray {
+                        pressRemoved(key: key)
+                    }
+                    
+                    self.previousPressedMusicKeysArray = []
+                }
+
                 pressAdded(newKey: key)
-                verifyTouches(touches: event?.allTouches ?? Set<UITouch>())
+                printWithMessage("按下\(key.midiNoteNumber)")
+                self.previousPressedMusicKeysArray.append(key)
+                
             }
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        
+
         for touch in touches {
-//            if !self.frame.contains(touch.location(in: self)) {
-//                verifyTouches(touches: event?.allTouches ?? Set<UITouch>())
-//            } else {
-//
-//
-//            }
+            
             if let key = getKeyFromLocation(loc: touch.location(in: self)),
                 key != getKeyFromLocation(loc: touch.previousLocation(in: self)) {
+                
+                // 处理之前按下的键
+                if self.previousPressedMusicKeysArray.count != 0 {
+                    for key in self.previousPressedMusicKeysArray {
+                        pressRemoved(key: key)
+                    }
+                    
+                    self.previousPressedMusicKeysArray = []
+                }
+                
                 pressAdded(newKey: key)
-                verifyTouches(touches: event?.allTouches ?? Set<UITouch>())
+                self.previousPressedMusicKeysArray.append(key)
+                
+            }else if getKeyFromLocation(loc: touch.location(in: self)) == nil {
+                // 处理之前按下的键
+                if self.previousPressedMusicKeysArray.count != 0 {
+                    for key in self.previousPressedMusicKeysArray {
+                        pressRemoved(key: key)
+                    }
+                    
+                    self.previousPressedMusicKeysArray = []
+                }
+                
             }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // 处理之前按下的键
+        if self.previousPressedMusicKeysArray.count != 0 {
+            for key in self.previousPressedMusicKeysArray {
+                pressRemoved(key: key)
+            }
+            
+            self.previousPressedMusicKeysArray = []
+        }
+        
         for touch in touches {
             if let key = getKeyFromLocation(loc: touch.location(in: self)) {
-                printWithMessage("抬起\(key.midiNoteNumber)")
-                // verify that there isn't another finger pressed to same key
-                if var allTouches = event?.allTouches {
-                    allTouches.remove(touch)
-                    let noteSet = getNoteSetFromTouches(touches: allTouches)
-                    if !noteSet.contains(key.midiNoteNumber) {
-                        pressRemoved(key: key)
-                    }
-                }
+                
+                pressRemoved(key: key)
+                
             }
         }
         
-
         
-        let allTouches = event?.allTouches ?? Set<UITouch>()
-        verifyTouches(touches: allTouches)
-        
-//        if let noteEvent = NoteEvent.getNoteEventFromTmpNoteArray(self.pressedTmpNote) {
-//            self.noteEventModelList.append(noteEvent)
-//        }
-        if self.pressedTmpNote.count != 0 {
-            for tmpNote in self.pressedTmpNote {
-                let noteEvent = NoteEvent.getNoteEventFromTmpNote(tmpNote)
-                if noteEvent.startTime != noteEvent.endTime {
-                    self.noteEventModelList.append(noteEvent)
-                }
-            }
-        }
-        
-        self.pressedTmpNote = []
         
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>?, with event: UIEvent?) {
-        let allTouches = event?.allTouches ?? Set<UITouch>()
-        verifyTouches(touches: allTouches)
+
         
     }
     
     private func pressAdded(newKey: BaseMusicKey) {
+        
         if newKey.pressed() {
             
             /// 开始记录单个音
             self.pressedTmpNote.append(TmpNote.init(newKey.midiNoteNumber, pressedTime: MusicTimer.getpresentTime()))
             
             delegate?.noteOn(note: newKey.midiNoteNumber)
-            pressedMusicKeys.insert(newKey.midiNoteNumber)
         }
     }
     
     private func pressRemoved(key: BaseMusicKey) {
         if key.released() {
-            // 根据音音阶为Key 遍历查找最后一个并设定抬起时间
-            var index = 0
-            var indexRecord: Int? = nil
             
-            for tmpNote in self.pressedTmpNote {
-                if tmpNote.midiNoteNumber == key.midiNoteNumber {
-                    indexRecord = index
-                    break
-                }
-                
-                index += 1
-            }
+            let tmpNote = TmpNote.init(key.midiNoteNumber, pressedTime: self.prevTime)
             
-            
-            let tmpNote: TmpNote = {
-                if indexRecord != nil {
-                    return self.pressedTmpNote[indexRecord!]
-                    
-                }else {
-                    
-                    if pressedMusicKeys.count != 0 {
-                        let tmpNote = TmpNote.init(self.pressedMusicKeys.first!, pressedTime: self.prevTime)
-                        
-                        tmpNote.unPressedTime = MusicTimer.getpresentTime()
-                        
-                        return tmpNote
-                        
-                    }else {
-                        return self.pressedTmpNote.last!
-                    }
-                    
-                }
-            }()
+            tmpNote.unPressedTime = MusicTimer.getpresentTime()
             
             
             
@@ -392,36 +320,31 @@ extension MusicKeyBoard {
             
             
             delegate?.noteOff(note: key.midiNoteNumber)
-            if let lastNote = self.lastNote {
-                delegate?.noteOff(note: lastNote)
+            
+            if let noteEvent = NoteEvent.getNoteEventFromTmpNoteArray([tmpNote]) {
+                self.noteEventModelList.append(noteEvent)
             }
             
-            pressedMusicKeys.remove(key.midiNoteNumber)
+        
         }
     
             
     }
     
-    private func getNoteSetFromTouches(touches: Set<UITouch>) -> Set<UInt8> {
-        var touchedKeys = Set<UInt8>()
+    private func getKeyIndexFromTouches(touches: Set<UITouch>) -> [Int] {
+
+        var touchedKeysIndexArray: [Int] = []
+
         for touch in touches {
             if let key = getKeyFromLocation(loc: touch.location(in: self)) {
-                touchedKeys.insert(key.midiNoteNumber)
+
+                touchedKeysIndexArray.append(key.keyIndex)
             }
         }
-        return touchedKeys
+        
+        return touchedKeysIndexArray
     }
     
-    private func verifyTouches(touches: Set<UITouch>) {
-        let notesFromTouches = getNoteSetFromTouches(touches: touches)
-        let disjunct = pressedMusicKeys.subtracting(notesFromTouches)
-        if !disjunct.isEmpty {
-            print("stuck notes: \(disjunct) touches at\(notesFromTouches)")
-            for note in disjunct {
-                pressRemoved(key: getKeyFromMidiNote(midiNoteNumber: note)!)
-            }
-        }
-    }
 
 }
 

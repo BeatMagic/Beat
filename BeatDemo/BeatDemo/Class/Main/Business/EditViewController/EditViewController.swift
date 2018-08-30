@@ -27,25 +27,31 @@ class EditViewController: UIViewController {
         return UIBarButtonItem.init(customView: button)
     }()
     
-    /// 全部音乐ButtonItem
-    /**
-     lazy private var allMusicItem: UIBarButtonItem = {
-     let button = createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.black, action: #selector(allMusicEvent))
-     button.widthAnchor.constraint(equalToConstant: 35).isActive = true
-     button.heightAnchor.constraint(equalToConstant: 35).isActive = true
-     
-     return UIBarButtonItem.init(customView: button)
-     }()
-     */
-    
-    @IBOutlet var resetButton: UIButton!
+    @IBOutlet var prevButton: UIButton!
     @IBOutlet var keyBoardView: MusicKeyBoard!
     @IBOutlet var playButton: UIButton!
-    @IBOutlet var playButtonTitleLabel: UILabel!
-    @IBOutlet var editButton: UIButton!
     
-    var sampler:AVAudioUnitSampler!
-    var engine: AVAudioEngine!
+    // MARK: - 数据
+    var playSectionArray: [Section] = []
+
+    
+    // MARK: - 其他
+    /// 循环次数
+    var circleNum: Int = 0
+    
+    
+    /// 下一个需要记录的时间节点
+    var nextNeedRecordTime: Double = 3
+    var sampler: AKAppleSampler!
+    let basicSequencer = BasicSequencer()
+    let localMusicPlayer: AVAudioPlayer = {
+        let pathStr = Bundle.main.path(forResource: "编曲图谱3伴奏.wav", ofType: nil)
+        let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
+        player.prepareToPlay()
+        player.numberOfLoops = -1
+        
+        return player
+    }()
     
     /// 音乐播放状态
     var musicState: EnumStandard.MusicPlayStates = .caused {
@@ -84,32 +90,19 @@ extension EditViewController {
         beatViewHeight.constant = FrameStandard.beatViewHeight
         
         navigationItem.leftBarButtonItem = closeItem
-//        navigationItem.rightBarButtonItem = allMusicItem
         
-        resetButton.addTarget(self, action: #selector(resetEvent), for: .touchUpInside)
+        prevButton.isHidden = true
+        prevButton.addTarget(self, action: #selector(prevEvent), for: .touchUpInside)
         playButton.tintColor = UIColor.black
         playButton.addTarget(self, action: #selector(playButtonEvent), for: .touchUpInside)
-        editButton.addTarget(self, action: #selector(editEvent), for: .touchUpInside)
     }// funcEnd
     
     /// 设置Data
     func setData() -> Void {
         keyBoardView.delegate = self
-        engine = AVAudioEngine()
-        sampler = AVAudioUnitSampler()
-        engine.attach(sampler)
-        engine.connect(sampler, to: engine.mainMixerNode, format: nil)
-        let audioSession = AVAudioSession.sharedInstance()
         
-        do {
-            try engine.start()
-            try audioSession.setCategory(AVAudioSessionCategoryPlayback, with:
-                AVAudioSessionCategoryOptions.mixWithOthers)
-            try audioSession.setActive(true)
-        } catch {
-            print("set up failed")
-            return
-        }
+        sampler = basicSequencer.GetSampler()
+        basicSequencer.setupMelodyTrack()
         
     }// funcEnd
     
@@ -119,15 +112,12 @@ extension EditViewController {
         
     }// funcEnd
     
-    /// 音乐管理点击事件
-    @objc func allMusicEvent() -> Void {
-        printWithMessage("音乐管理")
+    /// 上一曲点击事件
+    @objc func prevEvent() -> Void {
+        
+        
     }// funcEnd
     
-    /// 重置点击事件
-    @objc func resetEvent() -> Void {
-        printWithMessage("重置")
-    }// funcEnd
     
     /// 播放按钮点击事件
     @objc func playButtonEvent() -> Void {
@@ -142,22 +132,25 @@ extension EditViewController {
         }
     }// funcEnd
     
-    /// 编辑按钮点击事件
-    @objc func editEvent() -> Void {
-//        let newVC = UIViewController.initVControllerFromStoryboard("EditViewController")
-//        navigationController?.pushViewController(newVC, animated: true)
-        
-    }// funcEnd
     
     /// 设置当前按钮信息 ( 音乐当前状态 )
     func setUpButtonMessageWithState(_ state: EnumStandard.MusicPlayStates) -> Void {
         if state == .caused {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.play.rawValue), for: .normal)
-            playButtonTitleLabel.text = "播放"
+            
+            localMusicPlayer.pause()
+            localMusicPlayer.currentTime = 0
+            
+            self.basicSequencer.stopPlayMelody()
+            DelayTask.cancelAllWorkItems()
             
         }else {
-            playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.cause.rawValue), for: .normal)
-            playButtonTitleLabel.text = "暂停"
+            playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.prevSong.rawValue), for: .normal)
+            
+            localMusicPlayer.play()
+            
+            VariousOperateFunc.playMIDI(sectionArray: self.playSectionArray, totalDelayTime: 27, basicSequencer: self.basicSequencer)
+            
         }
     }// funcEnd
     
@@ -175,11 +168,12 @@ extension EditViewController: MusicKeyDelegate {
     }
     
     func noteOn(note: UInt8) {
-        sampler.startNote(note, withVelocity: 120, onChannel: 0)
+        self.basicSequencer.stopPlayMelody()
+        try! self.sampler.play(noteNumber: note, velocity: 95, channel: 1)
     }
     
     func noteOff(note: UInt8) {
-        sampler.stopNote(note, onChannel: 0)
+        try! self.sampler.stop(noteNumber: note, channel: 1)
     }
     
 }

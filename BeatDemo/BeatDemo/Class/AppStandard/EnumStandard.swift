@@ -36,6 +36,8 @@ class EnumStandard: NSObject {
         case reset = "reset"
         /// 暂停
         case cause = "cause"
+        /// 上一曲
+        case prevSong = "prev"
         /// 播放
         case play = "play"
         /// 删除

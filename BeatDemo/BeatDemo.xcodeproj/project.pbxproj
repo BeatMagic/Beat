@@ -38,6 +38,7 @@
 		7C888E77212D6D3B0094DC85 /* MusicKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */; };
 		7C888E7E212E53D70094DC85 /* DataStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E7D212E53D70094DC85 /* DataStandard.swift */; };
 		7CA6445B21366BD00062CA58 /* VariousSetFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */; };
+		7CB567FB2137E7A6004891D3 /* 编曲图谱3伴奏.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CB567FA2137E7A6004891D3 /* 编曲图谱3伴奏.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		7C888E7A212E47DC0094DC85 /* BeatDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BeatDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		7C888E7D212E53D70094DC85 /* DataStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStandard.swift; sourceTree = "<group>"; };
 		7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariousSetFunc.swift; sourceTree = "<group>"; };
+		7CB567FA2137E7A6004891D3 /* 编曲图谱3伴奏.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "编曲图谱3伴奏.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +203,7 @@
 				7C1D736D212D470C00144822 /* Assets.xcassets */,
 				7C1D736F212D470C00144822 /* LaunchScreen.storyboard */,
 				7C1D7372212D470C00144822 /* Info.plist */,
+				7CB567FA2137E7A6004891D3 /* 编曲图谱3伴奏.wav */,
 				7C847DB22136CEA400A6EB1E /* 9小节输入伴奏.wav */,
 				7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */,
 				7C1D736A212D470B00144822 /* BeatDemo.xcdatamodeld */,
@@ -315,6 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CB567FB2137E7A6004891D3 /* 编曲图谱3伴奏.wav in Resources */,
 				7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */,
 				7C1D736E212D470C00144822 /* Assets.xcassets in Resources */,
 				7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */,

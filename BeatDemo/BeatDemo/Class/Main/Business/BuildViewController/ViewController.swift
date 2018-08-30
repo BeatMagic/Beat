@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     // MARK: - 底部按钮
     @IBOutlet var resetButton: UIButton!
     @IBOutlet var playButton: UIButton!
+    @IBOutlet var editButton: UIButton!
     
     // MARK: - 其他
     /// 循环次数
@@ -131,9 +132,7 @@ extension ViewController {
         resetButton.addTarget(self, action: #selector(resetMusicEvent), for: .touchUpInside)
         playButton.tintColor = UIColor.black
         playButton.addTarget(self, action: #selector(playButtonEvent), for: .touchUpInside)
-        
-        
-        
+        editButton.addTarget(self, action: #selector(editButtonEvent), for: .touchUpInside)
         
     }// funcEnd
     
@@ -169,7 +168,7 @@ extension ViewController {
             ProgressButtonManager.resetAllPresentButtonProgress()
             
             self.circleNum = 0
-            VariousSetFunc.setMusicKeysEverySection(
+            VariousOperateFunc.setMusicKeysEverySection(
                 self.keyBoardView.musicKeysArray,
                 stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
                 musicKeyNotes: DataStandard.MusicKeysRulesA)
@@ -196,9 +195,12 @@ extension ViewController {
 
     /// 小节点击事件
     @objc func sectionButtonEvent(_ sender: Any) -> Void {
-        SVProgressHUD.showSuccess(withStatus: "已选择第\((sender as! UIButton).tag)小节")
+//        SVProgressHUD.showSuccess(withStatus: "已选择第\((sender as! UIButton).tag)小节")
+        
+        
         self.selectedSection = (sender as! UIButton).tag
         self.musicState = .caused
+        ProgressButtonManager.presentTime = self.selectedSection! * 3
 
     }// funcEnd
     
@@ -250,6 +252,22 @@ extension ViewController {
             
         }
     }// funcEnd
+    
+    /// 编辑按钮点击事件
+    @objc func editButtonEvent() -> Void {
+        self.musicState = .caused
+        
+        let editViewController = UIViewController.initVControllerFromStoryboard("EditViewController") as! EditViewController
+        editViewController.playSectionArray = self.keyBoardView.sectionArray
+        
+        let editNaviViewController = UINavigationController.init(rootViewController: editViewController)
+        
+        editNaviViewController.modalTransitionStyle = .flipHorizontal
+        
+        self.present(editNaviViewController, animated: true, completion: nil)
+        
+        
+    }
     
     /// 设置当前按钮信息 ( 音乐当前状态 )
     func setUpButtonMessageWithState(_ state: EnumStandard.MusicPlayStates) -> Void {
@@ -333,7 +351,6 @@ extension ViewController {
     
     /// 从某小节处开始播放
     func playMusic(_ fromSectionIndex: Int) -> Void {
-//        let nextSectionIndex = ProgressButtonManager.getPresentButtonIndex() + 1
         
         for sectionIndex in fromSectionIndex ..< 9 {
             // 获得播放的小节Model
@@ -343,8 +360,7 @@ extension ViewController {
             
             // 小节Model里有音
             if sectionModel.passNoteEventArray.count != 0 {
-                
-//                playDelayTime = sectionModel.passNoteEventArray.first!.startTime - sectionModel.startTime
+
                 playDelayTime = sectionModel.passNoteEventArray.first!.startBeat / DataStandard.oneBeatWithTime
                 
                 DelayTask.createTaskWith(name: "第\(sectionIndex)小节", workItem: {
@@ -353,7 +369,6 @@ extension ViewController {
                     
                 }, delayTime: playDelayTime - fromSectionIndex * 3)
                 
-            // 没有音
             }
             
         }
@@ -388,13 +403,13 @@ extension ViewController: TimerDelegate {
                 nextNeedRecordTime += 3
                 
                 if self.nextNeedRecordTime >= 18 {
-                    VariousSetFunc.setMusicKeysEverySection(
+                    VariousOperateFunc.setMusicKeysEverySection(
                         self.keyBoardView.musicKeysArray,
                         stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[presentSectionIndex],
                         musicKeyNotes: DataStandard.MusicKeysRulesA)
                     
                 }else {
-                    VariousSetFunc.setMusicKeysEverySection(
+                    VariousOperateFunc.setMusicKeysEverySection(
                         self.keyBoardView.musicKeysArray,
                         stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[presentSectionIndex],
                         musicKeyNotes: DataStandard.MusicKeysRulesB)
@@ -426,7 +441,7 @@ extension ViewController: TimerDelegate {
     
     func doThingsWhenEnd() {
         circleNum += 1
-        VariousSetFunc.setMusicKeysEverySection(
+        VariousOperateFunc.setMusicKeysEverySection(
             self.keyBoardView.musicKeysArray,
             stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
             musicKeyNotes: DataStandard.MusicKeysRulesA)
