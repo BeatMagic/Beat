@@ -67,7 +67,7 @@ class ViewController: UIViewController {
     let basicSequencer = BasicSequencer()
     
     let localMusicPlayer: AVAudioPlayer = {
-        let pathStr = Bundle.main.path(forResource: "9小节输入伴奏.mp3", ofType: nil)
+        let pathStr = Bundle.main.path(forResource: "9小节输入伴奏.wav", ofType: nil)
         let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
         player.prepareToPlay()
         player.numberOfLoops = -1
@@ -82,6 +82,10 @@ class ViewController: UIViewController {
             setUpButtonMessageWithState(musicState)
         }
     }
+    
+    
+
+    
     
     
     override func viewDidLoad() {
@@ -145,7 +149,44 @@ extension ViewController {
     
     /// 删除音乐点击事件
     @objc func deleteMusicEvent() -> Void {
-        printWithMessage("删除当前")
+        let alertController = SimpleAlertController.getSimpleAlertController(title: "删除所有小节输入的音符?", message: nil) {
+            
+            // 取消播放
+            DelayTask.cancelAllWorkItems()
+            
+            // 暂停播放与录制
+//            self.setUpButtonMessageWithState(.caused)
+            
+            // 重置进度条
+            MusicTimer.setPresentTime(0)
+            ProgressButtonManager.presentTime = 0
+            
+            // 重置播放器时间条
+            self.localMusicPlayer.currentTime = 0
+            
+            self.nextNeedRecordTime = 3
+            
+            ProgressButtonManager.resetAllPresentButtonProgress()
+            
+            self.circleNum = 0
+            VariousSetFunc.setMusicKeysEverySection(
+                self.keyBoardView.musicKeysArray,
+                stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
+                musicKeyNotes: DataStandard.MusicKeysRulesA)
+            
+            self.keyBoardView.noteEventModelList = []
+            
+            for sectionModel in self.keyBoardView.sectionArray {
+                sectionModel.passNoteEventArray = []
+            }
+            
+            
+            SVProgressHUD.showSuccess(withStatus: "删除成功")
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+
     }// funcEnd
     
     /// 音乐管理点击事件

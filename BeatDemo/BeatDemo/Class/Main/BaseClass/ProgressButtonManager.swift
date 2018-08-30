@@ -91,8 +91,19 @@ extension ProgressButtonManager {
         
     }// funcEnd
     
-    /// 删除所有进度条进度
+    /// 删除所有图片
     static func deleteAllPresentButtonProgress() -> Void {
+
+        
+        for imageView in ProgressButtonManager.imageViewArray {
+            imageView.image = UIImage.init(named: EnumStandard.ImageName.unfinished.rawValue)
+            imageView.tintColor = UIColor.flatGreen
+        }
+        
+    }// funcEnd
+    
+    /// 重置所有按钮状态
+    static func resetAllPresentButtonProgress() -> Void {
         for button in ProgressButtonManager.buttonArray {
             button.resetProgress()
         }
@@ -106,41 +117,61 @@ extension ProgressButtonManager {
     /// 根据当前时间重新绘制进度按钮
     private static func resetProgress() -> Void {
         
+//        for index in 0 ..< 9 {
+//            if index < ProgressButtonManager.presentButtonIndex {
+//                buttonArray[index].setProgress(progress: 1, false)
+//
+//            }else if index == ProgressButtonManager.presentButtonIndex  {
+//                let progress = (ProgressButtonManager.presentTime - Double.init(ProgressButtonManager.presentButtonIndex * 3))  / 3
+//                buttonArray[ProgressButtonManager.presentButtonIndex].setProgress(progress: CGFloat(progress), false)
+//                buttonArray[ProgressButtonManager.presentButtonIndex].isUserInteractionEnabled = true
+//
+//            }else {
+//                buttonArray[index].setProgress(progress: 0, false)
+//            }
+//        }
+        
         for index in 0 ..< 9 {
-            if index < ProgressButtonManager.presentButtonIndex {
-                buttonArray[index].setProgress(progress: 1, false)
-            
-            }else if index == ProgressButtonManager.presentButtonIndex  {
-                let progress = (ProgressButtonManager.presentTime - Double.init(ProgressButtonManager.presentButtonIndex * 3))  / 3
-                buttonArray[ProgressButtonManager.presentButtonIndex].setProgress(progress: CGFloat(progress), false)
-                buttonArray[ProgressButtonManager.presentButtonIndex].isUserInteractionEnabled = true
+            if index == ProgressButtonManager.presentButtonIndex {
+                ProgressButtonManager.imageViewArray[ProgressButtonManager.presentButtonIndex].image = UIImage.init(named: EnumStandard.ImageName.finished.rawValue)
                 
             }else {
-                buttonArray[index].setProgress(progress: 0, false)
+                ProgressButtonManager.imageViewArray[index].image = UIImage.init(named: EnumStandard.ImageName.unfinished.rawValue)
             }
-            
+        }
+        
+        
+        
+        
+        
+        
 //            else if index > ProgressButtonManager.presentButtonIndex  {
 //                buttonArray[index].setProgress(progress: 0, false)
 //
 //            }
-        }
+        
         
     }// funcEnd
     
     ///  根据是否有音符数组重新展示
     private static func resetFinishedImageViewArray() -> Void {
         for index in 0 ..< 9 {
-            let finishedImage = ProgressButtonManager.imageViewArray[index]
+//            let finishedImage = ProgressButtonManager.imageViewArray[index]
+            let finishedButton = ProgressButtonManager.buttonArray[index]
+            
             let isFinished = ProgressButtonManager.hasNotesArray[index]
+            
+            
+            
             
             if isFinished == true {
                 DispatchQueue.main.async {
-                    finishedImage.image = UIImage.init(named: EnumStandard.ImageName.finished.rawValue)
+                    finishedButton.setProgress(progress: 1, false)
                 }
                 
             }else {
                 DispatchQueue.main.async {
-                    finishedImage.image = UIImage.init(named: EnumStandard.ImageName.unfinished.rawValue)
+                    finishedButton.setProgress(progress: 0, false)
                 }
                 
             }
@@ -196,7 +227,7 @@ extension ProgressButtonManager {
             buttonProgressBar.setTitle("\(index)", for: .normal)
             buttonProgressBar.setBackgroundColor(color: UIColor.flatGreen.withAlphaComponent(0.25))
             buttonProgressBar.setProgressColor(color: UIColor.flatGreen)
-            buttonProgressBar.isUserInteractionEnabled = false
+            buttonProgressBar.isUserInteractionEnabled = true
             buttonProgressBar.tag = index
             buttonProgressBar.addTarget(nil, action: clickButtonEvent, for: .touchUpInside)
             superView.addSubview(buttonProgressBar)

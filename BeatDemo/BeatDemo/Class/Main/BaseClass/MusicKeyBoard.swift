@@ -31,6 +31,10 @@ class MusicKeyBoard: UIView {
     
 //    var musicStabileKeysIndexArray: [Int] = []
     
+    /// 记录的上一个音
+    var lastNote: UInt8? = nil
+
+    
     /// 音乐键数组
     var musicKeysArray = [BaseMusicKey]()
     /// 音高对应字典
@@ -57,6 +61,9 @@ class MusicKeyBoard: UIView {
     
     //MARK:-
     
+    /// 上次按下时间的记录
+    var prevTime: Double = 0
+    
     /// 所有键ViewModel
     var musicKeysViewModel: [CGRect] = [CGRect]()
     /// 外部代理
@@ -64,6 +71,8 @@ class MusicKeyBoard: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        self.isMultipleTouchEnabled = true
         
         self.musicKeysViewModel = {
             if ToolClass.getIPhoneType() == "iPhone X" {
@@ -86,6 +95,7 @@ class MusicKeyBoard: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.isMultipleTouchEnabled = true
         
         self.musicKeysViewModel = {
             if ToolClass.getIPhoneType() == "iPhone X" {
@@ -250,8 +260,14 @@ extension MusicKeyBoard {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         for touch in touches {
             if let key = getKeyFromLocation(loc: touch.location(in: self)) {
+                
+                self.lastNote = key.midiNoteNumber
+                
+                printWithMessage("按下\(key.midiNoteNumber)")
+                
                 delegate?.startTranscribe()
                 
                 pressAdded(newKey: key)
@@ -261,6 +277,8 @@ extension MusicKeyBoard {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        
         for touch in touches {
 //            if !self.frame.contains(touch.location(in: self)) {
 //                verifyTouches(touches: event?.allTouches ?? Set<UITouch>())
@@ -279,7 +297,7 @@ extension MusicKeyBoard {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if let key = getKeyFromLocation(loc: touch.location(in: self)) {
-                
+                printWithMessage("抬起\(key.midiNoteNumber)")
                 // verify that there isn't another finger pressed to same key
                 if var allTouches = event?.allTouches {
                     allTouches.remove(touch)
@@ -290,6 +308,8 @@ extension MusicKeyBoard {
                 }
             }
         }
+        
+
         
         let allTouches = event?.allTouches ?? Set<UITouch>()
         verifyTouches(touches: allTouches)
@@ -331,11 +351,12 @@ extension MusicKeyBoard {
         if key.released() {
             // 根据音音阶为Key 遍历查找最后一个并设定抬起时间
             var index = 0
-            var indexRecord = 0
+            var indexRecord: Int? = nil
             
             for tmpNote in self.pressedTmpNote {
                 if tmpNote.midiNoteNumber == key.midiNoteNumber {
                     indexRecord = index
+                    break
                 }
                 
                 index += 1
@@ -343,11 +364,21 @@ extension MusicKeyBoard {
             
             
             let tmpNote: TmpNote = {
-                if indexRecord != 0 {
-                    return self.pressedTmpNote[indexRecord]
+                if indexRecord != nil {
+                    return self.pressedTmpNote[indexRecord!]
                     
                 }else {
-                    return self.pressedTmpNote[index - 1]
+                    
+                    if pressedMusicKeys.count != 0 {
+                        let tmpNote = TmpNote.init(self.pressedMusicKeys.first!, pressedTime: self.prevTime)
+                        
+                        tmpNote.unPressedTime = MusicTimer.getpresentTime()
+                        
+                        return tmpNote
+                        
+                    }else {
+                        return self.pressedTmpNote.last!
+                    }
                     
                 }
             }()
@@ -355,10 +386,20 @@ extension MusicKeyBoard {
             
             
             tmpNote.unPressedTime = MusicTimer.getpresentTime()
+            self.prevTime = MusicTimer.getpresentTime()
+            
             printWithMessage("音阶\(tmpNote.midiNoteNumber!)按下时间\(tmpNote.pressedTime!)抬起时间\(tmpNote.unPressedTime!)")
+            
+            
             delegate?.noteOff(note: key.midiNoteNumber)
+            if let lastNote = self.lastNote {
+                delegate?.noteOff(note: lastNote)
+            }
+            
             pressedMusicKeys.remove(key.midiNoteNumber)
         }
+    
+            
     }
     
     private func getNoteSetFromTouches(touches: Set<UITouch>) -> Set<UInt8> {

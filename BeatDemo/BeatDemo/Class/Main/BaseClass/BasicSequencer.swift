@@ -23,6 +23,11 @@ class BasicSequencer: NSObject{
     
     var midiSampler = AKMIDISampler()
     var mixer = AKMixer()
+    var midiCompresser : AKCompressor
+    var reverb : AKReverb?
+    var reverbMixer : AKDryWetMixer?
+    var delay : AKDelay?
+    var delayMixer : AKDryWetMixer?
     var currentTempo = 110.0 {
         didSet {
             sequencer.setTempo(currentTempo)
@@ -37,7 +42,10 @@ class BasicSequencer: NSObject{
     override init() {
         
         
-        try! midiSampler.loadMelodicSoundFont("GeneralUser", preset: 5)
+        try! midiSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
+        midiCompresser = AKCompressor(midiSampler)
+        
+        
         
         //bgm 音色
         try! paino1Sampler.loadMelodicSoundFont("GeneralUser", preset: 3)
@@ -45,9 +53,16 @@ class BasicSequencer: NSObject{
         try! fluteSampler.loadMelodicSoundFont("GeneralUser", preset: 8)
         
         
-        [midiSampler,paino1Sampler,fluteSampler] >>> mixer
+        [midiCompresser,paino1Sampler,fluteSampler] >>> mixer
         
-        AudioKit.output = mixer
+        reverb = AKReverb(mixer)
+        reverbMixer = AKDryWetMixer(mixer, reverb)
+        
+        delay = AKDelay(reverb)
+        delay?.time = 0.1
+        delayMixer = AKDryWetMixer(reverb,delay)
+        
+        AudioKit.output = delayMixer
         do {
             try AudioKit.start()
         } catch {
