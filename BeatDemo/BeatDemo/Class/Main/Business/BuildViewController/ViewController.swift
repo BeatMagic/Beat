@@ -344,19 +344,17 @@ extension ViewController {
             // 小节Model里有音
             if sectionModel.passNoteEventArray.count != 0 {
                 
-                playDelayTime = sectionModel.passNoteEventArray.first!.startTime - sectionModel.startTime - sectionModel.delayTime
+//                playDelayTime = sectionModel.passNoteEventArray.first!.startTime - sectionModel.startTime
+                playDelayTime = sectionModel.passNoteEventArray.first!.startBeat / DataStandard.oneBeatWithTime
+                
+                DelayTask.createTaskWith(name: "第\(sectionIndex)小节", workItem: {
+                    self.basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
+                    self.basicSequencer.playMelody()
+                    
+                }, delayTime: playDelayTime - fromSectionIndex * 3)
                 
             // 没有音
-            }else {
-                playDelayTime = 3 - sectionModel.delayTime
-                
             }
-            
-            DelayTask.createTaskWith(name: "第\(sectionIndex)小节", workItem: {
-                self.basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
-                self.basicSequencer.playMelody()
-                
-            }, delayTime: (sectionIndex - fromSectionIndex) * 3 + playDelayTime)
             
         }
     
