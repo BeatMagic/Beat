@@ -22,6 +22,8 @@ class MusicKeyBoard: UIView {
     var lastPressedTmpNote: TmpNote? = nil
     /// 上一次按下的时间
     var lastPressedTime: Double! = 0
+    /// 上一次touch的地址
+    var lastTouchAddr: String!
 
 
     
@@ -166,8 +168,10 @@ extension MusicKeyBoard {
         
         VariousOperateFunc.setMusicKeysEverySection(
             self.musicKeysArray,
+            musicKeyNotes: DataStandard.MusicKeysRulesA,
             stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
-            musicKeyNotes: DataStandard.MusicKeysRulesA )
+            stableKeysNextRulesArray: DataStandard.MusicStabileKeysIndexArray[1]
+        )
         
     }// funcEnd
     
@@ -211,7 +215,7 @@ extension MusicKeyBoard {
     }
     
     /// 抬起上一个键的封装
-    private func pressRemovedLastNote() -> Void {
+    func pressRemovedLastNote() -> Void {
 
         
         // 临时音为空直接返回
@@ -279,6 +283,7 @@ extension MusicKeyBoard {
             let touch = touches.first
             if let key = self.getKeyFromLocation(loc: touch!.location(in: self)) {
                 self.pressAdded(newKey: key)
+                self.lastTouchAddr = String(format: "%p",  touch!)
                 
             }
             
@@ -288,6 +293,7 @@ extension MusicKeyBoard {
             for touch in touches {
                 if let key = self.getKeyFromLocation(loc: touch.location(in: self)) {
                     self.pressAdded(newKey: key)
+                    self.lastTouchAddr = String(format: "%p",  touch)
                     
                 }else {
                     self.pressRemovedLastNote()
@@ -304,27 +310,29 @@ extension MusicKeyBoard {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
-            if let key = self.getKeyFromLocation(loc: touch.location(in: self)) {
-
-                // 如果是第一次点击
-                if self.lastPressedTmpNote == nil {
-                    self.pressAdded(newKey: key)
+            
+            if self.lastTouchAddr == String(format: "%p", touch) {
+                if let key = self.getKeyFromLocation(loc: touch.location(in: self)) {
                     
-                // 如果不是第一次点击
-                }else {
-                    // 点击其他按钮的情况
-                    if key.midiNoteNumber != self.lastPressedTmpNote!.midiNoteNumber {
+                    // 如果是第一次点击
+                    if self.lastPressedTmpNote == nil {
                         self.pressAdded(newKey: key)
+                        
+                        // 如果不是第一次点击
+                    }else {
+                        // 点击其他按钮的情况
+                        if key.midiNoteNumber != self.lastPressedTmpNote!.midiNoteNumber {
+                            self.pressAdded(newKey: key)
+                            
+                        }
                         
                     }
                     
+                }else {
+                    self.pressRemovedLastNote()
+                    
                 }
-
-            }else {
-                self.pressRemovedLastNote()
-                
             }
-            
         }
 
     }

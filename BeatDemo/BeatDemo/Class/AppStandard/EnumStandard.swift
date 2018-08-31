@@ -51,7 +51,7 @@ class EnumStandard: NSObject {
         /// 关闭
         case close = "close"
         
-        /// 未完成
+        /// 已完成
         case finished = "finished"
         /// 未完成
         case unfinished = "unfinished"

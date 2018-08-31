@@ -111,46 +111,30 @@ extension ProgressButtonManager {
     private static func resetProgress() -> Void {
         
         for index in 0 ..< 9 {
-            if index == ProgressButtonManager.presentButtonIndex {
-                ProgressButtonManager.imageViewArray[ProgressButtonManager.presentButtonIndex].image = UIImage.init(named: EnumStandard.ImageName.finished.rawValue)
+            if index <= ProgressButtonManager.presentButtonIndex {
+                ProgressButtonManager.buttonArray[index].setProgress(progress: 1, true)
                 
             }else {
-                ProgressButtonManager.imageViewArray[index].image = UIImage.init(named: EnumStandard.ImageName.unfinished.rawValue)
+                ProgressButtonManager.buttonArray[index].setProgress(progress: 0, true)
             }
         }
-        
-        
-        
-        
-        
-        
-//            else if index > ProgressButtonManager.presentButtonIndex  {
-//                buttonArray[index].setProgress(progress: 0, false)
-//
-//            }
-        
         
     }// funcEnd
     
     ///  根据是否有音符数组重新展示
     private static func resetFinishedImageViewArray() -> Void {
         for index in 0 ..< 9 {
-//            let finishedImage = ProgressButtonManager.imageViewArray[index]
-            let finishedButton = ProgressButtonManager.buttonArray[index]
-            
+            let finishedImageView = ProgressButtonManager.imageViewArray[index]
             let isFinished = ProgressButtonManager.hasNotesArray[index]
-            
-            
-            
             
             if isFinished == true {
                 DispatchQueue.main.async {
-                    finishedButton.setProgress(progress: 1, false)
+                    finishedImageView.image = UIImage.init(named: EnumStandard.ImageName.finished.rawValue)
                 }
                 
             }else {
                 DispatchQueue.main.async {
-                    finishedButton.setProgress(progress: 0, false)
+                    finishedImageView.image = UIImage.init(named: EnumStandard.ImageName.unfinished.rawValue)
                 }
                 
             }

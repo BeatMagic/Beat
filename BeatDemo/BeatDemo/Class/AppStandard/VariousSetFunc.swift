@@ -13,8 +13,9 @@ class VariousOperateFunc: NSObject {
     static let highWhiteNote: EnumStandard.ScaleNotes = EnumStandard.ScaleNotes.B
     
     static func setMusicKeysEverySection(_ musicKeysArray: [BaseMusicKey],
+                                         musicKeyNotes: [Int],
                                          stableKeysRulesArray: [Int],
-                                         musicKeyNotes: [Int] ) -> Void {
+                                         stableKeysNextRulesArray: [Int]?) -> Void {
         
         let absoluteNum = highWhiteNote.rawValue
         var index = 0
@@ -23,23 +24,38 @@ class VariousOperateFunc: NSObject {
             
             musicKey.midiNoteNumber = DataStandard.root - UInt8(-musicKeyNotes[index] + absoluteNum)
             
+            
             if stableKeysRulesArray.contains(index) {
-                
+
                 DispatchQueue.main.async {
                     musicKey.backgroundColor = UIColor.flatGreen
                 }
-                
-                
+
+
             }else {
                 DispatchQueue.main.async {
                     musicKey.backgroundColor = UIColor.white
                 }
             }
             
+//            musicKey.backgroundColor = .clear
+            
+            if let nextRulesArray = stableKeysNextRulesArray {
+                if nextRulesArray.contains(index) {
+                    musicKey.gradientTimeInterval = (MusicTimer.getpresentTime() - Double.init(ProgressButtonManager.getPresentButtonIndex() * 3)) / 3
+                }
+                
+            }else {
+                musicKey.gradientTimeInterval = 0
+                
+            }
+            
             
             index += 1
         }
         
+        
+
     }
     
     
