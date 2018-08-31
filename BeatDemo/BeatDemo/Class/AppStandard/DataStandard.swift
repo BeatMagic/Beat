@@ -23,10 +23,39 @@ class DataStandard: NSObject {
         0, -2, -3, -5, -6, -9, -10, -12, -14, -15, -17, -18
     ]
     
-    /// 生成音乐键的规则 前四小节
+    /// 生成音乐键的规则 后五小节
     static let MusicKeysRulesB: [Int] = [
         0, -2, -3, -5, -7, -9, -10, -12, -14, -15, -17, -19
     ]
+    
+    /// 生成音乐键的音阶数组 (规则A)
+    static let MusicKeysNoteArrayA: [UInt8] = {
+        var tmpArray: [UInt8] = []
+        
+        for index in 0 ..< 9 {
+            let noteA = root - UInt8(-MusicKeysRulesA[index])
+            tmpArray.append(noteA)
+    
+        }
+        
+        return tmpArray
+    }()
+    
+    /// 生成音乐键的音阶数组 (规则B)
+    static let MusicKeysNoteArrayB: [UInt8] = {
+        var tmpArray: [UInt8] = []
+        
+        for index in 0 ..< 9 {
+            let noteA = root - UInt8(-MusicKeysRulesB[index])
+            tmpArray.append(noteA)
+            
+        }
+        
+        return tmpArray
+    }()
+    
+    
+    
     
     /// 音乐键标题
     static let MusicKeysTitle: [String] = [

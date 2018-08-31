@@ -40,14 +40,17 @@ class NoteEvent: NSObject {
         self.endTime = endTime
         self.passedNotes = passedNotes
         
-        self.belongToSection = Int.init(startTime) / 3
+        
+        
+        self.startBeat = DataStandard.getBeat(startTime)
+        self.endbeat = DataStandard.getBeat(endTime)
+        
+        self.belongToSection = Int.init(self.startBeat / 16)
         if self.endTime > Double.init((self.belongToSection + 1) * 3) {
             self.isTooLong = true
             self.tooLongTime = self.endTime - Double.init((self.belongToSection + 1) * 3)
         }
         
-        self.startBeat = DataStandard.getBeat(startTime)
-        self.endbeat = DataStandard.getBeat(endTime)
         super.init()
         
     }

@@ -23,7 +23,6 @@ class MusicTimer: NSObject {
     private static var presentTime: Double = 0 {
         didSet {
             ProgressButtonManager.presentTime = MusicTimer.presentTime
-            print("\(MusicTimer.presentTime)秒")
         }
     }
     

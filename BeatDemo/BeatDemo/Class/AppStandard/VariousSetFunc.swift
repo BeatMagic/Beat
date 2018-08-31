@@ -14,7 +14,7 @@ class VariousOperateFunc: NSObject {
     
     static func setMusicKeysEverySection(_ musicKeysArray: [BaseMusicKey],
                                          stableKeysRulesArray: [Int],
-                                         musicKeyNotes: [Int]) -> Void {
+                                         musicKeyNotes: [Int] ) -> Void {
         
         let absoluteNum = highWhiteNote.rawValue
         var index = 0

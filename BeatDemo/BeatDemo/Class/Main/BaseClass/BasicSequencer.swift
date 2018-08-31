@@ -12,10 +12,11 @@ import AudioKit
 class BasicSequencer: NSObject{
     
     var sequencer = AKSequencer()
-    
     //用于规则生成存放midi
     var bgmSequencer = AKSequencer()
     
+    //用于即时播放用户输入的sampler
+    var inputSampler = AKMIDISampler()
     //bgmSampler
     var paino1Sampler = AKMIDISampler()
     
@@ -45,6 +46,7 @@ class BasicSequencer: NSObject{
     override init() {
         
         
+        try! inputSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
         try! midiSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
         midiCompresser = AKCompressor(midiSampler)
         
@@ -56,7 +58,7 @@ class BasicSequencer: NSObject{
         try! fluteSampler.loadMelodicSoundFont("GeneralUser", preset: 8)
         
         
-        [midiCompresser,paino1Sampler,fluteSampler] >>> mixer
+        [inputSampler,midiCompresser,paino1Sampler,fluteSampler] >>> mixer
         
         reverb = AKReverb(mixer)
         reverbMixer = AKDryWetMixer(mixer, reverb)
@@ -66,7 +68,8 @@ class BasicSequencer: NSObject{
         delayMixer = AKDryWetMixer(reverb,delay)
         
         booster = AKBooster(delayMixer)
-        booster?.gain = 3.0
+        booster?.gain = 3
+        
         AudioKit.output = booster
         do {
             try AudioKit.start()
@@ -77,9 +80,20 @@ class BasicSequencer: NSObject{
         super.init()
     }
     
+    func SetPlayVolume(volume:Double)
+    {
+        var vol = volume
+        if volume<0{
+            vol = 0
+        }
+        if volume>1.0{
+            vol = 1.0
+        }
+        midiSampler.volume = vol
+    }
     
     func GetSampler() -> AKAppleSampler{
-        return self.midiSampler
+        return self.inputSampler
     }
     
     func SetNoteEventSeq(noteEventSeq:[NoteEvent]){

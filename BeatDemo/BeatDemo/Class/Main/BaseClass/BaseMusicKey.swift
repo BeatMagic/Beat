@@ -11,7 +11,6 @@ import UIKit
 class BaseMusicKey: UIButton {
     /// 按钮Index
     let keyIndex: Int
-    
     /// 音阶
     var midiNoteNumber: UInt8!
     /// 是否为主音键

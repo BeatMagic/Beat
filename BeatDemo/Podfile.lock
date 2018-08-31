@@ -7,9 +7,6 @@ PODS:
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - Hero (1.2.0)
-  - RxCocoa (4.1.2):
-    - RxSwift (~> 4.0)
-  - RxSwift (4.1.2)
   - SnapKit (4.0.0)
   - SVProgressHUD (2.2.5)
   - SwiftMessages (4.1.2)
@@ -25,8 +22,6 @@ DEPENDENCIES:
   - ButtonProgressBar-iOS
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - Hero
-  - RxCocoa (~> 4.0)
-  - RxSwift (~> 4.0)
   - SnapKit (~> 4.0.0)
   - SVProgressHUD
   - SwiftMessages
@@ -38,8 +33,6 @@ SPEC REPOS:
     - AudioKit
     - ButtonProgressBar-iOS
     - Hero
-    - RxCocoa
-    - RxSwift
     - SnapKit
     - SVProgressHUD
     - SwiftMessages
@@ -59,13 +52,11 @@ SPEC CHECKSUMS:
   ButtonProgressBar-iOS: 1127f15c7ab843648febc857fc2018c8224675c7
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
-  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
-  RxSwift: e49536837d9901277638493ea537394d4b55f570
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftMessages: d81f48c1f8b6bc1dbebdfffe11226f0344f937ca
   XLActionController: 007868251c0eed70d649d06c1625259b73b3a600
 
-PODFILE CHECKSUM: 5cd898871d4723dbcc057bc86f074e9131050195
+PODFILE CHECKSUM: cf73eb2b2f14d72f1923a16fea3dcec9aa983837
 
 COCOAPODS: 1.5.0

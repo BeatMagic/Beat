@@ -149,7 +149,7 @@ extension EditViewController {
             
             localMusicPlayer.play()
             
-            VariousOperateFunc.playMIDI(sectionArray: self.playSectionArray, totalDelayTime: 27, basicSequencer: self.basicSequencer)
+            VariousOperateFunc.playMIDI(sectionArray: self.playSectionArray, totalDelayTime: 24, basicSequencer: self.basicSequencer)
             
         }
     }// funcEnd

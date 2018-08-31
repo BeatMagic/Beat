@@ -23,13 +23,6 @@ class ProgressButtonManager: NSObject {
             /// 更新按钮index
             ProgressButtonManager.presentButtonIndex = ProgressButtonManager.getPresentButtonIndex(presentTime)
             
-//            if presentTime == 0 {
-//                return
-//
-//            }else {
-//
-//            }
-            
             /// 刷新按钮状态
             ProgressButtonManager.resetProgress()
         }
@@ -116,20 +109,6 @@ extension ProgressButtonManager {
     
     /// 根据当前时间重新绘制进度按钮
     private static func resetProgress() -> Void {
-        
-//        for index in 0 ..< 9 {
-//            if index < ProgressButtonManager.presentButtonIndex {
-//                buttonArray[index].setProgress(progress: 1, false)
-//
-//            }else if index == ProgressButtonManager.presentButtonIndex  {
-//                let progress = (ProgressButtonManager.presentTime - Double.init(ProgressButtonManager.presentButtonIndex * 3))  / 3
-//                buttonArray[ProgressButtonManager.presentButtonIndex].setProgress(progress: CGFloat(progress), false)
-//                buttonArray[ProgressButtonManager.presentButtonIndex].isUserInteractionEnabled = true
-//
-//            }else {
-//                buttonArray[index].setProgress(progress: 0, false)
-//            }
-//        }
         
         for index in 0 ..< 9 {
             if index == ProgressButtonManager.presentButtonIndex {

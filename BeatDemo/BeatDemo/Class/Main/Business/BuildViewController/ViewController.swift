@@ -84,11 +84,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
-
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -148,6 +143,7 @@ extension ViewController {
     
     /// 删除音乐点击事件
     @objc func deleteMusicEvent() -> Void {
+        
         let alertController = SimpleAlertController.getSimpleAlertController(title: "删除所有小节输入的音符?", message: nil) {
             
             // 取消播放
@@ -160,6 +156,8 @@ extension ViewController {
             MusicTimer.setPresentTime(0)
             ProgressButtonManager.presentTime = 0
             
+            ProgressButtonManager.hasNotesArray = [false, false, false, false, false, false, false, false, false, ]
+            
             // 重置播放器时间条
             self.localMusicPlayer.currentTime = 0
             
@@ -171,13 +169,24 @@ extension ViewController {
             VariousOperateFunc.setMusicKeysEverySection(
                 self.keyBoardView.musicKeysArray,
                 stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
-                musicKeyNotes: DataStandard.MusicKeysRulesA)
+                musicKeyNotes: DataStandard.MusicKeysRulesA
+                )
             
             self.keyBoardView.noteEventModelList = []
             
-            for sectionModel in self.keyBoardView.sectionArray {
-                sectionModel.passNoteEventArray = []
-            }
+            self.keyBoardView.sectionArray = {
+                var tmpSectionArray: [Section] = []
+                for index in 0 ..< 9 {
+                    let sectionModel = Section.init(startTime: Double(index * 3),
+                                                    endTime: Double((index + 1) * 3),
+                                                    passNoteEventArray: nil,
+                                                    delayTime: nil)
+                    
+                    tmpSectionArray.append(sectionModel)
+                }
+                
+                return tmpSectionArray
+            }()
             
             
             SVProgressHUD.showSuccess(withStatus: "删除成功")
@@ -200,7 +209,23 @@ extension ViewController {
         
         self.selectedSection = (sender as! UIButton).tag
         self.musicState = .caused
+        MusicTimer.setPresentTime(self.selectedSection! * 3)
         ProgressButtonManager.presentTime = self.selectedSection! * 3
+        self.nextNeedRecordTime = self.selectedSection! * 3 + 3
+        
+        if self.nextNeedRecordTime >= 18 {
+            VariousOperateFunc.setMusicKeysEverySection(
+                self.keyBoardView.musicKeysArray,
+                stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[self.selectedSection!],
+                musicKeyNotes: DataStandard.MusicKeysRulesA )
+            
+        }else {
+            VariousOperateFunc.setMusicKeysEverySection(
+                self.keyBoardView.musicKeysArray,
+                stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[self.selectedSection!],
+                musicKeyNotes: DataStandard.MusicKeysRulesB)
+            
+        }
 
     }// funcEnd
     
@@ -289,20 +314,11 @@ extension ViewController {
             }
             
             
-            let queueGroup = DispatchGroup.init()
-            let basicQueue = DispatchQueue(label: "getSectionModel")
-            basicQueue.async(group: queueGroup, execute: {
-                // 在子线程转换
-                Section.getSectionModel(noteEventArray: self.keyBoardView.noteEventModelList, tmpSectionModelArray: self.keyBoardView.sectionArray)
-                
-            })
             
-            queueGroup.notify(queue: basicQueue) {
-                self.keyBoardView.noteEventModelList = []
-            }
             
             self.basicSequencer.stopPlayMelody()
             DelayTask.cancelAllWorkItems()
+            Section.getSectionModel(noteEventArray: self.keyBoardView.noteEventModelList, tmpSectionModelArray: self.keyBoardView.sectionArray)
             
         }else if state == .played  {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.cause.rawValue), for: .normal)
@@ -320,6 +336,11 @@ extension ViewController {
             }
             
             if self.selectedSection == nil {
+                self.selectedSection = ProgressButtonManager.getPresentButtonIndex()
+                MusicTimer.setPresentTime(selectedSection! * 3)
+                self.playMusic(selectedSection!)
+                
+                self.selectedSection = nil
                 localMusicPlayer.play()
                 
             }else {
@@ -383,12 +404,13 @@ extension ViewController: MusicKeyDelegate {
     }
     
     func noteOn(note: UInt8) {
-        self.basicSequencer.stopPlayMelody()
+        self.basicSequencer.SetPlayVolume(volume: 0)
         try! self.sampler.play(noteNumber: note, velocity: 95, channel: 1)
     }
     
     func noteOff(note: UInt8) {
         try! self.sampler.stop(noteNumber: note, channel: 1)
+        self.basicSequencer.SetPlayVolume(volume: 1)
     }
     
 }
@@ -397,7 +419,10 @@ extension ViewController: TimerDelegate {
     func doThingsWhenTiming() {
         // 下一小节需要记录的时间节点
         if MusicTimer.getpresentTime() >= nextNeedRecordTime {
-            if self.circleNum == 0 {
+//            self.keyBoardView.dealPreviousPressedMusicKeys()
+            
+            
+                
                 let presentSectionIndex = ProgressButtonManager.getPresentButtonIndex()
                 
                 nextNeedRecordTime += 3
@@ -406,50 +431,66 @@ extension ViewController: TimerDelegate {
                     VariousOperateFunc.setMusicKeysEverySection(
                         self.keyBoardView.musicKeysArray,
                         stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[presentSectionIndex],
-                        musicKeyNotes: DataStandard.MusicKeysRulesA)
+                        musicKeyNotes: DataStandard.MusicKeysRulesA )
                     
                 }else {
                     VariousOperateFunc.setMusicKeysEverySection(
                         self.keyBoardView.musicKeysArray,
                         stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[presentSectionIndex],
-                        musicKeyNotes: DataStandard.MusicKeysRulesB)
+                        musicKeyNotes: DataStandard.MusicKeysRulesB )
                     
                 }
                 
-                self.keyBoardView.sectionArray[presentSectionIndex - 1].passNoteEventArray = []
-                
-                let queueGroup = DispatchGroup.init()
-                let basicQueue = DispatchQueue(label: "getSectionModel")
-                basicQueue.async(group: queueGroup, execute: {
-                    // 在子线程转换
-                    Section.getSectionModel(noteEventArray: self.keyBoardView.noteEventModelList, tmpSectionModelArray: self.keyBoardView.sectionArray)
+                // 更新是否有音的UI
+                for index in 0 ..< presentSectionIndex  {
                     
-                })
-                
-                queueGroup.notify(queue: basicQueue) {
-                    if self.keyBoardView.sectionArray[presentSectionIndex - 1].passNoteEventArray.count != 0 {
-                        ProgressButtonManager.hasNotesArray[presentSectionIndex - 1] = true
+                    let sectionModel = self.keyBoardView.sectionArray[index]
+                    if ProgressButtonManager.hasNotesArray[presentSectionIndex - 1] == false {
                         
+                        for note in self.keyBoardView.noteEventModelList {
+                            
+                            if note.startBeat >= sectionModel.startBeat && note.startBeat < sectionModel.endbeat {
+                                ProgressButtonManager.hasNotesArray[index] = true
+                                break
+                                
+                            }else if note.endbeat >= sectionModel.startBeat && note.endbeat < sectionModel.endbeat {
+                                ProgressButtonManager.hasNotesArray[index] = true
+                                break
+                                
+                            }else if note.startBeat <= sectionModel.startBeat && note.endbeat >= sectionModel.endbeat {
+                                ProgressButtonManager.hasNotesArray[index] = true
+                                break
+                                
+                            }
+                        }
                     }
-                    
                 }
             }
-            
         }
-        
-    }
+    
+    
+    
+    //
+    
+    /*
+
+     */
     
     func doThingsWhenEnd() {
+        
         circleNum += 1
         VariousOperateFunc.setMusicKeysEverySection(
             self.keyBoardView.musicKeysArray,
             stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[0],
             musicKeyNotes: DataStandard.MusicKeysRulesA)
         
+        Section.getSectionModel(
+            noteEventArray: self.keyBoardView.noteEventModelList,
+            tmpSectionModelArray: self.keyBoardView.sectionArray)
+        
         nextNeedRecordTime = 3
-        keyBoardView.noteEventModelList = []
         ProgressButtonManager.deleteAllPresentButtonProgress()
-
+        
         
         DelayTask.cancelAllWorkItems()
         
