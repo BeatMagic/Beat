@@ -39,30 +39,30 @@ class BaseMusicKey: UIButton {
         }
     }
     
-    var gradientTimeInterval: CFTimeInterval = CFTimeInterval.init(0) {
-        didSet {
-            self.gradient.timeOffset = gradientTimeInterval
-        }
-    }
+//    var gradientTimeInterval: CFTimeInterval = CFTimeInterval.init(0) {
+//        didSet {
+//            self.gradient.timeOffset = gradientTimeInterval
+//        }
+//    }
 
     
-    /// 渐变色处理
-    private lazy var gradient: CAGradientLayer = [
-        UIColor.white,
-        ].gradient { gradient in
-            gradient.speed = 0
-            gradient.timeOffset = 0
-
-            return gradient
-    }
-    /// 渐变色动画
-    private lazy var animation: CABasicAnimation = { [unowned self] in
-        let animation = CABasicAnimation(keyPath: "colors")
-        animation.duration = 1.0
-        animation.isRemovedOnCompletion = false
-        
-        return animation
-    }()
+//    /// 渐变色处理
+//    private lazy var gradient: CAGradientLayer = [
+//        UIColor.white,
+//        ].gradient { gradient in
+//            gradient.speed = 0
+//            gradient.timeOffset = 0
+//
+//            return gradient
+//    }
+//    /// 渐变色动画
+//    private lazy var animation: CABasicAnimation = { [unowned self] in
+//        let animation = CABasicAnimation(keyPath: "colors")
+//        animation.duration = 1.0
+//        animation.isRemovedOnCompletion = false
+//
+//        return animation
+//    }()
     
     /// 初始化
     init(frame: CGRect, midiNoteNumber: UInt8, keyIndex: Int, isMainKey: Bool) {
@@ -96,10 +96,10 @@ extension BaseMusicKey {
         
         self.backgroundColor = .clear
         
-        self.animation.fromValue = gradient.colors
-        self.animation.toValue = UIColor.flatGreen.cgColor
-        self.gradient.add(self.animation, forKey: "changeColors")
-        self.layer.insertSublayer(self.gradient, at: 0)
+//        self.animation.fromValue = gradient.colors
+//        self.animation.toValue = UIColor.flatGreen.cgColor
+//        self.gradient.add(self.animation, forKey: "changeColors")
+//        self.layer.insertSublayer(self.gradient, at: 0)
         
         if self.isMainKey == true {
             let dogFrame = CGRect.init(x: 0, y: (self.getHeight() - self.getWidth()) / 2, width: self.getWidth(), height: self.getWidth())

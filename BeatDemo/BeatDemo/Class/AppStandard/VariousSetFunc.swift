@@ -40,15 +40,15 @@ class VariousOperateFunc: NSObject {
             
 //            musicKey.backgroundColor = .clear
             
-            if let nextRulesArray = stableKeysNextRulesArray {
-                if nextRulesArray.contains(index) {
-                    musicKey.gradientTimeInterval = (MusicTimer.getpresentTime() - Double.init(ProgressButtonManager.getPresentButtonIndex() * 3)) / 3
-                }
-                
-            }else {
-                musicKey.gradientTimeInterval = 0
-                
-            }
+//            if let nextRulesArray = stableKeysNextRulesArray {
+//                if nextRulesArray.contains(index) {
+//                    musicKey.gradientTimeInterval = (MusicTimer.getpresentTime() - Double.init(ProgressButtonManager.getPresentButtonIndex() * 3)) / 3
+//                }
+//
+//            }else {
+//                musicKey.gradientTimeInterval = 0
+//
+//            }
             
             
             index += 1
