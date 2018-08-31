@@ -45,7 +45,7 @@ class EditViewController: UIViewController {
     var sampler: AKAppleSampler!
     let basicSequencer = BasicSequencer()
     let localMusicPlayer: AVAudioPlayer = {
-        let pathStr = Bundle.main.path(forResource: "编曲图谱3伴奏.wav", ofType: nil)
+        let pathStr = Bundle.main.path(forResource: "播放伴奏.mp3", ofType: nil)
         let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
         player.prepareToPlay()
         player.numberOfLoops = -1
@@ -149,7 +149,7 @@ extension EditViewController {
             
             localMusicPlayer.play()
             
-            VariousOperateFunc.playMIDI(sectionArray: self.playSectionArray, totalDelayTime: 24, basicSequencer: self.basicSequencer)
+            VariousOperateFunc.playMIDI(sectionArray: self.playSectionArray, totalDelayTime: 12, basicSequencer: self.basicSequencer)
             
         }
     }// funcEnd

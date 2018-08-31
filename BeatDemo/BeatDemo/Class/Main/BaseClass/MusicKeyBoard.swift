@@ -20,6 +20,11 @@ class MusicKeyBoard: UIView {
     //MARK:- 重要数据
     /// 上一个按下的音
     var lastPressedTmpNote: TmpNote? = nil
+    /// 上一次按下的时间
+    var lastPressedTime: Double! = 0
+
+
+    
     /// 音阶数组
     var noteEventModelList: [NoteEvent] = []
     /// 小节模型
@@ -71,6 +76,7 @@ class MusicKeyBoard: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.isMultipleTouchEnabled = true
+        self.isExclusiveTouch = true
         
         self.musicKeysViewModel = {
             if ToolClass.getIPhoneType() == "iPhone X" {
@@ -199,6 +205,9 @@ extension MusicKeyBoard {
         
         // 开始播放
         self.delegate?.noteOn(note: newKey.midiNoteNumber)
+        
+        // 更新
+        self.lastPressedTime = MusicTimer.getpresentTime()
     }
     
     /// 抬起上一个键的封装
@@ -262,6 +271,10 @@ extension MusicKeyBoard {
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+
+        
+        
         if touches.count == 1 { // 只按了一处
             let touch = touches.first
             if let key = self.getKeyFromLocation(loc: touch!.location(in: self)) {
@@ -270,6 +283,7 @@ extension MusicKeyBoard {
             }
             
         }else if touches.count > 1 { // 多点触控
+            
             
             for touch in touches {
                 if let key = self.getKeyFromLocation(loc: touch.location(in: self)) {

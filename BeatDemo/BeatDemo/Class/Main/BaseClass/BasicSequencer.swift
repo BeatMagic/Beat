@@ -31,7 +31,7 @@ class BasicSequencer: NSObject{
     var delay : AKDelay?
     var delayMixer : AKDryWetMixer?
     var booster : AKBooster?
-    var currentTempo = 110.0 {
+    var currentTempo = 80.0 {
         didSet {
             sequencer.setTempo(currentTempo)
         }

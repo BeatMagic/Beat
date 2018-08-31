@@ -68,7 +68,7 @@ class ViewController: UIViewController {
     let basicSequencer = BasicSequencer()
     
     let localMusicPlayer: AVAudioPlayer = {
-        let pathStr = Bundle.main.path(forResource: "9小节输入伴奏.wav", ofType: nil)
+        let pathStr = Bundle.main.path(forResource: "输入伴奏.mp3", ofType: nil)
         let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
         player.prepareToPlay()
         player.numberOfLoops = -1
