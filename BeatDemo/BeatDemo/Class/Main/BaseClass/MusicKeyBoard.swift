@@ -205,13 +205,13 @@ extension MusicKeyBoard {
     private func pressAdded(newKey: BaseMusicKey) {
         self.pressRemovedLastNote()
         
-        self.lastPressedTmpNote = TmpNote.init(newKey.midiNoteNumber, pressedTime: MusicTimer.getpresentTime())
+        self.lastPressedTmpNote = TmpNote.init(newKey.midiNoteNumber, pressedTime: MusicTimer.getTimeFromStartPlayBGM())
         
         // 开始播放
         self.delegate?.noteOn(note: newKey.midiNoteNumber)
         
         // 更新
-        self.lastPressedTime = MusicTimer.getpresentTime()
+        self.lastPressedTime = MusicTimer.getTimeFromStartPlayBGM()
     }
     
     /// 抬起上一个键的封装
@@ -228,7 +228,7 @@ extension MusicKeyBoard {
             return
             
         }else { // 最后一个音没有抬起时间点
-            self.lastPressedTmpNote!.unPressedTime = MusicTimer.getpresentTime()
+            self.lastPressedTmpNote!.unPressedTime = MusicTimer.getTimeFromStartPlayBGM()
             
             // 临时音转换为音阶并储存到音阶数组
             let note = NoteEvent.init(startNoteNumber: self.lastPressedTmpNote!.midiNoteNumber, startTime: self.lastPressedTmpNote!.pressedTime, endTime: self.lastPressedTmpNote!.unPressedTime, passedNotes: nil)

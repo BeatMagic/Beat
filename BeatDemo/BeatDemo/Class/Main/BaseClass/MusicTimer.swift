@@ -17,19 +17,56 @@ class MusicTimer: NSObject {
     static var actionClosures: (() -> Void)? = nil
     
     /// 总时间
-    static let totalTime: Double = 27
+    static let totalTime: Int = 27
     
-    /// 目前时间
-    private static var presentTime: Double = 0 {
-        didSet {
-            ProgressButtonManager.presentTime = MusicTimer.presentTime
-        }
-    }
+    /// 目前时间的秒数
+    private static var presentTime: Int = 0
+//    {
+//        didSet {
+//            // 在当前的小节赋值
+//            self.presentSectionIndex = presentTime / 3
+//        }
+//    }
     
     /// 外部代理
     weak static var delegate: TimerDelegate?
     
+    /// 当前小节
+    private static var presentSectionIndex: Int = 0 {
+        didSet {
+            ProgressButtonManager.resetProgress()
+        }
+    }
     
+    /// 播放开始的小节处
+    static var startPlaySectionIndex: Int = 0
+    
+    /// 开始播放时间点
+    static var carryOnMoment: Double = 0
+    
+    
+    /// 获取当前小节index
+    static func getPresentSectionIndex() -> Int {
+        return MusicTimer.presentSectionIndex
+        
+    }// funcEnd
+    
+    /// 设置当前小节
+    static func setPresentSectionIndex(_ index: Int) -> Void {
+        MusicTimer.presentSectionIndex = index
+        MusicTimer.presentTime = index * 3
+        
+    }// funcEnd
+    
+    /// 获取BGM开始播放到当前的时间
+    static func getTimeFromStartPlayBGM() -> Double {
+        return Date().timeIntervalSince1970 - self.carryOnMoment + Double.init(startPlaySectionIndex * 3)
+    }
+    
+    
+}
+
+extension MusicTimer {
     /// 初始化
     static func createOneTimer(_ actionClosures: @escaping (() -> Void)) -> Void {
         MusicTimer.actionClosures = actionClosures
@@ -38,36 +75,46 @@ class MusicTimer: NSObject {
         
         let timer: DispatchSourceTimer? = DispatchSource.makeTimerSource()
         timer!.schedule(deadline: DispatchTime.now(),
-                        repeating: 0.01,
+                        repeating: 1,
                         leeway: DispatchTimeInterval.seconds(0))
         
         timer!.setEventHandler(handler: {
+
+            printWithMessage(MusicTimer.presentTime)
+            
             if MusicTimer.presentTime >= MusicTimer.totalTime {
                 
                 let queueGroup = DispatchGroup.init()
                 DispatchQueue.main.async(group: queueGroup, execute: {
                     MusicTimer.delegate?.doThingsWhenEnd()
-                    
+                    MusicTimer.setPresentSectionIndex(0)
                 })
                 
-                queueGroup.notify(queue: DispatchQueue.main, execute: {
-                    MusicTimer.presentTime = 0
-                })
+            }else {
                 
-                
-                
-            } else {
-                DispatchQueue.main.async {
-                    MusicTimer.presentTime += 0.01
-                    MusicTimer.delegate?.doThingsWhenTiming()
+                DispatchQueue.main.sync {
+                    // 临时
+                    if MusicTimer.presentTime % 3 == 0 {
+                        if MusicTimer.presentTime != 0 {
+                            MusicTimer.presentSectionIndex = MusicTimer.presentTime / 3
+                        }
+                        MusicTimer.delegate!.doThingsWhenTiming()
+                      
+                    }
+                    MusicTimer.presentTime += 1
                 }
+                
             }
+
+            
         })
         
         MusicTimer.shared = timer
+
         
     }// funcEnd
     
+
     /// 开启计时器
     static func startTiming() -> Void {
         if MusicTimer.shared != nil {
@@ -75,7 +122,7 @@ class MusicTimer: NSObject {
             MusicTimer.shared!.resume()
             MusicTimer.timerState = .timing
         }
-
+        
         
     }// funcEnd
     
@@ -85,6 +132,7 @@ class MusicTimer: NSObject {
             timer.suspend()
             MusicTimer.timerState = .caused
         }
+        printWithMessage(self.getPresentSectionIndex())
         
     }// funcEnd
     
@@ -112,17 +160,17 @@ class MusicTimer: NSObject {
         
     }// funcEnd
     
-    /// 获取当前时间点
-    static func getpresentTime() -> Double {
-        return MusicTimer.presentTime
-        
-    }// funcEnd
     
-    /// 设置当前时间点
-    static func setPresentTime(_ presentTime: Double) -> Void {
-        MusicTimer.presentTime = presentTime
-        
-    }// funcEnd
+    /// 销毁并重新创建计时器
+    static func recycleAndCreateTimer(_ nowIndex: Int) -> Void {
+        self.closeTimer()
+        MusicTimer.createOneTimer {}
+        MusicTimer.setPresentSectionIndex(nowIndex)
+        MusicTimer.startTiming()
+        MusicTimer.causeTimer()
+    }
+    
+    
 }
 
 protocol TimerDelegate: class {

@@ -17,17 +17,6 @@ class ProgressButtonManager: NSObject {
     /// 图片数组
     static var imageViewArray: [UIImageView] = []
     
-    /// 当前时间
-    static var presentTime = MusicTimer.getpresentTime() {
-        didSet {
-            /// 更新按钮index
-            ProgressButtonManager.presentButtonIndex = ProgressButtonManager.getPresentButtonIndex(presentTime)
-            
-            /// 刷新按钮状态
-            ProgressButtonManager.resetProgress()
-        }
-    }
-    
     /// 是否有音符数组
     static var hasNotesArray: [Bool] = [
             false, false, false, false, false, false, false, false, false, 
@@ -36,9 +25,6 @@ class ProgressButtonManager: NSObject {
             resetFinishedImageViewArray()
         }
     }
-    
-    /// 当前按钮index
-    private static var presentButtonIndex: Int = 0
     
 
 }
@@ -78,12 +64,6 @@ extension ProgressButtonManager {
         
     }// funcEnd
     
-    /// 返回当前按钮index
-    static func getPresentButtonIndex() -> Int {
-        return presentButtonIndex
-        
-    }// funcEnd
-    
     /// 删除所有图片
     static func deleteAllPresentButtonProgress() -> Void {
 
@@ -108,10 +88,10 @@ extension ProgressButtonManager {
 extension ProgressButtonManager {
     
     /// 根据当前时间重新绘制进度按钮
-    private static func resetProgress() -> Void {
+    static func resetProgress() -> Void {
         
         for index in 0 ..< 9 {
-            if index <= ProgressButtonManager.presentButtonIndex {
+            if index <= MusicTimer.getPresentSectionIndex() {
                 ProgressButtonManager.buttonArray[index].setProgress(progress: 1, true)
                 
             }else {

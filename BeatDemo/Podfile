@@ -21,6 +21,9 @@ target 'BeatDemo' do
     pod 'AudioKit', '~> 4.0'
     pod 'AudioKit/UI'
     
+    # 时间处理
+    pod 'Timepiece'
+    
     # 数据处理
 #    pod 'RxSwift',    '~> 4.0'
 #    pod 'RxCocoa',    '~> 4.0'

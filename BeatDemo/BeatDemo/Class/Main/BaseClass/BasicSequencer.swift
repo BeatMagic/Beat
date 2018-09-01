@@ -11,6 +11,8 @@ import AudioKit
 
 class BasicSequencer: NSObject{
     
+    var firstDelay = 0.0
+    
     var sequencer = AKSequencer()
     //用于规则生成存放midi
     var bgmSequencer = AKSequencer()
@@ -31,11 +33,7 @@ class BasicSequencer: NSObject{
     var delay : AKDelay?
     var delayMixer : AKDryWetMixer?
     var booster : AKBooster?
-    var currentTempo = 80.0 {
-        didSet {
-            sequencer.setTempo(currentTempo)
-        }
-    }
+    var currentTempo = 80.0
     
     var noteEventSeq : [NoteEvent]!
     let sequenceLength = AKDuration(beats: 36.0)
@@ -96,11 +94,11 @@ class BasicSequencer: NSObject{
         return self.inputSampler
     }
     
-    func SetNoteEventSeq(noteEventSeq:[NoteEvent]){
+    func SetNoteEventSeq(noteEventSeq:[NoteEvent],preroll: Bool = true){
         self.noteEventSeq = noteEventSeq
         
         sequencer.stop()
-        generateRecordSeq()
+        generateRecordSeq(preroll: preroll)
     }
     
     
@@ -108,7 +106,6 @@ class BasicSequencer: NSObject{
         _ = sequencer.newTrack()
         sequencer.setLength(sequenceLength)
         sequencer.tracks[0].setMIDIOutput(midiSampler.midiIn)
-        sequencer.setTempo(currentTempo)
         
         //test
         //setupBgmTracks()
@@ -155,8 +152,12 @@ class BasicSequencer: NSObject{
         //print(String(sequencer.tracks[Sequence.melody.rawValue].isEmpty))
         
         //if !sequencer.isPlaying{
+        
+        
         sequencer.rewind()
         //sequencer.preroll()
+        print(sequencer.tempo)
+        print(sequencer.rate)
         sequencer.play()
         //}else{
         //sequencer.stop()
@@ -168,6 +169,7 @@ class BasicSequencer: NSObject{
         //        }
         
     }
+    
     
     /// 停止播放
     func stopPlayMelody() -> Void {
@@ -216,7 +218,7 @@ class BasicSequencer: NSObject{
         sequencer.tracks[typeOfSequence.rawValue].clear()
     }
     
-    func generateRecordSeq(clear: Bool = true){
+    func generateRecordSeq(preroll: Bool = true, clear: Bool = true){
         if clear { sequencer.tracks[0].clear() }
         sequencer.setLength(sequenceLength)
         print("generate!!!!")
@@ -232,18 +234,19 @@ class BasicSequencer: NSObject{
             beats = Double(noteEvent.startBeat)/4.0
             if fbPosition<0{
                 fbPosition = beats
+                firstDelay = noteEvent.startBeat*3/16
+                print(firstDelay)
             }
-            beats -= fbPosition
+            if preroll{
+                beats -= fbPosition
+            }
             let position = AKDuration(beats: beats)
             sequencer.tracks[0].add(noteNumber:noteEvent.startNoteNumber,velocity:velocity,position:position, duration:duration, channel:channel)
             
         }
         sequencer.setLength(sequenceLength)
+        sequencer.setTempo(80.0)
     }
-    
-    
-    
-    
     
     
     
