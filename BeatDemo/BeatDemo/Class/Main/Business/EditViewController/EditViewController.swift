@@ -32,7 +32,8 @@ class EditViewController: UIViewController {
     @IBOutlet var playButton: UIButton!
     
     // MARK: - 数据
-    var playSectionArray: [Section] = []
+    var noteEventArray : [NoteEvent] = []
+
 
     
     // MARK: - 其他
@@ -103,6 +104,7 @@ extension EditViewController {
         
         sampler = basicSequencer.GetSampler()
         basicSequencer.setupMelodyTrack()
+        self.basicSequencer.SetNoteEventSeq(noteEventSeq: self.noteEventArray, preroll: false)
         
     }// funcEnd
     
@@ -123,11 +125,9 @@ extension EditViewController {
     @objc func playButtonEvent() -> Void {
         if musicState == .caused {
             musicState = .played
-            printWithMessage("开始播放")
             
         } else {
             musicState = .caused
-            printWithMessage("播放暂停")
             
         }
     }// funcEnd
@@ -149,7 +149,8 @@ extension EditViewController {
             
             localMusicPlayer.play()
             
-            VariousOperateFunc.playMIDI(sectionArray: self.playSectionArray, totalDelayTime: 12, basicSequencer: self.basicSequencer)
+            VariousOperateFunc.playMIDI(totalDelayTime: 38, basicSequencer: self.basicSequencer)
+            
             
         }
     }// funcEnd

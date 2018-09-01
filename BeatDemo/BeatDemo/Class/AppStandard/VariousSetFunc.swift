@@ -38,17 +38,7 @@ class VariousOperateFunc: NSObject {
                 }
             }
             
-//            musicKey.backgroundColor = .clear
-            
-//            if let nextRulesArray = stableKeysNextRulesArray {
-//                if nextRulesArray.contains(index) {
-//                    musicKey.gradientTimeInterval = (MusicTimer.getpresentTime() - Double.init(ProgressButtonManager.getPresentButtonIndex() * 3)) / 3
-//                }
-//
-//            }else {
-//                musicKey.gradientTimeInterval = 0
-//
-//            }
+
             
             
             index += 1
@@ -59,26 +49,12 @@ class VariousOperateFunc: NSObject {
     }
     
     
-    static func playMIDI(sectionArray: [Section],
-                         totalDelayTime: Double,
+    static func playMIDI(totalDelayTime: Double,
                          basicSequencer: BasicSequencer) -> Void {
         
         DelayTask.cancelAllWorkItems()
-        
-        for sectionModel in sectionArray {
-            // 小节Model里有音
-            if sectionModel.passNoteEventArray.count != 0 {
-                var playDelayTime: Double = 0
-                
-                playDelayTime = Double.init(sectionModel.passNoteEventArray.first!.startBeat) / DataStandard.oneBeatWithTime
-                
-                DelayTask.createTaskWith(name: "", workItem: {
-                    basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
-                    basicSequencer.playMelody()
-                    
-                }, delayTime: playDelayTime + totalDelayTime)
-                
-            }
-        }
+        DelayTask.createTaskWith(workItem: {
+            basicSequencer.playMelody()
+        }, delayTime: totalDelayTime)
     }
 }

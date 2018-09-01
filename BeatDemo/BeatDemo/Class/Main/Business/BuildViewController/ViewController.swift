@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     
     /// 全部音乐ButtonItem
     lazy private var allMusicItem: UIBarButtonItem = {
-        let button = createButton(EnumStandard.ImageName.allMusic.rawValue, tintColor: UIColor.black, action: #selector(allMusicEvent))
+        let button = createButton(EnumStandard.ImageName.edit.rawValue, tintColor: UIColor.black, action: #selector(editButtonEvent))
         button.widthAnchor.constraint(equalToConstant: 25).isActive = true
         button.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
@@ -121,9 +121,13 @@ extension ViewController {
         
         // 底部按钮
         resetButton.addTarget(self, action: #selector(resetMusicEvent), for: .touchUpInside)
+        resetButton.isHidden = true
+        
         playButton.tintColor = UIColor.black
         playButton.addTarget(self, action: #selector(playButtonEvent), for: .touchUpInside)
+        
         editButton.addTarget(self, action: #selector(editButtonEvent), for: .touchUpInside)
+        editButton.isHidden = true
         
     }// funcEnd
     
@@ -197,7 +201,6 @@ extension ViewController {
     
     /// 音乐管理点击事件
     @objc func allMusicEvent() -> Void {
-        printWithMessage("音乐管理")
     }// funcEnd
 
     /// 小节点击事件
@@ -253,13 +256,11 @@ extension ViewController {
         
         if musicState == .caused {
             musicState = .played
-            printWithMessage("开始播放")
             
         } else {
             
             MusicTimer.setPresentSectionIndex(MusicTimer.getPresentSectionIndex())
             musicState = .caused
-            printWithMessage("播放暂停")
         }
     }// funcEnd
     
@@ -268,7 +269,7 @@ extension ViewController {
         self.musicState = .caused
         
         let editViewController = UIViewController.initVControllerFromStoryboard("EditViewController") as! EditViewController
-        editViewController.playSectionArray = self.keyBoardView.sectionArray
+        editViewController.noteEventArray = self.keyBoardView.noteEventModelList
         
         let editNaviViewController = UINavigationController.init(rootViewController: editViewController)
         
@@ -292,8 +293,7 @@ extension ViewController {
                 return
                 
             case .timing:
-                let section = MusicTimer.getPresentSectionIndex()
-                MusicTimer.recycleAndCreateTimer(section)
+                MusicTimer.causeTimer()
                 
             case .caused:
                 break;
@@ -315,6 +315,11 @@ extension ViewController {
                 }
 
                 MusicTimer.startTiming()
+                
+            }else {
+                let section = MusicTimer.getPresentSectionIndex()
+                MusicTimer.recycleAndCreateTimer(section)
+                
             }
             
             if self.selectedSection == nil {
@@ -373,7 +378,8 @@ extension ViewController {
 
                 playDelayTime = sectionModel.passNoteEventArray.first!.startBeat / DataStandard.oneBeatWithTime
                 
-                DelayTask.createTaskWith(name: "第\(sectionIndex)小节", workItem: {
+                DelayTask.createTaskWith(workItem: {
+                    
                     self.basicSequencer.SetNoteEventSeq(noteEventSeq: sectionModel.passNoteEventArray)
                     self.basicSequencer.playMelody()
                     
@@ -390,10 +396,10 @@ extension ViewController {
         
         let presentSectionIndex = MusicTimer.getPresentSectionIndex()
         
-        for index in 0 ..< presentSectionIndex  {
+        for index in 0 ... presentSectionIndex  {
             
             let sectionModel = self.keyBoardView.sectionArray[index]
-            if ProgressButtonManager.hasNotesArray[presentSectionIndex - 1] == false {
+            if ProgressButtonManager.hasNotesArray[index] == false {
                 
                 for note in self.keyBoardView.noteEventModelList {
                     
@@ -418,7 +424,6 @@ extension ViewController {
     /// 在小节处
     func doInSection() -> Void {
         let presentSectionIndex = MusicTimer.getPresentSectionIndex()
-        printWithMessage(presentSectionIndex)
         
         // 变调
         if presentSectionIndex >= 4 {
@@ -466,6 +471,7 @@ extension ViewController {
             stableKeysRulesArray: DataStandard.MusicStabileKeysIndexArray[8],
             stableKeysNextRulesArray: nil
         )
+        self.updateProgessUI()
         
     }// funcEnd
 }
@@ -494,14 +500,6 @@ extension ViewController: TimerDelegate {
         self.doInSection()
         
     }
-    
-    
-    
-    //
-    
-    /*
-
-     */
     
     func doThingsWhenEnd() {
         

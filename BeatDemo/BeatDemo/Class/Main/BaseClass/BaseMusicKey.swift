@@ -8,6 +8,7 @@
 
 import UIKit
 import Hue
+import ChameleonFramework
 
 class BaseMusicKey: UIButton {
     /// 按钮Index
@@ -105,8 +106,10 @@ extension BaseMusicKey {
             let dogFrame = CGRect.init(x: 0, y: (self.getHeight() - self.getWidth()) / 2, width: self.getWidth(), height: self.getWidth())
             let dogImageView = UIImageView.init(frame: dogFrame)
             dogImageView.image = UIImage.init(named: EnumStandard.ImageName.mainMusicKey.rawValue)
+            dogImageView.tintColor = UIColor.flatGreen
             
             self.addSubview(dogImageView)
+            
             
         }else {
             

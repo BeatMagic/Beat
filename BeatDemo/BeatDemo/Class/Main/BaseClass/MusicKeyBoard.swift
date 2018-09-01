@@ -277,8 +277,6 @@ extension MusicKeyBoard {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
 
-        
-        
         if touches.count == 1 { // 只按了一处
             let touch = touches.first
             if let key = self.getKeyFromLocation(loc: touch!.location(in: self)) {
@@ -338,7 +336,14 @@ extension MusicKeyBoard {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.pressRemovedLastNote()
+        for touch in touches {
+            
+            if self.lastTouchAddr == String(format: "%p", touch) {
+                self.pressRemovedLastNote()
+
+            }
+        }
+        
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>?, with event: UIEvent?) {

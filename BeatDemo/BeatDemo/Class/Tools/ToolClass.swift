@@ -341,28 +341,29 @@ public class DelayTask: NSObject {
     static var workItemDict: Dictionary<String, DispatchWorkItem> = Dictionary<String, DispatchWorkItem>.init()
     
     /// 任务数组
-    static var workItemArray: [DispatchWorkItem] = []
-    
+    static var workTimerArray: [Timer] = []
+
     /// 创建一个延时执行任务并加入任务字典
-    static func createTaskWith(name: String, workItem: @escaping ()->(), delayTime: TimeInterval) -> Void {
+    static func createTaskWith(workItem: (() -> ())?, delayTime: TimeInterval) -> Void {
         
-        let workItem = DispatchWorkItem.init(block: {
-            workItem()
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) {
-            workItem.perform()
-        }
+        let workTimer = Timer.scheduledTimer(
+                            withTimeInterval: delayTime,
+                            repeats: false) { (timer) in
+                                if workItem != nil {
+                                    workItem!()
+                                }
+                        }
         
-        workItemArray.append(workItem)
+        self.workTimerArray.append(workTimer)
         
     }// funcEnd
     
     static func cancelAllWorkItems() -> Void {
-        for workItem in workItemArray {
-            workItem.cancel()
+        for workTimer in workTimerArray {
+            workTimer.invalidate()
         }
-        
-        self.workItemArray = []
+
+        self.workTimerArray = []
     }// funcEnd
     
 }

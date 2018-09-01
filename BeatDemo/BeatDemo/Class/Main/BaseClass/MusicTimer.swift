@@ -79,8 +79,6 @@ extension MusicTimer {
                         leeway: DispatchTimeInterval.seconds(0))
         
         timer!.setEventHandler(handler: {
-
-            printWithMessage(MusicTimer.presentTime)
             
             if MusicTimer.presentTime >= MusicTimer.totalTime {
                 
@@ -132,7 +130,6 @@ extension MusicTimer {
             timer.suspend()
             MusicTimer.timerState = .caused
         }
-        printWithMessage(self.getPresentSectionIndex())
         
     }// funcEnd
     
@@ -140,7 +137,6 @@ extension MusicTimer {
     static func closeTimer() -> Void {
         if let timer = MusicTimer.shared {
             MusicTimer.presentTime = 0
-            MusicTimer.timerState = .initState
             MusicTimer.actionClosures = nil
             
             switch MusicTimer.timerState {
@@ -156,6 +152,7 @@ extension MusicTimer {
             default:
                 return
             }
+            MusicTimer.timerState = .initState
         }
         
     }// funcEnd
