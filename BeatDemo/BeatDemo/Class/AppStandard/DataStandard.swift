@@ -13,7 +13,7 @@ class DataStandard: NSObject {
     static let octave: UInt8 = 6
     
     /// 音高
-    static let root: UInt8 = octave * 12 + UInt8(EnumStandard.ScaleNotes.B.rawValue) - 1
+    static let root: UInt8 = octave * 12 + UInt8(VariousOperateFunc.highWhiteNote.rawValue) - 1
     
     /// 一秒多少拍子
     static let oneBeatWithTime: Double = 16 / 3
@@ -73,6 +73,18 @@ class DataStandard: NSObject {
         [0, 2, 4, 7, 9, 11],
         [1, 4, 6, 8, 11],
         [0, 2, 4, 7, 9, 11],
+    ]
+    
+    /// 音乐文件信息
+    static let MusicFileMessage: Dictionary<String, Dictionary<String, Any>> = [
+        "Build": [
+            "fileName": "输入伴奏.mp3"
+        ],
+        
+        "Edit": [
+            "fileName": "播放伴奏.mp3",
+            "delayTime": 0, 
+        ],
     ]
 }
 

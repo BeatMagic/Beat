@@ -64,7 +64,8 @@ class ViewController: UIViewController {
     let basicSequencer = BasicSequencer()
     
     let localMusicPlayer: AVAudioPlayer = {
-        let pathStr = Bundle.main.path(forResource: "输入伴奏.mp3", ofType: nil)
+        let messageDict = DataStandard.MusicFileMessage["Build"]
+        let pathStr = Bundle.main.path(forResource: messageDict!["fileName"] as? String, ofType: nil)
         let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
         player.prepareToPlay()
         player.numberOfLoops = -1
@@ -149,10 +150,7 @@ extension ViewController {
         
         let alertController = SimpleAlertController.getSimpleAlertController(title: "删除所有小节输入的音符?", message: nil) {
             // 暂停播放与录制
-            self.setUpButtonMessageWithState(.caused)
-            
-            // 取消播放
-            DelayTask.cancelAllWorkItems()
+            self.musicState = .caused
             
             MusicTimer.recycleAndCreateTimer(0)
             

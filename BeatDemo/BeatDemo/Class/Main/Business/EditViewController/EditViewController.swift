@@ -45,8 +45,11 @@ class EditViewController: UIViewController {
     var nextNeedRecordTime: Double = 3
     var sampler: AKAppleSampler!
     let basicSequencer = BasicSequencer()
+    
     let localMusicPlayer: AVAudioPlayer = {
-        let pathStr = Bundle.main.path(forResource: "播放伴奏.mp3", ofType: nil)
+        let messageDict = DataStandard.MusicFileMessage["Edit"]
+        
+        let pathStr = Bundle.main.path(forResource: messageDict!["fileName"] as? String, ofType: nil)
         let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
         player.prepareToPlay()
         player.numberOfLoops = -1
@@ -147,9 +150,13 @@ extension EditViewController {
         }else {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.prevSong.rawValue), for: .normal)
             
+            let messageDict = DataStandard.MusicFileMessage["Edit"]
+            
             localMusicPlayer.play()
             
-            VariousOperateFunc.playMIDI(totalDelayTime: 3, basicSequencer: self.basicSequencer)
+            VariousOperateFunc.playMIDI(
+                totalDelayTime: Double.init(messageDict!["delayTime"] as! Int),
+                basicSequencer: self.basicSequencer)
             
             
         }

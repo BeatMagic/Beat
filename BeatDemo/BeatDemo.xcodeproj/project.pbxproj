@@ -199,8 +199,8 @@
 		7C1D7378212D4B1E00144822 /* AboutApp */ = {
 			isa = PBXGroup;
 			children = (
-				7CD3F9AD213AEA0700F7A795 /* 播放伴奏.mp3 */,
 				7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */,
+				7CD3F9AD213AEA0700F7A795 /* 播放伴奏.mp3 */,
 				7C1D7363212D470B00144822 /* AppDelegate.swift */,
 				7C1D736D212D470C00144822 /* Assets.xcassets */,
 				7C1D736F212D470C00144822 /* LaunchScreen.storyboard */,
