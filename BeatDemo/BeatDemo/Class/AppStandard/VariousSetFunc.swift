@@ -26,15 +26,30 @@ class VariousOperateFunc: NSObject {
             
             
             if stableKeysRulesArray.contains(index) {
-
+                
                 DispatchQueue.main.async {
                     musicKey.backgroundColor = UIColor.flatGreen
                 }
-
+                
+                if musicKey.isMainKey == true {
+                    
+                    DispatchQueue.main.async {
+                        musicKey.dogImageView!.tintColor = UIColor.white
+                    }
+                    
+                }
 
             }else {
                 DispatchQueue.main.async {
                     musicKey.backgroundColor = UIColor.white
+                }
+                
+                if musicKey.isMainKey == true {
+                    
+                    DispatchQueue.main.async {
+                        musicKey.dogImageView!.tintColor = UIColor.flatGreen
+                    }
+                    
                 }
             }
             

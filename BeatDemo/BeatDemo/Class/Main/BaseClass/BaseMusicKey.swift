@@ -19,6 +19,9 @@ class BaseMusicKey: UIButton {
     let isMainKey: Bool!
     /// 音乐键状态(是否被按下)
     var keyState: EnumStandard.KeyStates = .notPressed
+    /// 主音图片
+    let dogImageView: UIImageView?
+
     
     /// 标题Label
     var title: String = "" {
@@ -71,7 +74,22 @@ class BaseMusicKey: UIButton {
         self.isMainKey = isMainKey
         self.keyIndex = keyIndex
         
+        if self.isMainKey == true {
+            let dogFrame = CGRect.init(x: 0, y: (frame.height - frame.width) / 2, width: frame.width, height: frame.width)
+            self.dogImageView = UIImageView.init(frame: dogFrame)
+            self.dogImageView!.image = UIImage.init(named: EnumStandard.ImageName.mainMusicKey.rawValue)
+            self.dogImageView!.tintColor = UIColor.flatGreen
+            
+        }else {
+            
+            self.dogImageView = nil
+        }
+        
         super.init(frame: frame)
+        
+        if self.isMainKey == true {
+            self.addSubview(self.dogImageView!)
+        }
         
         setUp()
     }
@@ -81,6 +99,7 @@ class BaseMusicKey: UIButton {
         self.isMainKey = false
         self.midiNoteNumber = 60
         self.keyIndex = -1
+        self.dogImageView = nil
         
         super.init(coder: aDecoder)
     }
@@ -101,19 +120,6 @@ extension BaseMusicKey {
 //        self.animation.toValue = UIColor.flatGreen.cgColor
 //        self.gradient.add(self.animation, forKey: "changeColors")
 //        self.layer.insertSublayer(self.gradient, at: 0)
-        
-        if self.isMainKey == true {
-            let dogFrame = CGRect.init(x: 0, y: (self.getHeight() - self.getWidth()) / 2, width: self.getWidth(), height: self.getWidth())
-            let dogImageView = UIImageView.init(frame: dogFrame)
-            dogImageView.image = UIImage.init(named: EnumStandard.ImageName.mainMusicKey.rawValue)
-            dogImageView.tintColor = UIColor.flatGreen
-            
-            self.addSubview(dogImageView)
-            
-            
-        }else {
-            
-        }
     }
     
     func pressed() -> Bool {

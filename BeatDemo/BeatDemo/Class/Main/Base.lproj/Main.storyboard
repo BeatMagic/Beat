@@ -256,11 +256,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="z1p-Om-Vb1"/>
                     </view>
-                    <navigationItem key="navigationItem" title="编辑" id="mrW-Fe-YiD">
-                        <barButtonItem key="rightBarButtonItem" title="保存" id="g5l-eO-38j">
-                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="编辑" id="mrW-Fe-YiD"/>
                     <connections>
                         <outlet property="beatViewHeight" destination="A1e-4g-wCk" id="m4T-CD-MI7"/>
                         <outlet property="beatViewWidth" destination="XO4-9y-ipT" id="etq-fD-fqI"/>
