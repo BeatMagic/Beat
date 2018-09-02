@@ -104,6 +104,11 @@ class BasicSequencer: NSObject{
     
     func SetNotesAndMakeMelody(noteEventSeq:[NoteEvent])
     {
+        if noteEventSeq.count == 0 {
+            return
+        }
+        
+        
         //let startDelay = noteEventSeq[0].startBeat
         let addBeat = 144 - 16
         self.noteEventSeq = noteEventSeq
@@ -169,7 +174,7 @@ class BasicSequencer: NSObject{
         }
         
         
-        let mainNt =  NoteEvent.init(startNoteNumber: 56, startTime: 0.0, endTime: 0.0, passedNotes: nil)
+        let mainNt =  NoteEvent.init(startNoteNumber: 57, startTime: 0.0, endTime: 0.0, passedNotes: nil)
         mainNt.startBeat = 272
         mainNt.endbeat = 288
         self.noteEventSeq.append(mainNt)

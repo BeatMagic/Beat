@@ -22,7 +22,7 @@ class VariousOperateFunc: NSObject {
         
         for musicKey in musicKeysArray {
             
-            musicKey.midiNoteNumber = DataStandard.root - UInt8(-musicKeyNotes[index] + absoluteNum)
+            musicKey.midiNoteNumber = DataStandard.root - UInt8(-musicKeyNotes[index])
             
             
             if stableKeysRulesArray.contains(index) {

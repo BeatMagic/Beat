@@ -10,10 +10,10 @@ import UIKit
 
 class DataStandard: NSObject {
     /// 八度
-    static let octave: UInt8 = 6
+    static let octave: UInt8 = 5
     
     /// 音高
-    static let root: UInt8 = octave * 12 + UInt8(VariousOperateFunc.highWhiteNote.rawValue) - 1
+    static let root: UInt8 = octave * 12 + UInt8(VariousOperateFunc.highWhiteNote.rawValue)
     
     /// 一秒多少拍子
     static let oneBeatWithTime: Double = 16 / 3

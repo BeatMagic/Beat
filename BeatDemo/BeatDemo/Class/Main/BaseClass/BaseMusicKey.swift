@@ -46,10 +46,6 @@ class BaseMusicKey: UIButton {
     /// 标题Label
     var title: String = "" {
         didSet {
-            if DataStandard.MusicKeysImportentTitle.contains(title) {
-                self.layer.borderColor = UIColor.flatGreen.cgColor
-                self.layer.borderWidth = 2
-            }
             
             if isMainKey != true {
                 let titleLabel = UILabel.init(frame: CGRect.init(
@@ -62,6 +58,10 @@ class BaseMusicKey: UIButton {
                 titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
                 titleLabel.textAlignment = .center
                 titleLabel.backgroundColor = UIColor.clear
+                
+                if DataStandard.MusicKeysImportentTitle.contains(title) == false {
+                    titleLabel.textColor = UIColor.flatRed
+                }
                 
                 self.addSubview(titleLabel)
             }
@@ -126,8 +126,8 @@ extension BaseMusicKey {
     func setUp() -> Void {
         isUserInteractionEnabled = false
         layer.cornerRadius = 5
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.flatWhiteDark.cgColor
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.flatGreen.cgColor
         
         self.backgroundColor = .clear
         
