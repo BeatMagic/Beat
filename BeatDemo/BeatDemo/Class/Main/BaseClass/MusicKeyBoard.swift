@@ -18,6 +18,8 @@ class MusicKeyBoard: UIView {
     var musicKeysArray = [BaseMusicKey]()
     
     //MARK:- 重要数据
+    /// 上一个按下的按钮
+    var lastPressedKey: BaseMusicKey? = nil
     /// 上一个按下的音
     var lastPressedTmpNote: TmpNote? = nil
     /// 上一次按下的时间
@@ -205,8 +207,10 @@ extension MusicKeyBoard {
     private func pressAdded(newKey: BaseMusicKey) {
         self.pressRemovedLastNote()
         
+        self.lastPressedKey = newKey
         self.lastPressedTmpNote = TmpNote.init(newKey.midiNoteNumber, pressedTime: MusicTimer.getTimeFromStartPlayBGM())
         
+        newKey.keyState = .pressed
         // 开始播放
         self.delegate?.noteOn(note: newKey.midiNoteNumber)
         
@@ -216,7 +220,6 @@ extension MusicKeyBoard {
     
     /// 抬起上一个键的封装
     func pressRemovedLastNote() -> Void {
-
         
         // 临时音为空直接返回
         if self.lastPressedTmpNote == nil {
@@ -228,6 +231,7 @@ extension MusicKeyBoard {
             return
             
         }else { // 最后一个音没有抬起时间点
+            self.lastPressedKey?.keyState = .notPressed
             self.lastPressedTmpNote!.unPressedTime = MusicTimer.getTimeFromStartPlayBGM()
             
             // 临时音转换为音阶并储存到音阶数组

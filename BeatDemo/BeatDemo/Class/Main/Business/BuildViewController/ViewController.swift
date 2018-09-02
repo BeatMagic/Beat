@@ -141,7 +141,7 @@ extension ViewController {
         sampler = basicSequencer.GetSampler()
         basicSequencer.setupMelodyTrack()
         
-//        self.doInSection()
+        
 
     }// funcEnd
     
@@ -260,7 +260,10 @@ extension ViewController {
         self.musicState = .caused
         
         let editViewController = UIViewController.initVControllerFromStoryboard("EditViewController") as! EditViewController
-        editViewController.noteEventArray = self.keyBoardView.noteEventModelList
+        
+        let tmpArray = self.keyBoardView.noteEventModelList
+        
+        editViewController.noteEventArray = tmpArray
         
         let editNaviViewController = UINavigationController.init(rootViewController: editViewController)
         
@@ -453,6 +456,7 @@ extension ViewController {
     
     /// 在结尾处
     func doInEnd() -> Void {
+        self.keyBoardView.pressRemovedLastNote()
         self.selectedSection = 0
         self.musicState = .caused
         self.musicState = .played

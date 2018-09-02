@@ -54,19 +54,20 @@ class DataStandard: NSObject {
         return tmpArray
     }()
     
-    
-    
-    
     /// 音乐键标题
     static let MusicKeysTitle: [String] = [
         "2", "1", "7", "6", "5", "4", "3", "2", "1", "7", "6", "5",
+    ]
+    /// 重要音乐键标题
+    static let MusicKeysImportentTitle: [String] = [
+        "2", "1", "6", "5", "3"
     ]
     
     /// 稳定音
     static let MusicStabileKeysIndexArray: [ [Int] ] = [
         [],
         [1, 3, 5, 8, 10],
-        [0, 2, 7, 9],
+        [0, 2, 4, 7, 9, 11],
         [2, 4, 6, 9, 11],
         [1, 3, 6, 8, 10],
         [0, 3, 5, 7, 10],
@@ -74,6 +75,33 @@ class DataStandard: NSObject {
         [1, 4, 6, 8, 11],
         [0, 2, 4, 7, 9, 11],
     ]
+    
+    /// 稳定音高
+    static let SteadyMidiArray: [[UInt8]] = {
+        var totalArray: [UInt8] = []
+
+        for dValue in DataStandard.MusicKeysRulesA {
+            totalArray.append(DataStandard.root - UInt8(-dValue))
+            
+        }
+        
+        var tmpMidiArray: [[UInt8]] = [
+            [],[],[],[],[],[],[],[],[],
+        ]
+        var index = 0
+        
+        for keysIndexArray in DataStandard.MusicStabileKeysIndexArray {
+            
+            for keyIndex in keysIndexArray {
+                tmpMidiArray[index].append(totalArray[keyIndex])
+                
+            }
+            
+            index += 1
+        }
+        
+        return tmpMidiArray
+    }()
     
     /// 音乐文件信息
     static let MusicFileMessage: Dictionary<String, Dictionary<String, Any>> = [
@@ -83,7 +111,7 @@ class DataStandard: NSObject {
         
         "Edit": [
             "fileName": "播放伴奏.mp3",
-            "delayTime": 0, 
+            "delayTime": 0,
         ],
     ]
 }
@@ -95,4 +123,9 @@ extension DataStandard {
         return lroundf(Float(time * DataStandard.oneBeatWithTime))
         
     }// funcEnd
+    
+    static func getMeasureSteadyMidi(_ measure: Int) -> [UInt8] {
+        
+        return SteadyMidiArray[measure]
+    }
 }

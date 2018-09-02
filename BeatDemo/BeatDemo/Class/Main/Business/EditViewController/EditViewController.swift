@@ -107,7 +107,7 @@ extension EditViewController {
         
         sampler = basicSequencer.GetSampler()
         basicSequencer.setupMelodyTrack()
-        self.basicSequencer.SetNoteEventSeq(noteEventSeq: self.noteEventArray, preroll: false)
+        self.basicSequencer.SetNotesAndMakeMelody(noteEventSeq: self.noteEventArray)
         
     }// funcEnd
     
@@ -176,7 +176,6 @@ extension EditViewController: MusicKeyDelegate {
     }
     
     func noteOn(note: UInt8) {
-        self.basicSequencer.stopPlayMelody()
         try! self.sampler.play(noteNumber: note, velocity: 95, channel: 1)
     }
     

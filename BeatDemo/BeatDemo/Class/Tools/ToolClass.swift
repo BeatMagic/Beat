@@ -381,4 +381,14 @@ public func printWithMessage<T>(_ printObj: T,
     #endif
 }
 
+public func shuffle(toShuffle: [Int]) -> [Int] {
+    var list = toShuffle
+    for index in 0..<list.count {
+        let newIndex = Int(arc4random_uniform(UInt32(list.count-index))) + index
+        if index != newIndex {
+            list.swapAt(index, newIndex)
+        }
+    }
+    return list
+}
 

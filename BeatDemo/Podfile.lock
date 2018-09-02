@@ -7,7 +7,7 @@ PODS:
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - Hero (1.2.0)
-  - Hue (3.0.1)
+  - HGRippleRadarView (0.1.2)
   - SnapKit (4.0.0)
   - SVProgressHUD (2.2.5)
   - SwiftMessages (4.1.2)
@@ -24,7 +24,7 @@ DEPENDENCIES:
   - ButtonProgressBar-iOS
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
   - Hero
-  - Hue
+  - HGRippleRadarView
   - SnapKit (~> 4.0.0)
   - SVProgressHUD
   - SwiftMessages
@@ -37,7 +37,7 @@ SPEC REPOS:
     - AudioKit
     - ButtonProgressBar-iOS
     - Hero
-    - Hue
+    - HGRippleRadarView
     - SnapKit
     - SVProgressHUD
     - SwiftMessages
@@ -58,13 +58,13 @@ SPEC CHECKSUMS:
   ButtonProgressBar-iOS: 1127f15c7ab843648febc857fc2018c8224675c7
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
-  Hue: 93e852fa6211ab35922ad8c293f51c43d6c79eb2
+  HGRippleRadarView: 5379e27634c09222ebc836671c7425ad7b257cc4
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftMessages: d81f48c1f8b6bc1dbebdfffe11226f0344f937ca
   Timepiece: c0760ec0e545697d86b80424dcd2b4d5ef66cf51
   XLActionController: 007868251c0eed70d649d06c1625259b73b3a600
 
-PODFILE CHECKSUM: a7a27a03b9a889ce501459227891b4ea45aaadb9
+PODFILE CHECKSUM: 3367a2526b46c4a6fe71b886181138e85237388d
 
 COCOAPODS: 1.5.0

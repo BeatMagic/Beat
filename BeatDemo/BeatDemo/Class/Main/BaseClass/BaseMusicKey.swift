@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Hue
-import ChameleonFramework
+import HGRippleRadarView
 
 class BaseMusicKey: UIButton {
     /// 按钮Index
@@ -17,15 +16,41 @@ class BaseMusicKey: UIButton {
     var midiNoteNumber: UInt8!
     /// 是否为主音键
     let isMainKey: Bool!
+    /// 记录的Frame
+    let recordFrame: CGRect!
+    
+    /// 抖动开关
+    var isNeedShake: Bool = false
+    
     /// 音乐键状态(是否被按下)
-    var keyState: EnumStandard.KeyStates = .notPressed
+    var keyState: EnumStandard.KeyStates = .notPressed {
+        didSet {
+            if keyState == .notPressed {
+                self.layer.setAffineTransform(CGAffineTransform.identity)
+                
+            }else {
+                self.shake()
+            }
+        }
+    }
     /// 主音图片
     let dogImageView: UIImageView?
-
+    
+    /// 波浪动画View
+    let rippleView = RippleView.init(
+        frame: CGRect.init(x: 0,
+                           y: 0,
+                           width: FrameStandard.universalHeight / 4 / 2 * 3,
+                           height: FrameStandard.universalHeight / 4 / 2 * 3))
     
     /// 标题Label
     var title: String = "" {
         didSet {
+            if DataStandard.MusicKeysImportentTitle.contains(title) {
+                self.layer.borderColor = UIColor.flatGreen.cgColor
+                self.layer.borderWidth = 2
+            }
+            
             if isMainKey != true {
                 let titleLabel = UILabel.init(frame: CGRect.init(
                     x: 0,
@@ -43,36 +68,12 @@ class BaseMusicKey: UIButton {
         }
     }
     
-//    var gradientTimeInterval: CFTimeInterval = CFTimeInterval.init(0) {
-//        didSet {
-//            self.gradient.timeOffset = gradientTimeInterval
-//        }
-//    }
-
-    
-//    /// 渐变色处理
-//    private lazy var gradient: CAGradientLayer = [
-//        UIColor.white,
-//        ].gradient { gradient in
-//            gradient.speed = 0
-//            gradient.timeOffset = 0
-//
-//            return gradient
-//    }
-//    /// 渐变色动画
-//    private lazy var animation: CABasicAnimation = { [unowned self] in
-//        let animation = CABasicAnimation(keyPath: "colors")
-//        animation.duration = 1.0
-//        animation.isRemovedOnCompletion = false
-//
-//        return animation
-//    }()
-    
     /// 初始化
     init(frame: CGRect, midiNoteNumber: UInt8, keyIndex: Int, isMainKey: Bool) {
         self.midiNoteNumber = midiNoteNumber
         self.isMainKey = isMainKey
         self.keyIndex = keyIndex
+        self.recordFrame = frame
         
         if self.isMainKey == true {
             let dogFrame = CGRect.init(x: 0, y: (frame.height - frame.width) / 2, width: frame.width, height: frame.width)
@@ -86,10 +87,23 @@ class BaseMusicKey: UIButton {
         }
         
         super.init(frame: frame)
+        self.rippleView.center = CGPoint.init(x: frame.width / 2,
+                                              y: frame.height / 2)
+        self.rippleView.diskRadius = 0.1
+        self.rippleView.diskColor = UIColor.flatGreenDark
+//            .withAlphaComponent(0.75)
+        self.rippleView.numberOfCircles = 0
+        self.rippleView.animationDuration = 3 / 8
+        
+        self.addSubview(self.rippleView)
+        
         
         if self.isMainKey == true {
             self.addSubview(self.dogImageView!)
         }
+        
+//        self.animation = self.shakeOffAnimation()
+//        self.layer.add(self.animation, forKey: "animation")
         
         setUp()
     }
@@ -100,6 +114,7 @@ class BaseMusicKey: UIButton {
         self.midiNoteNumber = 60
         self.keyIndex = -1
         self.dogImageView = nil
+        self.recordFrame = CGRect.init(x: 0, y: 0, width: 0, height: 0)
         
         super.init(coder: aDecoder)
     }
@@ -112,14 +127,11 @@ extension BaseMusicKey {
         isUserInteractionEnabled = false
         layer.cornerRadius = 5
         layer.borderWidth = 1
-        layer.borderColor = UIColor.flatGreen.cgColor
+        layer.borderColor = UIColor.flatWhiteDark.cgColor
         
         self.backgroundColor = .clear
         
-//        self.animation.fromValue = gradient.colors
-//        self.animation.toValue = UIColor.flatGreen.cgColor
-//        self.gradient.add(self.animation, forKey: "changeColors")
-//        self.layer.insertSublayer(self.gradient, at: 0)
+        
     }
     
     func pressed() -> Bool {

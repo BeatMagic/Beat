@@ -53,11 +53,17 @@ class VariousOperateFunc: NSObject {
                 }
             }
             
-
             
+            
+            if let tmpNextRulesArray = stableKeysNextRulesArray {
+                musicKey.rippleView.isHidden = !(tmpNextRulesArray.contains(index))
+                
+            }
             
             index += 1
         }
+        
+        
         
         
 

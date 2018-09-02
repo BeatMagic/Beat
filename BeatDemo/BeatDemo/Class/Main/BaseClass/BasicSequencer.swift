@@ -36,7 +36,7 @@ class BasicSequencer: NSObject{
     var currentTempo = 80.0
     
     var noteEventSeq : [NoteEvent]!
-    let sequenceLength = AKDuration(beats: 36.0)
+    let sequenceLength = AKDuration(beats: 76.0)
     
     //4 乘以小节数量
     let bgmSeqLength = AKDuration(beats:8.0)
@@ -45,6 +45,7 @@ class BasicSequencer: NSObject{
         
         
         try! inputSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
+        
         try! midiSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
         midiCompresser = AKCompressor(midiSampler)
         
@@ -101,6 +102,81 @@ class BasicSequencer: NSObject{
         generateRecordSeq(preroll: preroll)
     }
     
+    func SetNotesAndMakeMelody(noteEventSeq:[NoteEvent])
+    {
+        //let startDelay = noteEventSeq[0].startBeat
+        let addBeat = 144 - 16
+        self.noteEventSeq = noteEventSeq
+        
+        var indexList:[Int] = []
+        for index in 0 ..< noteEventSeq.count
+        {
+            indexList.append(index)
+        }
+        indexList = shuffle(toShuffle: indexList)
+        //print(indexList)
+        
+        for index in 0 ..< noteEventSeq.count
+        {
+            let nt = noteEventSeq[index]
+            
+            let newNt = NoteEvent.init(startNoteNumber: nt.startNoteNumber, startTime: 0.0, endTime: 0.0, passedNotes: nil)
+            newNt.startBeat = nt.startBeat+addBeat
+            newNt.endbeat = nt.endbeat+addBeat
+            if newNt.endbeat <= 12+addBeat{
+                continue
+            }
+            
+            //更改稳定音
+            let count = indexList.count/3
+            for j in 0 ..< count{
+                if index == indexList[j]{
+                    let steadymidis = DataStandard.getMeasureSteadyMidi(nt.belongToSection)
+                    var diff:Int32 = 128
+                    for midi in steadymidis{
+                        let newDiff = abs(Int32(newNt.startNoteNumber) - Int32(midi))
+                        if newDiff<diff && midi != newNt.startNoteNumber{
+                            newNt.startNoteNumber = midi
+                            diff = newDiff
+                        }
+                    }
+                }
+            }
+            
+            self.noteEventSeq.append(newNt)
+        }
+        //加一小节主音 68
+        
+        //去掉重叠的音
+        
+        var toRemove:[Int] = []
+        
+        for index in 0 ..< self.noteEventSeq.count-1 {
+            let nt = self.noteEventSeq[index]
+            
+            let _nt = self.noteEventSeq[index+1]
+            if nt.startBeat >= _nt.startBeat
+            {
+                toRemove.append(index)
+            }
+            else if nt.endbeat>=_nt.startBeat{
+                nt.endbeat = _nt.startBeat
+            }
+        }
+        
+        for i in toRemove{
+            self.noteEventSeq.remove(at: i)
+        }
+        
+        
+        let mainNt =  NoteEvent.init(startNoteNumber: 56, startTime: 0.0, endTime: 0.0, passedNotes: nil)
+        mainNt.startBeat = 272
+        mainNt.endbeat = 288
+        self.noteEventSeq.append(mainNt)
+        
+        sequencer.stop()
+        generateRecordSeq(preroll: false)
+    }
     
     func setupMelodyTrack(){
         _ = sequencer.newTrack()
@@ -247,6 +323,7 @@ class BasicSequencer: NSObject{
         sequencer.setLength(sequenceLength)
         sequencer.setTempo(80.0)
     }
+    
     
     
     
