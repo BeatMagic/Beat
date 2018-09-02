@@ -25,6 +25,7 @@
 		7C2E982921316B2F00BBCD75 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982821316B2F00BBCD75 /* Sequence.swift */; };
 		7C2E982B21316C3C00BBCD75 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982A21316C3C00BBCD75 /* Section.swift */; };
 		7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */; };
+		7C38ED2B213C1CB1009A56FA /* 播放伴奏_摇滚.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7C38ED2A213C1CB1009A56FA /* 播放伴奏_摇滚.mp3 */; };
 		7C76988E213AE189006350D3 /* ProgressButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76988D213AE189006350D3 /* ProgressButtonManager.swift */; };
 		7C842665212F979C0070FD69 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842664212F979C0070FD69 /* EditViewController.swift */; };
 		7C84266B212FB1230070FD69 /* NoteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842668212FB1230070FD69 /* NoteEvent.swift */; };
@@ -38,7 +39,7 @@
 		7C888E77212D6D3B0094DC85 /* MusicKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */; };
 		7C888E7E212E53D70094DC85 /* DataStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E7D212E53D70094DC85 /* DataStandard.swift */; };
 		7CA6445B21366BD00062CA58 /* VariousSetFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */; };
-		7CD3F9AF213AEA0700F7A795 /* 播放伴奏.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CD3F9AD213AEA0700F7A795 /* 播放伴奏.mp3 */; };
+		7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		7C2E982821316B2F00BBCD75 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		7C2E982A21316C3C00BBCD75 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "输入伴奏.mp3"; sourceTree = "<group>"; };
+		7C38ED2A213C1CB1009A56FA /* 播放伴奏_摇滚.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_摇滚.mp3"; sourceTree = "<group>"; };
 		7C76988D213AE189006350D3 /* ProgressButtonManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressButtonManager.swift; sourceTree = "<group>"; };
 		7C842664212F979C0070FD69 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		7C842668212FB1230070FD69 /* NoteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEvent.swift; sourceTree = "<group>"; };
@@ -78,7 +80,7 @@
 		7C888E7A212E47DC0094DC85 /* BeatDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BeatDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		7C888E7D212E53D70094DC85 /* DataStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStandard.swift; sourceTree = "<group>"; };
 		7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariousSetFunc.swift; sourceTree = "<group>"; };
-		7CD3F9AD213AEA0700F7A795 /* 播放伴奏.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏.mp3"; sourceTree = "<group>"; };
+		7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_普通.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,7 +202,8 @@
 			isa = PBXGroup;
 			children = (
 				7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */,
-				7CD3F9AD213AEA0700F7A795 /* 播放伴奏.mp3 */,
+				7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */,
+				7C38ED2A213C1CB1009A56FA /* 播放伴奏_摇滚.mp3 */,
 				7C1D7363212D470B00144822 /* AppDelegate.swift */,
 				7C1D736D212D470C00144822 /* Assets.xcassets */,
 				7C1D736F212D470C00144822 /* LaunchScreen.storyboard */,
@@ -319,9 +322,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */,
-				7CD3F9AF213AEA0700F7A795 /* 播放伴奏.mp3 in Resources */,
+				7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */,
 				7C1D736E212D470C00144822 /* Assets.xcassets in Resources */,
 				7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */,
+				7C38ED2B213C1CB1009A56FA /* 播放伴奏_摇滚.mp3 in Resources */,
 				7C1D7369212D470B00144822 /* Main.storyboard in Resources */,
 				7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */,
 			);
@@ -576,7 +580,10 @@
 				DEVELOPMENT_TEAM = L9ZC5Q2DDV;
 				INFOPLIST_FILE = BeatDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Young.BeatDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BeatDemo/BeatDemo-Bridging-Header.h";
@@ -596,7 +603,10 @@
 				DEVELOPMENT_TEAM = L9ZC5Q2DDV;
 				INFOPLIST_FILE = BeatDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Young.BeatDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BeatDemo/BeatDemo-Bridging-Header.h";

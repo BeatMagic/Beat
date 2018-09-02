@@ -46,16 +46,29 @@ class EditViewController: UIViewController {
     var sampler: AKAppleSampler!
     let basicSequencer = BasicSequencer()
     
-    let localMusicPlayer: AVAudioPlayer = {
-        let messageDict = DataStandard.MusicFileMessage["Edit"]
-        
-        let pathStr = Bundle.main.path(forResource: messageDict!["fileName"] as? String, ofType: nil)
-        let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
-        player.prepareToPlay()
-        player.numberOfLoops = -1
-        
-        return player
-    }()
+//    let localMusicPlayer: AVAudioPlayer = {
+//        let messageDict = DataStandard.MusicFileMessage["Edit"]
+//
+//        let pathStr = Bundle.main.path(forResource: messageDict!["fileName"] as? String, ofType: nil)
+//        let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
+//        player.prepareToPlay()
+//        player.numberOfLoops = -1
+//
+//        return player
+//    }()
+    
+    var localMusicPlayer: AVAudioPlayer? {
+        didSet {
+            if let player = localMusicPlayer {
+                player.prepareToPlay()
+                player.numberOfLoops = -1
+            }
+        }
+    }
+
+    /// 暂停按钮点击次数
+    var clickPauseTime: Int = 0
+
     
     /// 音乐播放状态
     var musicState: EnumStandard.MusicPlayStates = .caused {
@@ -133,6 +146,8 @@ extension EditViewController {
             musicState = .caused
             
         }
+        
+
     }// funcEnd
     
     
@@ -141,8 +156,8 @@ extension EditViewController {
         if state == .caused {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.play.rawValue), for: .normal)
             
-            localMusicPlayer.pause()
-            localMusicPlayer.currentTime = 0
+            localMusicPlayer!.pause()
+            localMusicPlayer!.currentTime = 0
             
             self.basicSequencer.stopPlayMelody()
             DelayTask.cancelAllWorkItems()
@@ -150,12 +165,28 @@ extension EditViewController {
         }else {
             playButton.setBackgroundImage(UIImage.init(named: EnumStandard.ImageName.prevSong.rawValue), for: .normal)
             
-            let messageDict = DataStandard.MusicFileMessage["Edit"]
+            self.clickPauseTime += 1
             
-            localMusicPlayer.play()
+            var messageDict: Dictionary<String, Any> = Dictionary<String, Any>()
+            
+            switch self.clickPauseTime % 2 {
+                
+            case 1:
+                messageDict = DataStandard.MusicFileMessage["Edit_Normal"]!
+                
+            case 0:
+                messageDict = DataStandard.MusicFileMessage["Edit_Rock"]!
+                
+            default:
+                print("???")
+            }
+            
+            self.localMusicPlayer = VariousOperateFunc.initOnePlayer(messageDict["fileName"] as! String)
+            
+            localMusicPlayer!.play()
             
             VariousOperateFunc.playMIDI(
-                totalDelayTime: Double.init(messageDict!["delayTime"] as! Int),
+                totalDelayTime: Double.init(messageDict["delayTime"] as! Int),
                 basicSequencer: self.basicSequencer)
             
             

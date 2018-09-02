@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BeatDemo/Class/Tools/ToolClass.swift"
-            timestampString = "557582700.757475"
+            timestampString = "557589545.331458"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "240"
             endingLineNumber = "240"
             landmarkName = "baseAnimationWithKeyPath(_:fromValue:toValue:duration:repeatCount:timingFunction:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BeatDemo/Class/Main/BaseClass/MusicKeyBoard.swift"
+            timestampString = "557589545.331549"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "pressAdded(newKey:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -16,7 +16,7 @@ class DataStandard: NSObject {
     static let root: UInt8 = octave * 12 + UInt8(VariousOperateFunc.highWhiteNote.rawValue)
     
     /// 一秒多少拍子
-    static let oneBeatWithTime: Double = 16 / 3
+    static let oneBeatWithTime: Double = 128 / 3
     
     /// 生成音乐键的规则 前四小节
     static let MusicKeysRulesA: [Int] = [
@@ -109,8 +109,13 @@ class DataStandard: NSObject {
             "fileName": "输入伴奏.mp3"
         ],
         
-        "Edit": [
-            "fileName": "播放伴奏.mp3",
+        "Edit_Normal": [
+            "fileName": "播放伴奏_普通.mp3",
+            "delayTime": 0,
+        ],
+        
+        "Edit_Rock": [
+            "fileName": "播放伴奏_摇滚.mp3",
             "delayTime": 0,
         ],
     ]

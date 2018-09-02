@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioKit
 
 class VariousOperateFunc: NSObject {
     
@@ -17,7 +18,7 @@ class VariousOperateFunc: NSObject {
                                          stableKeysRulesArray: [Int],
                                          stableKeysNextRulesArray: [Int]?) -> Void {
         
-        let absoluteNum = highWhiteNote.rawValue
+        _ = highWhiteNote.rawValue
         var index = 0
         
         for musicKey in musicKeysArray {
@@ -77,5 +78,14 @@ class VariousOperateFunc: NSObject {
         DelayTask.createTaskWith(workItem: {
             basicSequencer.playMelody()
         }, delayTime: totalDelayTime)
+    }
+    
+    /// 初始化一个音乐播放器
+    static func initOnePlayer(_ fileName: String) -> AVAudioPlayer? {
+        let pathStr = Bundle.main.path(forResource: fileName, ofType: nil)
+        let player = try? AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
+        
+        return player
+        
     }
 }

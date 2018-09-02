@@ -11,7 +11,6 @@ import AudioKit
 
 class BasicSequencer: NSObject{
     
-    var firstDelay = 0.0
     
     var sequencer = AKSequencer()
     //用于规则生成存放midi
@@ -41,8 +40,15 @@ class BasicSequencer: NSObject{
     //4 乘以小节数量
     let bgmSeqLength = AKDuration(beats:8.0)
     
+    let standerand = 128
+    let measureCount = 9
+    
+    let diviation: Double!
+    
+    
     override init() {
         
+        diviation = standerand/4.0
         
         try! inputSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
         
@@ -110,7 +116,7 @@ class BasicSequencer: NSObject{
         
         
         //let startDelay = noteEventSeq[0].startBeat
-        let addBeat = 144 - 16
+        let addBeat = standerand*(measureCount - 1)
         self.noteEventSeq = noteEventSeq
         
         var indexList:[Int] = []
@@ -175,8 +181,8 @@ class BasicSequencer: NSObject{
         
         
         let mainNt =  NoteEvent.init(startNoteNumber: 57, startTime: 0.0, endTime: 0.0, passedNotes: nil)
-        mainNt.startBeat = 272
-        mainNt.endbeat = 288
+        mainNt.startBeat = standerand*(measureCount*2-1)
+        mainNt.endbeat = mainNt.startBeat+standerand
         self.noteEventSeq.append(mainNt)
         
         sequencer.stop()
@@ -309,14 +315,12 @@ class BasicSequencer: NSObject{
             let velocity: UInt8 = 95
             let channel:UInt8 = 1
             //速度给的是每小节4拍的速度，我们量化是用16分音符，所以这里要有个转换
-            var beats = Double(noteEvent.endbeat - noteEvent.startBeat)/4.0
+            var beats = Double(noteEvent.endbeat - noteEvent.startBeat)/diviation
             //print("realbeate"+String(beats))
             let duration = AKDuration(beats: beats)
-            beats = Double(noteEvent.startBeat)/4.0
+            beats = Double(noteEvent.startBeat)/diviation
             if fbPosition<0{
                 fbPosition = beats
-                firstDelay = noteEvent.startBeat*3/16
-                print(firstDelay)
             }
             if preroll{
                 beats -= fbPosition
