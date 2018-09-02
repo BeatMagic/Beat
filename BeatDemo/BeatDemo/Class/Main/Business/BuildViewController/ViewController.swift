@@ -148,15 +148,13 @@ extension ViewController {
     @objc func deleteMusicEvent() -> Void {
         
         let alertController = SimpleAlertController.getSimpleAlertController(title: "删除所有小节输入的音符?", message: nil) {
+            // 暂停播放与录制
+            self.setUpButtonMessageWithState(.caused)
             
             // 取消播放
             DelayTask.cancelAllWorkItems()
             
-            // 暂停播放与录制
-            self.setUpButtonMessageWithState(.caused)
-            
-            // 重置进度条
-            MusicTimer.setPresentSectionIndex(0)
+            MusicTimer.recycleAndCreateTimer(0)
             
             ProgressButtonManager.hasNotesArray = [false, false, false, false, false, false, false, false, false, ]
             
@@ -176,20 +174,15 @@ extension ViewController {
             
             self.keyBoardView.noteEventModelList = []
             
-            self.keyBoardView.sectionArray = {
-                var tmpSectionArray: [Section] = []
-                for index in 0 ..< 9 {
-                    let sectionModel = Section.init(startTime: Double(index * 3),
-                                                    endTime: Double((index + 1) * 3),
-                                                    passNoteEventArray: nil,
-                                                    delayTime: nil)
-                    
-                    tmpSectionArray.append(sectionModel)
-                }
+            self.keyBoardView.sectionArray = []
+            for index in 0 ..< 9 {
+                let sectionModel = Section.init(startTime: Double(index * 3),
+                                                endTime: Double((index + 1) * 3),
+                                                passNoteEventArray: nil,
+                                                delayTime: nil)
                 
-                return tmpSectionArray
-            }()
-            
+                self.keyBoardView.sectionArray.append(sectionModel)
+            }
             
             SVProgressHUD.showSuccess(withStatus: "删除成功")
         }
