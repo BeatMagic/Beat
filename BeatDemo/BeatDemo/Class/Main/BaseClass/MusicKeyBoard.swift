@@ -237,8 +237,13 @@ extension MusicKeyBoard {
             // 临时音转换为音阶并储存到音阶数组
             let note = NoteEvent.init(startNoteNumber: self.lastPressedTmpNote!.midiNoteNumber, startTime: self.lastPressedTmpNote!.pressedTime, endTime: self.lastPressedTmpNote!.unPressedTime, passedNotes: nil)
             printWithMessage("音阶\(note.startNoteNumber!)开始时间\(note.startTime!)结束时间\(note.endTime!)")
-            self.addNoteEvent(noteEvent: note)
             
+            
+            if self.delegate!.judgeShouldRecord() == true {
+                self.addNoteEvent(noteEvent: note)
+                
+            }
+
             // 停止播放
             self.delegate?.noteOff(note:  self.lastPressedTmpNote!.midiNoteNumber)
             // 重置最后一个音为空
@@ -361,5 +366,6 @@ extension MusicKeyBoard {
 protocol MusicKeyDelegate: class {
     func noteOn(note: UInt8)
     func noteOff(note: UInt8)
+    func judgeShouldRecord() -> Bool
     func startTranscribe()
 }

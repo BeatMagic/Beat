@@ -170,6 +170,10 @@ extension EditViewController {
 }
 
 extension EditViewController: MusicKeyDelegate {
+    func judgeShouldRecord() -> Bool {
+        return false
+    }
+    
     
     func startTranscribe() {
         

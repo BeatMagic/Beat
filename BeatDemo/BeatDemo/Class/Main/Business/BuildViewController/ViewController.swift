@@ -472,6 +472,17 @@ extension ViewController {
 }
 
 extension ViewController: MusicKeyDelegate {
+    func judgeShouldRecord() -> Bool {
+        if self.musicState == .caused {
+            return false
+            
+        }else {
+            return true
+            
+        }
+    }
+    
+    
     
     func startTranscribe() {
         self.circleNum = 0
