@@ -46,16 +46,7 @@ class EditViewController: UIViewController {
     var sampler: AKAppleSampler!
     let basicSequencer = BasicSequencer()
     
-//    let localMusicPlayer: AVAudioPlayer = {
-//        let messageDict = DataStandard.MusicFileMessage["Edit"]
-//
-//        let pathStr = Bundle.main.path(forResource: messageDict!["fileName"] as? String, ofType: nil)
-//        let player = try! AVAudioPlayer.init(contentsOf: URL.init(fileURLWithPath: pathStr!))
-//        player.prepareToPlay()
-//        player.numberOfLoops = -1
-//
-//        return player
-//    }()
+
     
     var localMusicPlayer: AVAudioPlayer? {
         didSet {
@@ -121,6 +112,26 @@ extension EditViewController {
         sampler = basicSequencer.GetSampler()
         basicSequencer.setupMelodyTrack()
         self.basicSequencer.SetNotesAndMakeMelody(noteEventSeq: self.noteEventArray)
+        
+        var messageDict: Dictionary<String, Any> = Dictionary<String, Any>()
+        
+        switch self.clickPauseTime % 2 {
+            
+        case 1:
+            messageDict = DataStandard.MusicFileMessage["Edit_Normal"]!
+            
+        case 0:
+            messageDict = DataStandard.MusicFileMessage["Edit_Rock"]!
+            
+        default:
+            print("???")
+        }
+        
+        self.localMusicPlayer = VariousOperateFunc.initOnePlayer(messageDict["fileName"] as! String)
+        
+        VariousOperateFunc.playMIDI(
+            totalDelayTime: Double.init(messageDict["delayTime"] as! Int),
+            basicSequencer: self.basicSequencer)
         
     }// funcEnd
     

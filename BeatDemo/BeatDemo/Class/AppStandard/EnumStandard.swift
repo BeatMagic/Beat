@@ -30,6 +30,15 @@ class EnumStandard: NSObject {
         case played, caused
     }
     
+    /// 播放音色对应
+    enum PlayMusicTimbre: Int {
+        /// 电吉他
+        case electricGuitar = 29
+        
+        /// 小提琴
+        case violin = 40
+    }
+    
     /// 图片名枚举
     enum ImageName: String {
         /// 重置

@@ -50,8 +50,9 @@ class BasicSequencer: NSObject{
         
         diviation = standerand/4.0
         
+        // 点击反馈音色
         try! inputSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
-        
+        // 播放反馈音色
         try! midiSampler.loadMelodicSoundFont("GeneralUser", preset: 40)
         midiCompresser = AKCompressor(midiSampler)
         
@@ -73,7 +74,7 @@ class BasicSequencer: NSObject{
         delayMixer = AKDryWetMixer(reverb,delay)
         
         booster = AKBooster(delayMixer)
-        booster?.gain = 3
+        booster?.gain = 1.8
         
         AudioKit.output = booster
         do {
@@ -116,7 +117,7 @@ class BasicSequencer: NSObject{
         
         
         //let startDelay = noteEventSeq[0].startBeat
-        let addBeat = standerand*(measureCount - 1)
+        let addBeat = standerand * (measureCount - 1)
         self.noteEventSeq = noteEventSeq
         
         var indexList:[Int] = []
@@ -139,7 +140,7 @@ class BasicSequencer: NSObject{
             }
             
             //更改稳定音
-            let count = indexList.count/3
+            let count = indexList.count / 3
             for j in 0 ..< count{
                 if index == indexList[j]{
                     let steadymidis = DataStandard.getMeasureSteadyMidi(nt.belongToSection)
@@ -296,6 +297,7 @@ class BasicSequencer: NSObject{
         }
     }
     
+    /// 随机生成一个布尔值Œ
     func randomBool() -> Bool {
         return arc4random_uniform(2) == 0 ? true : false
     }
@@ -333,6 +335,10 @@ class BasicSequencer: NSObject{
         sequencer.setTempo(80.0)
     }
     
+    func SetPlayTimbre(timbre:Int)
+    {
+        try! midiSampler.loadMelodicSoundFont("GeneralUser", preset: timbre)
+    }
     
     
     

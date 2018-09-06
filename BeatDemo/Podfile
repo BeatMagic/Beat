@@ -26,7 +26,6 @@ target 'BeatDemo' do
     pod 'Timepiece'
     
     # 数据处理
-#    pod 'RxSwift',    '~> 4.0'
-#    pod 'RxCocoa',    '~> 4.0'
+    pod 'HandyJSON', '~> 4.1.1'                                 # JSON
 
 end

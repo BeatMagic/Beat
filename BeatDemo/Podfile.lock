@@ -6,6 +6,7 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
+  - HandyJSON (4.1.1)
   - Hero (1.2.0)
   - HGRippleRadarView (0.1.2)
   - SnapKit (4.0.0)
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - AudioKit/UI
   - ButtonProgressBar-iOS
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - HandyJSON (~> 4.1.1)
   - Hero
   - HGRippleRadarView
   - SnapKit (~> 4.0.0)
@@ -36,6 +38,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AudioKit
     - ButtonProgressBar-iOS
+    - HandyJSON
     - Hero
     - HGRippleRadarView
     - SnapKit
@@ -57,6 +60,7 @@ SPEC CHECKSUMS:
   AudioKit: 90ed0de2bc50ab68306f4b424ae1622fc9149b8e
   ButtonProgressBar-iOS: 1127f15c7ab843648febc857fc2018c8224675c7
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  HandyJSON: 3a3de917c4118767ffe41c29b5acba23409649f4
   Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   HGRippleRadarView: 5379e27634c09222ebc836671c7425ad7b257cc4
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
@@ -65,6 +69,6 @@ SPEC CHECKSUMS:
   Timepiece: c0760ec0e545697d86b80424dcd2b4d5ef66cf51
   XLActionController: 007868251c0eed70d649d06c1625259b73b3a600
 
-PODFILE CHECKSUM: 3367a2526b46c4a6fe71b886181138e85237388d
+PODFILE CHECKSUM: 27367d73972f2dae32539a6c643f2d7f1327d96a
 
 COCOAPODS: 1.5.0
