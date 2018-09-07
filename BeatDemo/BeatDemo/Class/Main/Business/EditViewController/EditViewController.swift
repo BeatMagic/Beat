@@ -18,6 +18,7 @@ class EditViewController: UIViewController {
     @IBOutlet var beatViewWidth: NSLayoutConstraint!
     @IBOutlet var beatViewHeight: NSLayoutConstraint!
 
+    @IBOutlet var keyBoardViewHeight: NSLayoutConstraint!
     /// 关闭ButtonItem
     lazy private var closeItem: UIBarButtonItem = {
         let button = createButton(EnumStandard.ImageName.close.rawValue, tintColor: UIColor.black, action: #selector(closeEvent))
@@ -92,10 +93,29 @@ extension EditViewController {
     
     /// 设置UI && 绑定点击事件
     func setUI() -> Void {
-        operationViewWidth.constant = FrameStandard.universalWidth
-        operationViewHeight.constant = FrameStandard.universalHeight
-        beatViewWidth.constant = FrameStandard.universalWidth
-        beatViewHeight.constant = FrameStandard.beatViewHeight
+        let keyBoardHeight: CGFloat = {
+            if ToolClass.getIPhoneType() == "iPhone X" {
+                return ToolClass.getScreenHeight() - 88 - 100 - 8 - 8 - 60
+                
+            }else {
+                return ToolClass.getScreenHeight() - 64 - 100 - 8 - 8 - 60
+                
+            }
+            
+        }()
+        
+        self.keyBoardViewHeight.constant = keyBoardHeight
+        
+        self.keyBoardView.musicKeysViewModel = {
+            if ToolClass.getIPhoneType() == "iPhone X" {
+                return self.keyBoardView.initMusicKeyFrame(ownHeight: keyBoardHeight + 88)
+                
+            }else {
+                return self.keyBoardView.initMusicKeyFrame(ownHeight: keyBoardHeight)
+                
+            }
+            
+        }()
         
         navigationItem.leftBarButtonItem = closeItem
         

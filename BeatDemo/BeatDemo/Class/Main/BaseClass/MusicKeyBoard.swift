@@ -49,7 +49,13 @@ class MusicKeyBoard: UIView {
     //MARK:-
     
     /// 所有键ViewModel
-    var musicKeysViewModel: [CGRect] = [CGRect]()
+    var musicKeysViewModel: [CGRect] = [CGRect]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.initKeyBoard()
+            }
+        }
+    }
     /// 外部代理
     weak var delegate: MusicKeyDelegate?
     
@@ -58,21 +64,7 @@ class MusicKeyBoard: UIView {
         
         self.isMultipleTouchEnabled = true
         
-        self.musicKeysViewModel = {
-            if ToolClass.getIPhoneType() == "iPhone X" {
-                return self.initMusicKeyFrame(ownHeight: frame.height + 88)
-                
-            }else {
-                return self.initMusicKeyFrame(ownHeight: frame.height)
-                
-            }
-            
-        }()
-        
-        
-        DispatchQueue.main.async {
-            self.initKeyBoard()
-        }
+//        self.musicKeysViewModel = 
         
         
     }
@@ -110,7 +102,7 @@ extension MusicKeyBoard {
     }
     
     /// 生成所有键的ViewModel -> [ CGRect ]
-    private func initMusicKeyFrame(ownHeight: CGFloat) -> [CGRect] {
+    func initMusicKeyFrame(ownHeight: CGFloat) -> [CGRect] {
         let normalWidth = ToolClass.getScreenWidth() - FrameStandard.universalWidth
         let firstAreaKeyHeight = FrameStandard.universalHeight / 4
         let secondAreaKeyHeight = ownHeight - FrameStandard.universalHeight - FrameStandard.beatViewHeight
@@ -136,7 +128,7 @@ extension MusicKeyBoard {
     }// funcEnd
     
     /// 根据所有键的ViewModel生成键 [[CGRect]] -> Void
-    private func addMusicKeysWithViewModel(_ viewModel: [CGRect] ) -> Void {
+    func addMusicKeysWithViewModel(_ viewModel: [CGRect] ) -> Void {
         // 先清空
         for key in self.musicKeysArray {
             key.removeFromSuperview()
@@ -178,7 +170,7 @@ extension MusicKeyBoard {
     }// funcEnd
     
     /// 添加键 -> Void
-    private func addMusicKey() -> Void {
+    func addMusicKey() -> Void {
         for key in musicKeysArray {
             //            key.removeFromSuperview()
             addSubview(key)

@@ -33,8 +33,8 @@ extension ProgressButtonManager {
     /// 返回设置的按钮数组
     static func getButtonsArray(clickButtonEvent: Selector, superView: UIView) -> Void {
         let viewModelArray = ProgressButtonManager.createButtonsViewModelArray(
-            buttonWidth: 40,
-            buttonHeight: 50
+            buttonWidth: 40 / 375 * ToolClass.getScreenWidth(),
+            buttonHeight: 50 / 667 * ToolClass.getScreenHeight()
         )
         
         ProgressButtonManager.buttonArray = ProgressButtonManager.createButtonsArray(viewModelArray: viewModelArray, clickButtonEvent: clickButtonEvent, superView: superView)

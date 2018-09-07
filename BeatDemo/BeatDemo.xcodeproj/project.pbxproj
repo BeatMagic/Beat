@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F620CBC93B1561DD92E56F0 /* Pods_BeatDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690775DCC4F41B88F16A2F75 /* Pods_BeatDemo.framework */; };
 		7C0FDF5D21369994000200E2 /* BasicSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5C21369994000200E2 /* BasicSequencer.swift */; };
 		7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */; };
 		7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C15E11C212D4CC800077573 /* BasicKnowledge.swift */; };
@@ -24,6 +23,7 @@
 		7C2E982921316B2F00BBCD75 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982821316B2F00BBCD75 /* Sequence.swift */; };
 		7C2E982B21316C3C00BBCD75 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982A21316C3C00BBCD75 /* Section.swift */; };
 		7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */; };
+		7C44D9DD214211090063F77E /* StaticConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C44D9DC214211090063F77E /* StaticConfigurationModel.swift */; };
 		7C76988E213AE189006350D3 /* ProgressButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76988D213AE189006350D3 /* ProgressButtonManager.swift */; };
 		7C842665212F979C0070FD69 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842664212F979C0070FD69 /* EditViewController.swift */; };
 		7C84266B212FB1230070FD69 /* NoteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842668212FB1230070FD69 /* NoteEvent.swift */; };
@@ -39,6 +39,16 @@
 		7CA6445B21366BD00062CA58 /* VariousSetFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */; };
 		7CB119132140BAAA005A5ABE /* ReferenceTrackMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB119122140BAAA005A5ABE /* ReferenceTrackMessage.swift */; };
 		7CB119152140FC77005A5ABE /* ArrangingMapFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB119142140FC77005A5ABE /* ArrangingMapFunc.swift */; };
+		7CB432F821422604006F367A /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432F721422604006F367A /* SVProgressHUD.framework */; };
+		7CB432FA21422629006F367A /* ButtonProgressBar_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432F921422629006F367A /* ButtonProgressBar_iOS.framework */; };
+		7CB432FC2142265E006F367A /* ChameleonFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432FB2142265E006F367A /* ChameleonFramework.framework */; };
+		7CB432FE2142265E006F367A /* HandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432FD2142265E006F367A /* HandyJSON.framework */; };
+		7CB433002142265E006F367A /* Hero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432FF2142265E006F367A /* Hero.framework */; };
+		7CB433022142265E006F367A /* HGRippleRadarView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433012142265E006F367A /* HGRippleRadarView.framework */; };
+		7CB433042142265E006F367A /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433032142265E006F367A /* SnapKit.framework */; };
+		7CB433062142265E006F367A /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433052142265E006F367A /* SwiftMessages.framework */; };
+		7CB433082142265E006F367A /* Timepiece.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433072142265E006F367A /* Timepiece.framework */; };
+		7CB4330A2142265E006F367A /* XLActionController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433092142265E006F367A /* XLActionController.framework */; };
 		7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */; };
 		7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */; };
 /* End PBXBuildFile section */
@@ -65,6 +75,7 @@
 		7C2E982821316B2F00BBCD75 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		7C2E982A21316C3C00BBCD75 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "输入伴奏.mp3"; sourceTree = "<group>"; };
+		7C44D9DC214211090063F77E /* StaticConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticConfigurationModel.swift; sourceTree = "<group>"; };
 		7C76988D213AE189006350D3 /* ProgressButtonManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressButtonManager.swift; sourceTree = "<group>"; };
 		7C842664212F979C0070FD69 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		7C842668212FB1230070FD69 /* NoteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEvent.swift; sourceTree = "<group>"; };
@@ -83,6 +94,16 @@
 		7CB119142140FC77005A5ABE /* ArrangingMapFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangingMapFunc.swift; sourceTree = "<group>"; };
 		7CB1191621412101005A5ABE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		7CB1193C21412454005A5ABE /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../../usr/lib/libiconv.2.dylib; sourceTree = "<group>"; };
+		7CB432F721422604006F367A /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB432F921422629006F367A /* ButtonProgressBar_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ButtonProgressBar_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB432FB2142265E006F367A /* ChameleonFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ChameleonFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB432FD2142265E006F367A /* HandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB432FF2142265E006F367A /* Hero.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Hero.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB433012142265E006F367A /* HGRippleRadarView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HGRippleRadarView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB433032142265E006F367A /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB433052142265E006F367A /* SwiftMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB433072142265E006F367A /* Timepiece.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Timepiece.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB433092142265E006F367A /* XLActionController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XLActionController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_普通.mp3"; sourceTree = "<group>"; };
 		7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_摇滚.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,7 +113,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F620CBC93B1561DD92E56F0 /* Pods_BeatDemo.framework in Frameworks */,
+				7CB432FC2142265E006F367A /* ChameleonFramework.framework in Frameworks */,
+				7CB432FE2142265E006F367A /* HandyJSON.framework in Frameworks */,
+				7CB433002142265E006F367A /* Hero.framework in Frameworks */,
+				7CB433022142265E006F367A /* HGRippleRadarView.framework in Frameworks */,
+				7CB433042142265E006F367A /* SnapKit.framework in Frameworks */,
+				7CB433062142265E006F367A /* SwiftMessages.framework in Frameworks */,
+				7CB433082142265E006F367A /* Timepiece.framework in Frameworks */,
+				7CB4330A2142265E006F367A /* XLActionController.framework in Frameworks */,
+				7CB432FA21422629006F367A /* ButtonProgressBar_iOS.framework in Frameworks */,
+				7CB432F821422604006F367A /* SVProgressHUD.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +146,7 @@
 				7C15E124212D65C500077573 /* FrameStandard.swift */,
 				7C888E7D212E53D70094DC85 /* DataStandard.swift */,
 				7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */,
+				7C44D9DC214211090063F77E /* StaticConfigurationModel.swift */,
 			);
 			path = AppStandard;
 			sourceTree = "<group>";
@@ -259,6 +290,16 @@
 		A1E6A2DF3EF7B207B633A981 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7CB432FB2142265E006F367A /* ChameleonFramework.framework */,
+				7CB432FD2142265E006F367A /* HandyJSON.framework */,
+				7CB432FF2142265E006F367A /* Hero.framework */,
+				7CB433012142265E006F367A /* HGRippleRadarView.framework */,
+				7CB433032142265E006F367A /* SnapKit.framework */,
+				7CB433052142265E006F367A /* SwiftMessages.framework */,
+				7CB433072142265E006F367A /* Timepiece.framework */,
+				7CB433092142265E006F367A /* XLActionController.framework */,
+				7CB432F921422629006F367A /* ButtonProgressBar_iOS.framework */,
+				7CB432F721422604006F367A /* SVProgressHUD.framework */,
 				7CB1193C21412454005A5ABE /* libiconv.2.dylib */,
 				7CB1191621412101005A5ABE /* libz.tbd */,
 				690775DCC4F41B88F16A2F75 /* Pods_BeatDemo.framework */,
@@ -416,6 +457,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C76988E213AE189006350D3 /* ProgressButtonManager.swift in Sources */,
+				7C44D9DD214211090063F77E /* StaticConfigurationModel.swift in Sources */,
 				7C842673212FFAF40070FD69 /* TmpNote.swift in Sources */,
 				7C15E125212D65C500077573 /* FrameStandard.swift in Sources */,
 				7C2E982921316B2F00BBCD75 /* Sequence.swift in Sources */,
@@ -584,21 +626,26 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D780262589EA7F2CFC0DA1D /* Pods-BeatDemo.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L9ZC5Q2DDV;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include";
 				INFOPLIST_FILE = BeatDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Young.BeatDemo;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ChongMen.BeatDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "BeatDemo/BeatDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BeatDemo/BeatDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -610,21 +657,26 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 198DE31940DDDEBD09895E7B /* Pods-BeatDemo.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L9ZC5Q2DDV;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include";
 				INFOPLIST_FILE = BeatDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Young.BeatDemo;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ChongMen.BeatDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "BeatDemo/BeatDemo-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/BeatDemo/BeatDemo-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

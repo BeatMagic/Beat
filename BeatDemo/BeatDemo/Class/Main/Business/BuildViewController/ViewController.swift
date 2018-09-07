@@ -14,10 +14,12 @@ import AVFoundation
 
 class ViewController: UIViewController {
     // MARK: - 布局
+    
     @IBOutlet var operationViewWidth: NSLayoutConstraint!
     @IBOutlet var operationViewHeight: NSLayoutConstraint!
     @IBOutlet var beatViewWidth: NSLayoutConstraint!
     @IBOutlet var beatViewHeight: NSLayoutConstraint!
+    @IBOutlet var keyBoardViewHeight: NSLayoutConstraint!
     
     // MARK: - 导航栏按钮
     /// 删除ButtonItem
@@ -107,10 +109,10 @@ extension ViewController {
     /// 设置UI && 绑定点击事件
     func setUI() -> Void {
         // 布局
-        operationViewWidth.constant = FrameStandard.universalWidth
-        operationViewHeight.constant = FrameStandard.universalHeight
-        beatViewWidth.constant = FrameStandard.universalWidth
-        beatViewHeight.constant = FrameStandard.beatViewHeight
+//        operationViewWidth.constant = FrameStandard.universalWidth
+//        operationViewHeight.constant = FrameStandard.universalHeight
+//        beatViewWidth.constant = FrameStandard.universalWidth
+//        beatViewHeight.constant = FrameStandard.beatViewHeight
         
         // 导航栏按钮
         navigationItem.leftBarButtonItem = deleteItem
@@ -119,6 +121,33 @@ extension ViewController {
         // 进度条
         ProgressButtonManager.getButtonsArray(clickButtonEvent: #selector(sectionButtonEvent), superView: progressBackgroundView)
         ProgressButtonManager.getImagesArray(superView: progressBackgroundView)
+        
+        // KeyBoard
+//        self.keyBoardView.frame =
+        
+        let keyBoardHeight: CGFloat = {
+            if ToolClass.getIPhoneType() == "iPhone X" {
+                return ToolClass.getScreenHeight() - 88 - 100 - 8 - 8 - 60
+                
+            }else {
+                return ToolClass.getScreenHeight() - 64 - 100 - 8 - 8 - 60
+                
+            }
+            
+        }()
+        
+        self.keyBoardViewHeight.constant = keyBoardHeight
+        
+        self.keyBoardView.musicKeysViewModel = {
+            if ToolClass.getIPhoneType() == "iPhone X" {
+                return self.keyBoardView.initMusicKeyFrame(ownHeight: keyBoardHeight + 88)
+                
+            }else {
+                return self.keyBoardView.initMusicKeyFrame(ownHeight: keyBoardHeight)
+                
+            }
+            
+        }()
         
         // 底部按钮
         resetButton.addTarget(self, action: #selector(resetMusicEvent), for: .touchUpInside)
