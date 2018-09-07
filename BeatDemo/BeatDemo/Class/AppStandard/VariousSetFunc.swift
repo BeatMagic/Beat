@@ -88,4 +88,6 @@ class VariousOperateFunc: NSObject {
         return player
         
     }
+    
+
 }

@@ -162,6 +162,9 @@ extension ViewController {
         basicSequencer.setupMelodyTrack()
         
         
+        
+//        let _ = ArrangingMapFunc.getHarmonyMessageArray("四部和声midi.xml")
+        
 
     }// funcEnd
     

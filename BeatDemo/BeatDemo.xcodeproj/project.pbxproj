@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C3396F40E3708E8D004DB38 /* Pods_BeatDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690775DCC4F41B88F16A2F75 /* Pods_BeatDemo.framework */; };
 		7C0FDF5D21369994000200E2 /* BasicSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5C21369994000200E2 /* BasicSequencer.swift */; };
 		7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */; };
 		7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C15E11C212D4CC800077573 /* BasicKnowledge.swift */; };
@@ -49,6 +50,8 @@
 		7CB433062142265E006F367A /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433052142265E006F367A /* SwiftMessages.framework */; };
 		7CB433082142265E006F367A /* Timepiece.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433072142265E006F367A /* Timepiece.framework */; };
 		7CB4330A2142265E006F367A /* XLActionController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB433092142265E006F367A /* XLActionController.framework */; };
+		7CB4330C21424B09006F367A /* SwiftyXMLParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */; };
+		7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7CB4330D21424FFD006F367A /* 四部和声midi.xml */; };
 		7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */; };
 		7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */; };
 /* End PBXBuildFile section */
@@ -104,6 +107,8 @@
 		7CB433052142265E006F367A /* SwiftMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB433072142265E006F367A /* Timepiece.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Timepiece.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB433092142265E006F367A /* XLActionController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = XLActionController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyXMLParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB4330D21424FFD006F367A /* 四部和声midi.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "四部和声midi.xml"; sourceTree = "<group>"; };
 		7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_普通.mp3"; sourceTree = "<group>"; };
 		7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_摇滚.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CB4330C21424B09006F367A /* SwiftyXMLParser.framework in Frameworks */,
 				7CB432FC2142265E006F367A /* ChameleonFramework.framework in Frameworks */,
 				7CB432FE2142265E006F367A /* HandyJSON.framework in Frameworks */,
 				7CB433002142265E006F367A /* Hero.framework in Frameworks */,
@@ -123,6 +129,7 @@
 				7CB4330A2142265E006F367A /* XLActionController.framework in Frameworks */,
 				7CB432FA21422629006F367A /* ButtonProgressBar_iOS.framework in Frameworks */,
 				7CB432F821422604006F367A /* SVProgressHUD.framework in Frameworks */,
+				3C3396F40E3708E8D004DB38 /* Pods_BeatDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +248,7 @@
 				7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */,
 				7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */,
 				7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */,
+				7CB4330D21424FFD006F367A /* 四部和声midi.xml */,
 				7C1D7363212D470B00144822 /* AppDelegate.swift */,
 				7C1D736D212D470C00144822 /* Assets.xcassets */,
 				7C1D736F212D470C00144822 /* LaunchScreen.storyboard */,
@@ -290,6 +298,7 @@
 		A1E6A2DF3EF7B207B633A981 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */,
 				7CB432FB2142265E006F367A /* ChameleonFramework.framework */,
 				7CB432FD2142265E006F367A /* HandyJSON.framework */,
 				7CB432FF2142265E006F367A /* Hero.framework */,
@@ -374,6 +383,7 @@
 				7C1D736E212D470C00144822 /* Assets.xcassets in Resources */,
 				7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */,
 				7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */,
+				7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */,
 				7C1D7369212D470B00144822 /* Main.storyboard in Resources */,
 				7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */,
 			);
@@ -428,6 +438,7 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyXMLParser/SwiftyXMLParser.framework",
 				"${BUILT_PRODUCTS_DIR}/Timepiece/Timepiece.framework",
 				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
 			);
@@ -441,6 +452,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyXMLParser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Timepiece.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
 			);

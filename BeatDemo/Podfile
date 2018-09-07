@@ -27,5 +27,8 @@ target 'BeatDemo' do
     
     # 数据处理
     pod 'HandyJSON', '~> 4.1.1'                                 # JSON
+    pod 'SwiftyXMLParser', :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
+                                                                # XML文件读取
+    
 
 end

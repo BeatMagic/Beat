@@ -7,16 +7,8 @@
 //
 
 import UIKit
+import SwiftyXMLParser
 
 class StaticConfigurationModel: NSObject {
-    
-    /// 静态四部和声模型
-//    let DefaultHarmonyList: [HarmonyMessage] = {
-//        let noteArray: [[Int]] = [
-//            
-//        
-//        
-//        ]
-//    }()
     
 }

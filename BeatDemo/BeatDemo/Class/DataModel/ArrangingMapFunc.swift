@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyXMLParser
 
 class ArrangingMapFunc: NSObject {
     /// 生成一个编曲图谱Model
@@ -171,6 +172,117 @@ class ArrangingMapFunc: NSObject {
         
 
         return array
+        
+    }// funcEnd
+    
+    /// 从XML文件中提取和声信息数组
+    static func getHarmonyMessageArray(_ fileName: String) -> [HarmonyMessage] {
+        let filePath = Bundle.main.path(forResource: fileName, ofType: nil)
+        if filePath == nil {
+            return []
+            
+        }
+        
+        let xml = try! XML.parse(Data.init(contentsOf: URL.init(fileURLWithPath: filePath!)))
+        // 获取小节的集合
+        let sectionSet = xml.element!.childElements[0].childElements[3].childElements
+        
+        var array: [HarmonyMessage] = []
+        
+        for sectionIndex in 0 ..< 18 {
+            let item = HarmonyMessage.init()
+            item.startBeat = sectionIndex * 16
+            item.endBeat = item.startBeat + 16
+            
+            let sectionXml = sectionSet[sectionIndex].childElements
+            
+            for note in sectionXml {
+                
+                if note.name == "note" {
+                    
+                    for pitch in note.childElements {
+                        
+                        if pitch.name == "pitch" {
+                            
+                            var scaleName = "1"
+                            var octaveCount = 0
+                            var isRising = false
+                            
+                            // 为每个信息赋值
+                            for pitchChildren in pitch.childElements {
+                                switch pitchChildren.name {
+                                case "step":
+                                    scaleName = pitchChildren.text!
+                                    
+                                case "octave":
+                                    octaveCount = Int(pitchChildren.text!)! - 2
+                                    
+                                case "alter":
+                                    isRising = true
+                    
+                                default:
+                                    print("?")
+                                }
+                                
+                            }
+                            
+                            // 获得音符
+                            let midiNote = self.getMidiNote(scaleName, octaveCount: octaveCount, isRising: isRising)
+                            
+                            item.scale.append(midiNote)
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            array.append(item)
+        }
+        
+        return array
+    }// funcEnd
+    
+    
+    /// 给定一个音阶与八度信息 返回midi音符数字
+    static func getMidiNote(_ scaleName: String, octaveCount: Int, isRising: Bool?) -> Int {
+        var tmpScale = 0
+        
+        switch scaleName {
+        case "A":
+            tmpScale = 9
+            
+        case "B":
+            tmpScale = 11
+            
+        case "C":
+            tmpScale = 0
+            
+        case "D":
+            tmpScale = 2
+            
+        case "E":
+            tmpScale = 4
+            
+        case "F":
+            tmpScale = 5
+            
+        case "G":
+            tmpScale = 7
+
+        default:
+            return 0
+        }
+        
+        if isRising != true {
+            return tmpScale + octaveCount * 12
+            
+        }else {
+            return tmpScale + octaveCount * 12 + 1
+            
+        }
         
     }// funcEnd
     
