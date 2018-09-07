@@ -127,7 +127,7 @@ extension ViewController {
         
         let keyBoardHeight: CGFloat = {
             if ToolClass.getIPhoneType() == "iPhone X" {
-                return ToolClass.getScreenHeight() - 88 - 100 - 8 - 8 - 60
+                return ToolClass.getScreenHeight() - 88 - 100 - 8 - 8 - 60 - 34
                 
             }else {
                 return ToolClass.getScreenHeight() - 64 - 100 - 8 - 8 - 60
@@ -138,16 +138,7 @@ extension ViewController {
         
         self.keyBoardViewHeight.constant = keyBoardHeight
         
-        self.keyBoardView.musicKeysViewModel = {
-            if ToolClass.getIPhoneType() == "iPhone X" {
-                return self.keyBoardView.initMusicKeyFrame(ownHeight: keyBoardHeight + 88)
-                
-            }else {
-                return self.keyBoardView.initMusicKeyFrame(ownHeight: keyBoardHeight)
-                
-            }
-            
-        }()
+        self.keyBoardView.musicKeysViewModel = self.keyBoardView.initMusicKeyFrame(ownHeight: keyBoardHeight)
         
         // 底部按钮
         resetButton.addTarget(self, action: #selector(resetMusicEvent), for: .touchUpInside)
