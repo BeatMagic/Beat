@@ -46,66 +46,7 @@ class ArrangingMapFunc: NSObject {
         return model
     }// funcEnd
     
-    
-    /// 生成和声节奏层
-    static func generateHarmonyLevel(_ model: ReferenceTrackMessage, instrumentName: String, startSection: Int, endSection: Int) -> [NoteEvent] {
 
-        // 找到选定的乐器
-        var selectInstrument: InstrumentRange? = nil
-        for variousInstrument in model.variousInstrumentArray {
-            if variousInstrument.name == instrumentName {
-                selectInstrument = variousInstrument
-            }
-        }
-        
-        // 没有匹配的乐器直接返回空数组
-        if selectInstrument == nil {
-            return []
-        }
-        
-        // 匹配对应的和声信息数组
-        var selectHarmonyMessage: HarmonyMessage? = nil
-        for harmonyMessage in model.harmonyMessageArray {
-            if harmonyMessage.startBeat == startSection * model.beatsNumInSection {
-                selectHarmonyMessage = harmonyMessage
-            }
-        }
-        
-        // 没有匹配的和声信息直接返回空数组
-        if selectHarmonyMessage == nil {
-            return []
-        }
-        
-        // 找到在选定乐器音域内的音高
-        var suitableScaleArray: [Int] = []
-        for tmpScale in selectHarmonyMessage!.scale {
-            if tmpScale > selectInstrument!.highestMidiNum { // 不合适?
-                suitableScaleArray.append(self.getMidiNoteFrom(tmpScale, highestMidiNum: selectInstrument!.highestMidiNum))
-                
-            }else { // 合适直接安排上了
-                suitableScaleArray.append(tmpScale)
-                
-            }
-            
-        }
-        
-        // 在合适的音符里生成数组
-        var noteEventArray: [NoteEvent] = []
-        let interval = Double.init(endSection - startSection) / Double.init(suitableScaleArray.count)
-        
-        for suitableScale in suitableScaleArray {
-            let noteEvent = NoteEvent.init(startNoteNumber: UInt8(suitableScale),
-                                           startTime: Double.init(startSection) * model.secondsInOneSection,
-                                           endTime: Double.init(startSection) * model.secondsInOneSection + interval,
-                                           passedNotes: nil)
-            
-            noteEventArray.append(noteEvent)
-        }
-        
-        return noteEventArray
-        
-    }// funcEnd
-    
     
     /// 生成复杂节奏层
     static func generateComplexRhythmLevel(_ model: ReferenceTrackMessage, instrumentName: String) -> [NoteEvent] {
@@ -138,17 +79,19 @@ class ArrangingMapFunc: NSObject {
                     if let midiNote = self.getMidiNoteFrom(totalBeatIndex, harmonyMessageArray: model.harmonyMessageArray) {
                         
                         // 返回选定的乐器
-                        let instrumenthighNote: Int = {
-                            for range in model.variousInstrumentArray {
-                                if range.name == instrumentName {
-                                    return range.highestMidiNum
-                                }
+                        var instrumentHighNote = 100
+                        var instrumentLowNote = 0
+                        
+                        for range in model.variousInstrumentArray {
+                            if range.name == instrumentName {
+                                instrumentHighNote = range.highestMidiNum
+                                instrumentLowNote = range.lowestMidiNum
+                                
                             }
-                            
-                            return 0
-                        }()
+                        }
 
-                        let tmpMideNote = UInt8(self.getMidiNoteFrom(midiNote, highestMidiNum: instrumenthighNote))
+//                        let tmpMideNote = UInt8(self.getMidiNoteFrom(midiNote, highestMidiNum: instrumenthighNote))
+                        let tmpMideNote = UInt8(self.getMidiNoteFrom(midiNote, highestMidiNum: instrumentHighNote, lowestMidiNum: instrumentLowNote))
                         
                         let note = NoteEvent.init(startNoteNumber: tmpMideNote,
                                                   startTime: lastTime - Double.init(noteLength * 3) / 16 ,
@@ -245,7 +188,9 @@ class ArrangingMapFunc: NSObject {
         return array
     }// funcEnd
     
+
     
+// MARK: - 工具方法
     /// 给定一个音阶与八度信息 返回midi音符数字
     static func getMidiNote(_ scaleName: String, octaveCount: Int, isRising: Bool?) -> Int {
         var tmpScale = 0
@@ -271,7 +216,7 @@ class ArrangingMapFunc: NSObject {
             
         case "G":
             tmpScale = 7
-
+            
         default:
             return 0
         }
@@ -286,16 +231,23 @@ class ArrangingMapFunc: NSObject {
         
     }// funcEnd
     
-    
-// MARK: - 私有方法
     /// 给定一个音域与一个确定的音高, 返回在该音域内的一个音符 [乐器]
-    static private func getMidiNoteFrom(_ scale: Int, highestMidiNum: Int) -> Int {
+    static func getMidiNoteFrom(_ scale: Int, highestMidiNum: Int, lowestMidiNum: Int) -> Int {
         
         var tmpScale = scale
-        while tmpScale > highestMidiNum {
-            tmpScale -= 12
+        
+        if tmpScale > highestMidiNum {
+            while tmpScale > highestMidiNum {
+                tmpScale -= 12
+            }
+            
+        }else if tmpScale < lowestMidiNum {
+            while tmpScale < lowestMidiNum {
+                tmpScale += 12
+            }
             
         }
+        
         
         return tmpScale
     }// funcEnd

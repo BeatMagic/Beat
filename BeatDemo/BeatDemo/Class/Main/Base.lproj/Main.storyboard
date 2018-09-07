@@ -139,12 +139,28 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFg-Lr-YJY">
+                                        <rect key="frame" x="8" y="8" width="80" height="50"/>
+                                        <color key="backgroundColor" red="0.19376453757286072" green="0.50850099325180054" blue="0.85232251882553101" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="1NN-qd-UFv"/>
+                                            <constraint firstAttribute="height" constant="50" id="oQ3-Eh-crx"/>
+                                        </constraints>
+                                        <state key="normal" title="测试播放">
+                                            <color key="titleColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="testPlay:" destination="JBX-dH-Wpd" eventType="touchUpInside" id="hNP-9i-XGD"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="F7o-W1-XIa" firstAttribute="centerX" secondItem="xWB-mu-V4Y" secondAttribute="centerX" id="SV8-Za-y9P"/>
+                                    <constraint firstItem="UFg-Lr-YJY" firstAttribute="leading" secondItem="xWB-mu-V4Y" secondAttribute="leading" constant="8" id="bQm-X7-wcd"/>
                                     <constraint firstAttribute="height" constant="100" id="beW-vH-duF"/>
                                     <constraint firstItem="F7o-W1-XIa" firstAttribute="centerY" secondItem="xWB-mu-V4Y" secondAttribute="centerY" id="dIv-l2-a2e"/>
+                                    <constraint firstItem="UFg-Lr-YJY" firstAttribute="top" secondItem="xWB-mu-V4Y" secondAttribute="top" constant="8" id="mnj-mA-jwm"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYO-mR-sqa">
@@ -209,7 +225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qhd-S7-keo" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="209" y="949"/>
+            <point key="canvasLocation" x="208.80000000000001" y="948.57571214392806"/>
         </scene>
     </scenes>
     <resources>
