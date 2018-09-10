@@ -72,96 +72,25 @@ class EditViewController: UIViewController {
     
     /// 测试播放
     @IBAction func testPlay(_ sender: Any) {
-        // 生成pad与钢琴的乐器信息
-        let padInstrumentRange = InstrumentRange.init()
-        padInstrumentRange.highestMidiNum = 50
-        padInstrumentRange.lowestMidiNum = 16
-        padInstrumentRange.name = "pad"
-        
-        let pianoInstrumentRange = InstrumentRange.init()
-        pianoInstrumentRange.highestMidiNum = 60
-        pianoInstrumentRange.lowestMidiNum = 16
-        pianoInstrumentRange.name = "piano"
-        
-//        var instrumentRangeArray = [padInstrumentRange, pianoInstrumentRange]
         
         // 生成四部和声midi
         let harmonyMessageArray = ArrangingMapFunc.getHarmonyMessageArray("四部和声midi.xml")
         
-        // 生成pad与钢琴的四部和声音符数组
-        var padNoteEventArray: [NoteEvent] = []
-        var pianoNoteEventArray: [NoteEvent] = []
+        let model = ReferenceTrackMessage.init()
+        model.harmonyMessageArray = harmonyMessageArray
         
-        let padSequencer = BasicSequencer()
-        let pianoSequencer = BasicSequencer()
+        let bassFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(
+            harmonyMessageArray,
+            instrumentRangeModel: StaticConfigurationModel.bassInstrumentRange
+        )
         
+        let bassSecondNoteArray: [NoteEvent] = StaticConfigurationModel.getBassNoteArray(bassFirstNoteArray, model: model)
         
-        for beatIndex in 0 ..< 18 {
-            
-            let harmonyMessage = harmonyMessageArray[beatIndex]
-            
-            for scale in harmonyMessage.scale {
-                
-                // 生成pad的音
-                let padNoteNumber = ArrangingMapFunc.getMidiNoteFrom(scale, highestMidiNum: padInstrumentRange.highestMidiNum, lowestMidiNum: padInstrumentRange.lowestMidiNum)
-                let padNote = NoteEvent.init(startNoteNumber: UInt8(padNoteNumber),
-                                             startTime: harmonyMessage.startBeat / 16 * 3,
-                                             endTime: harmonyMessage.endBeat / 16 * 3,
-                                             passedNotes: nil)
-                padNoteEventArray.append(padNote)
-                
-                // 生成钢琴的音
-                let pianoNoteNumber = ArrangingMapFunc.getMidiNoteFrom(scale, highestMidiNum: pianoInstrumentRange.highestMidiNum, lowestMidiNum: pianoInstrumentRange.lowestMidiNum)
-                let pianoNote = NoteEvent.init(startNoteNumber: UInt8(pianoNoteNumber),
-                                             startTime: harmonyMessage.startBeat / 16 * 3,
-                                             endTime: harmonyMessage.endBeat / 16 * 3,
-                                             passedNotes: nil)
-                pianoNoteEventArray.append(pianoNote)
-                
-                
-            }
-            
-            
-        }
+        self.basicSequencer.SetPlayTimbre(timbre: 32)
+        self.basicSequencer.SetNoteEventSeq(noteEventSeq: bassSecondNoteArray)
+        self.basicSequencer.playMelody()
         
         
-        
-        for index in 0 ..< 18 {
-            
-            let noteEventIndex = index * 4
-            
-            
-            let padPlayArray = [
-                    padNoteEventArray[noteEventIndex],
-                    padNoteEventArray[noteEventIndex + 1],
-                    padNoteEventArray[noteEventIndex + 2],
-                    padNoteEventArray[noteEventIndex + 3],
-                ]
-            
-            let pianoPlayArray = [
-                    pianoNoteEventArray[noteEventIndex],
-                    pianoNoteEventArray[noteEventIndex + 1],
-                    pianoNoteEventArray[noteEventIndex + 2],
-                    pianoNoteEventArray[noteEventIndex + 3],
-                ]
-            
-            let playDelayTime = padNoteEventArray[noteEventIndex].startBeat / DataStandard.oneBeatWithTime
-            
-            
-            DelayTask.createTaskWith(workItem: {
-                
-                padSequencer.SetNoteEventSeq(noteEventSeq: padPlayArray)
-                padSequencer.SetPlayTimbre(timbre: 89)
-                padSequencer.playMelody()
-                
-                pianoSequencer.SetNoteEventSeq(noteEventSeq: pianoPlayArray)
-                pianoSequencer.SetPlayTimbre(timbre: 0)
-                pianoSequencer.playMelody()
-                
-            }, delayTime: playDelayTime)
-            
-        }
-
     }
     
     override func viewDidLoad() {

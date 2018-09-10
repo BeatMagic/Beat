@@ -119,6 +119,121 @@ class DataStandard: NSObject {
             "delayTime": 0,
         ],
     ]
+    
+    /// 两个八度的误差(需要提高两个八度播放)
+    static let NeedHigherPlay = 12 * 2
+    
+    
+    /// 和声节奏层套路数组
+    static let RhythmLayerRoutinesArray: [RhythmLayerRoutineModel] = {
+        var array: [RhythmLayerRoutineModel] = []
+        
+        
+        for index in 0 ..< 8 {
+            let itemModel = RhythmLayerRoutineModel.init()
+            
+            let specificKindIndex = (index - index % 2) / 2
+            var isVariant = false
+            if index % 2 != 0 {
+                isVariant = true
+            }
+            
+            itemModel.specificKind = BeatConstitutionType.init(rawValue: specificKindIndex)!
+            itemModel.isVariant = isVariant
+            
+            array.append(itemModel)
+            
+        }
+        
+        array[0].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 4),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 4, endBeat: 8),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 8, endBeat: 12),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 12, endBeat: 16),
+        ]
+        
+        array[1].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 4),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 4, endBeat: 8),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 8, endBeat: 12),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 9, endBeat: 12),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 12, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 15, endBeat: 16),
+        ]
+        
+        array[2].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 6),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 6, endBeat: 12),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 6, endBeat: 12),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 6, endBeat: 12),
+            
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 12, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 12, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 12, endBeat: 16),
+            
+        ]
+        
+        array[3].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 6),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 6, endBeat: 12),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 6, endBeat: 12),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 6, endBeat: 12),
+            
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 12, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 14, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 14, endBeat: 16),
+        ]
+        
+        array[4].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 6),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 6, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 6, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 6, endBeat: 10),
+            
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 10, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 10, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 10, endBeat: 16),
+            
+        ]
+        
+        array[5].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 6),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 6, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 6, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 6, endBeat: 10),
+            
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 10, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 11, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 12, endBeat: 16),
+        ]
+        
+        array[6].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 4),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 4, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 4, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 4, endBeat: 10),
+            
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 10, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 10, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 10, endBeat: 16),
+            
+        ]
+        
+        array[7].noteArray = [
+            RhythmLayerSectionNote.init(scaleIndex: 0, startBeat: 0, endBeat: 4),
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 4, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 4, endBeat: 10),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 4, endBeat: 10),
+            
+            RhythmLayerSectionNote.init(scaleIndex: 1, startBeat: 10, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 3, startBeat: 12, endBeat: 16),
+            RhythmLayerSectionNote.init(scaleIndex: 2, startBeat: 14, endBeat: 16),
+        ]
+        
+        
+        
+        return array
+    }()
 }
 
 extension DataStandard {

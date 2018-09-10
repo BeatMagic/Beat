@@ -18,7 +18,6 @@ class ArrangingMapFunc: NSObject {
         model.totalSectionsNum = 18
         
         // MARK: - 测试数据
-        model.beatConstitutionTypeArray = [.Type2222]
         model.strongLevelInformationInSection = [.Weak]
         
         let instrumentRange = InstrumentRange.init()
@@ -49,7 +48,7 @@ class ArrangingMapFunc: NSObject {
 
     
     /// 生成复杂节奏层
-    static func generateComplexRhythmLevel(_ model: ReferenceTrackMessage, instrumentName: String) -> [NoteEvent] {
+    static func generateComplexRhythmLevel(_ model: ReferenceTrackMessage, instrumentRange: InstrumentRange) -> [NoteEvent] {
         
         var array: [NoteEvent] = []
         
@@ -69,7 +68,7 @@ class ArrangingMapFunc: NSObject {
                 let lastTime = sectionIndex * model.secondsInOneSection + Double.init(lastBeatIndex * 3) / 16
                 
                 // 1没有2有
-                let isHaveNote = ToolClass.randomInRange(range: 1 ... 2)
+                let isHaveNote = ToolClass.randomInRange(range: 1 ... 3)
                 if isHaveNote == 2 {
                     /// 当前音符长度
                     let noteLength = ToolClass.randomInRange(range: 1 ... beat)
@@ -79,18 +78,10 @@ class ArrangingMapFunc: NSObject {
                     if let midiNote = self.getMidiNoteFrom(totalBeatIndex, harmonyMessageArray: model.harmonyMessageArray) {
                         
                         // 返回选定的乐器
-                        var instrumentHighNote = 100
-                        var instrumentLowNote = 0
+                        let instrumentHighNote = instrumentRange.highestMidiNum
+                        let instrumentLowNote = instrumentRange.lowestMidiNum
                         
-                        for range in model.variousInstrumentArray {
-                            if range.name == instrumentName {
-                                instrumentHighNote = range.highestMidiNum
-                                instrumentLowNote = range.lowestMidiNum
-                                
-                            }
-                        }
 
-//                        let tmpMideNote = UInt8(self.getMidiNoteFrom(midiNote, highestMidiNum: instrumenthighNote))
                         let tmpMideNote = UInt8(self.getMidiNoteFrom(midiNote, highestMidiNum: instrumentHighNote, lowestMidiNum: instrumentLowNote))
                         
                         let note = NoteEvent.init(startNoteNumber: tmpMideNote,
@@ -170,8 +161,9 @@ class ArrangingMapFunc: NSObject {
                             }
                             
                             // 获得音符
-                            let midiNote = self.getMidiNote(scaleName, octaveCount: octaveCount, isRising: isRising)
+                            var tmpMidiNote = self.getMidiNote(scaleName, octaveCount: octaveCount, isRising: isRising)
                             
+                            let midiNote = tmpMidiNote + 24
                             item.scale.append(midiNote)
                             
                         }
@@ -191,6 +183,24 @@ class ArrangingMapFunc: NSObject {
 
     
 // MARK: - 工具方法
+    /// 给定一个拍点构成类型, 返回一个小节内的拍子构成
+    static func getBeatGroup(_ type: BeatConstitutionType) -> [Int] {
+        switch type {
+        case .Type2222:
+            return [4, 4, 4, 4]
+            
+        case .Type233:
+            return [4, 6, 6]
+            
+        case .Type323:
+            return [6, 4, 6]
+            
+        case .Type332:
+            return [6, 6, 4]
+            
+        }
+    }// funcEnd
+    
     /// 给定一个音阶与八度信息 返回midi音符数字
     static func getMidiNote(_ scaleName: String, octaveCount: Int, isRising: Bool?) -> Int {
         var tmpScale = 0
@@ -266,23 +276,7 @@ class ArrangingMapFunc: NSObject {
     }
     
     
-    /// 给定一个拍点构成类型, 返回一个小节内的拍子构成
-    static private func getBeatGroup(_ type: BeatConstitutionType) -> [Int] {
-        switch type {
-        case .Type2222:
-            return [4, 4, 4, 4]
-            
-        case .Type233:
-            return [4, 6, 6]
-            
-        case .Type323:
-            return [6, 4, 6]
-            
-        case .Type332:
-            return [6, 6, 4]
-            
-        }
-    }// funcEnd
+
     
     
 }

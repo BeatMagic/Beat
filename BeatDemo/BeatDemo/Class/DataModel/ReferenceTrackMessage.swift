@@ -18,13 +18,36 @@ class ReferenceTrackMessage: HandyJSON {
     var beatsNumInSection: Int = 16
 
     /// 每小节多少秒
-    var secondsInOneSection: Double = 0
+    var secondsInOneSection: Double = 3
 
     /// 小节总数
-    var totalSectionsNum: Int = 0
+    var totalSectionsNum: Int = 18
 
     /// 拍点构成
-    var beatConstitutionTypeArray: [BeatConstitutionType] = []
+    let beatConstitutionTypeArray: [BeatConstitutionType] = [
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        
+        BeatConstitutionType.Type2222,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        
+        BeatConstitutionType.Type2222,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        
+        BeatConstitutionType.Type2222,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        BeatConstitutionType.Type332,
+        
+        BeatConstitutionType.Type2222,
+        BeatConstitutionType.Type2222,
+    ]
 
     /// 每个小节内16个Beat的强弱信息 ()
     var strongLevelInformationInSection: [StrongLevelInformation] = [.Weak]
@@ -51,6 +74,9 @@ enum BeatConstitutionType: Int, HandyJSONEnum {
     case Type323 = 2
     case Type233 = 3
 }
+
+
+
 
 /// 每个Beat的强弱信息
 enum StrongLevelInformation: Int, HandyJSONEnum {
@@ -84,6 +110,43 @@ class HarmonyMessage: HandyJSON {
     required init() {}
 }
 
+
+/// 和声节奏层基础套路模型
+class RhythmLayerRoutineModel: HandyJSON {
+    
+    /// 具体是哪一种
+    var specificKind: BeatConstitutionType = .Type2222
+    
+    /// 是否为变种套路
+    var isVariant: Bool = false
+    
+    /// 具体音数组
+    var noteArray: [RhythmLayerSectionNote] = []
+
+    required init() {}
+}
+
+/// 和声节奏层小节内子音符模型
+class RhythmLayerSectionNote: HandyJSON {
+    /// 是哪个音 [0为根音, 1为冠, ...]
+    var scaleIndex: Int = 0
+    /// 起始拍
+    var startBeat: Int = 0
+    /// 终结拍
+    var endBeat: Int = 0
+    
+    init(scaleIndex: Int, startBeat: Int, endBeat: Int) {
+        self.scaleIndex = scaleIndex
+        self.startBeat = startBeat
+        self.endBeat = endBeat
+        
+    }
+    
+    required init() {}
+    
+}
+
+
 /// 主题句信息
 class TopicSentence: HandyJSON {
     /// 主调
@@ -110,3 +173,7 @@ class ChordMessage: HandyJSON {
 
     required init() {}
 }
+
+
+
+
