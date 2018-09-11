@@ -32,7 +32,7 @@ class StaticConfigurationModel: NSObject {
         return tmpModel
     }()
     
-    /// 钢琴的乐器信息
+    /// Bass的乐器信息
     static let bassInstrumentRange: InstrumentRange = {
         let tmpModel = InstrumentRange.init()
         tmpModel.highestMidiNum = 39
@@ -195,6 +195,87 @@ class StaticConfigurationModel: NSObject {
         
         
         return bassSecondNoteArray
+        
+    }// funcEnd
+    
+    /// 获取噪声层的数组
+    static func getNoiseDrummNoteArray(tmpModelArray: [String]) -> [NoteEvent] {
+        
+        var dramNoteTotalArray: [[NoteEvent]] = []
+        
+        
+        // 添加若干个空数组添加各个音色的音符
+        for _ in DataStandard.noiseBeatRoutine.keys {
+            dramNoteTotalArray.append([])
+            
+        }
+        
+        var sectionIndex = 0
+        for tmpModel in tmpModelArray {
+            
+            let probablyCount = ToolClass.randomInRange(range: 1 ... 3)
+            var dramModelDict: [String: [Int]]? = nil
+            
+            switch tmpModel {
+                
+            case "zy":
+                if probablyCount == 2 {
+                    dramModelDict = DataStandard.noiseBeatVariationRoutine
+                }
+
+            case "zyf":
+                dramModelDict = DataStandard.noiseBeatVariationRoutine
+
+            default:
+                dramModelDict = nil
+            }
+            
+            if dramModelDict != nil {
+                
+                var dramToneKeyIndex = 0
+                
+                for dramToneKey in dramModelDict!.keys {
+                    
+                    for beatIndex in dramModelDict![dramToneKey]! {
+                        
+                        let note = NoteEvent.init(
+                            startNoteNumber: 56,
+                            startTime: Double.init(sectionIndex * 3) + Double.init(beatIndex - 1) * 3 / 16,
+                            endTime:  Double.init(sectionIndex * 3) + Double.init(beatIndex) * 3 / 16,
+                            passedNotes: nil)
+                        
+                        dramNoteTotalArray[dramToneKeyIndex].append(note)
+                        
+                    }
+                    
+                    dramToneKeyIndex += 1
+                }
+                
+            }
+            
+            sectionIndex += 1
+        }
+        
+        
+        
+        var dragNoteArray: [NoteEvent] = []
+        
+        for array in dramNoteTotalArray {
+            for note in array {
+                
+                let noteEvent = NoteEvent.init(
+                    startNoteNumber: note.startNoteNumber - 12,
+                    startTime: note.startTime,
+                    endTime: note.endTime,
+                    passedNotes: nil)
+                
+                dragNoteArray.append(noteEvent)
+
+            }
+            
+        }
+        
+        return dragNoteArray
         
     }// funcEnd
     

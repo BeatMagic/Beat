@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import AudioKitUI
 import SVProgressHUD
+import SwiftyXMLParser
 
 class EditViewController: UIViewController {
     
@@ -75,9 +76,17 @@ class EditViewController: UIViewController {
         
         // 生成四部和声midi
         let harmonyMessageArray = ArrangingMapFunc.getHarmonyMessageArray("四部和声midi.xml")
-        
+
         let model = ReferenceTrackMessage.init()
         model.harmonyMessageArray = harmonyMessageArray
+        
+        let padNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.padInstrumentRange)
+        
+        
+        let pianoFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.pianoInstrumentRange)
+        
+        let pianoSecondNoteArray = StaticConfigurationModel.getPainoNoteArray(pianoFirstNoteArray, model: model)
+        
         
         let bassFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(
             harmonyMessageArray,
@@ -86,9 +95,44 @@ class EditViewController: UIViewController {
         
         let bassSecondNoteArray: [NoteEvent] = StaticConfigurationModel.getBassNoteArray(bassFirstNoteArray, model: model)
         
-        self.basicSequencer.SetPlayTimbre(timbre: 32)
-        self.basicSequencer.SetNoteEventSeq(noteEventSeq: bassSecondNoteArray)
-        self.basicSequencer.playMelody()
+
+        
+        let tmpArray = [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "zy",
+            "zy",
+            "zy",
+            "zyf",
+            "zy",
+            "zy",
+            "zyf",
+            "zyf",
+            "zyf",
+        ]
+        
+        
+        let dragNoteArray = StaticConfigurationModel.getNoiseDrummNoteArray(tmpModelArray: tmpArray)
+
+        self.basicSequencer.setupBgmTracks()
+        
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.pad.rawValue, noteEventSeq: padNoteArray)
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.paino1.rawValue, noteEventSeq: pianoSecondNoteArray)
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.bass.rawValue, noteEventSeq: bassSecondNoteArray)
+        
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.drum.rawValue, noteEventSeq: dragNoteArray)
+        
+        
+        
+        
+        self.basicSequencer.playBGM()
         
         
     }

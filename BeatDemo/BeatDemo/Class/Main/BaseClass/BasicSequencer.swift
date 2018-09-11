@@ -20,9 +20,23 @@ class BasicSequencer: NSObject{
     var inputSampler = AKMIDISampler()
     //bgmSampler
     var paino1Sampler = AKMIDISampler()
+    var padSampler = AKMIDISampler()
+    var bassSampler = AKMIDISampler()
+    var drumSampler: AKMIDISampler = {
+        let tmpSampler = AKMIDISampler()
+        
+        let bassDrumFile = try! AKAudioFile(readFileName: "bass_drum_C1.wav")
+        let clapFile = try! AKAudioFile(readFileName: "snare_D1.wav")
+        let closedHiHatFile = try! AKAudioFile(readFileName: "closed_hi_hat_F#1.wav")
+        
+        try! tmpSampler.loadAudioFiles([
+            bassDrumFile, clapFile, closedHiHatFile
+            ])
+        
+        return tmpSampler
+    }()
     
-    var fluteSampler = AKMIDISampler()
-    
+    //用于记录并播放用户输入的sampler
     var midiSampler = AKMIDISampler()
     
     var mixer = AKMixer()
@@ -38,7 +52,7 @@ class BasicSequencer: NSObject{
     let sequenceLength = AKDuration(beats: 76.0)
     
     //4 乘以小节数量
-    let bgmSeqLength = AKDuration(beats:8.0)
+    let bgmSeqLength = AKDuration(beats:200.0)
     
     let standerand = 128
     let measureCount = 9
@@ -59,12 +73,13 @@ class BasicSequencer: NSObject{
         
         
         //bgm 音色
-        try! paino1Sampler.loadMelodicSoundFont("GeneralUser", preset: 60)
+        try! paino1Sampler.loadMelodicSoundFont("GeneralUser", preset: 2)
+        try! padSampler.loadMelodicSoundFont("GeneralUser", preset: 89)
+        try! bassSampler.loadMelodicSoundFont("GeneralUser", preset: 32)
         
-        try! fluteSampler.loadMelodicSoundFont("GeneralUser", preset: 8)
         
         
-        [inputSampler,midiCompresser,paino1Sampler,fluteSampler] >>> mixer
+        [inputSampler,midiCompresser,paino1Sampler,padSampler,bassSampler, drumSampler] >>> mixer
         
         reverb = AKReverb(mixer)
         reverbMixer = AKDryWetMixer(mixer, reverb)
@@ -100,6 +115,12 @@ class BasicSequencer: NSObject{
     
     func GetSampler() -> AKAppleSampler{
         return self.inputSampler
+    }
+    
+    func SetBgmNoteEventSeq(index: Int, noteEventSeq:[NoteEvent]){
+        bgmSequencer.stop()
+        
+        generateBGMSeq(index: index, noteEventSeq:noteEventSeq)
     }
     
     func SetNoteEventSeq(noteEventSeq:[NoteEvent],preroll: Bool = true){
@@ -205,32 +226,34 @@ class BasicSequencer: NSObject{
         bgmSequencer.setLength(bgmSeqLength)
         bgmSequencer.tracks[Sequence.paino1.rawValue].setMIDIOutput(paino1Sampler.midiIn)
         bgmSequencer.setTempo(currentTempo)
-        generateNewMelodicSequence()
+        
         
         _ = bgmSequencer.newTrack()
         bgmSequencer.setLength(bgmSeqLength)
-        bgmSequencer.tracks[Sequence.paino2.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.tracks[Sequence.pad.rawValue].setMIDIOutput(padSampler.midiIn)
         bgmSequencer.setTempo(currentTempo)
         
         _ = bgmSequencer.newTrack()
         bgmSequencer.setLength(bgmSeqLength)
-        bgmSequencer.tracks[Sequence.koto.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.tracks[Sequence.bass.rawValue].setMIDIOutput(bassSampler.midiIn)
         bgmSequencer.setTempo(currentTempo)
         
         _ = bgmSequencer.newTrack()
         bgmSequencer.setLength(bgmSeqLength)
-        bgmSequencer.tracks[Sequence.flute.rawValue].setMIDIOutput(fluteSampler.midiIn)
+        bgmSequencer.tracks[Sequence.drum.rawValue].setMIDIOutput(drumSampler.midiIn)
         bgmSequencer.setTempo(currentTempo)
+
+    }
+    
+    func playBGM(){
+        bgmSequencer.rewind()
         
-        _ = bgmSequencer.newTrack()
-        bgmSequencer.setLength(bgmSeqLength)
-        bgmSequencer.tracks[Sequence.pad.rawValue].setMIDIOutput(fluteSampler.midiIn)
-        bgmSequencer.setTempo(currentTempo)
+        bgmSequencer.play()
         
-        _ = bgmSequencer.newTrack()
-        bgmSequencer.setLength(bgmSeqLength)
-        bgmSequencer.tracks[Sequence.bass.rawValue].setMIDIOutput(fluteSampler.midiIn)
-        bgmSequencer.setTempo(currentTempo)
+    }
+    
+    func stopBGM(){
+        sequencer.stop()
     }
     
     func playMelody(){
@@ -305,6 +328,33 @@ class BasicSequencer: NSObject{
     
     func clear(_ typeOfSequence: Sequence) {
         sequencer.tracks[typeOfSequence.rawValue].clear()
+    }
+    
+    func generateBGMSeq(index: Int, noteEventSeq: [NoteEvent]){
+        bgmSequencer.tracks[index].clear()
+        
+        bgmSequencer.setLength(bgmSeqLength)
+        print("generateBGM!!!!")
+        var fbPosition = -0.1
+        for noteEvent in noteEventSeq{
+            //print(String(noteEvent.startBeat)+" set "+String(noteEvent.endbeat))
+            let velocity: UInt8 = 95
+            let channel:UInt8 = 1
+            //速度给的是每小节4拍的速度，我们量化是用16分音符，所以这里要有个转换
+            var beats = Double(noteEvent.endbeat - noteEvent.startBeat)/diviation
+            //print("realbeate"+String(beats))
+            let duration = AKDuration(beats: beats)
+            beats = Double(noteEvent.startBeat)/diviation
+            if fbPosition<0{
+                fbPosition = beats
+            }
+            
+            let position = AKDuration(beats: beats)
+            bgmSequencer.tracks[index].add(noteNumber:noteEvent.startNoteNumber,velocity:velocity,position:position, duration:duration, channel:channel)
+            
+        }
+        bgmSequencer.setLength(bgmSeqLength)
+        bgmSequencer.setTempo(80.0)
     }
     
     func generateRecordSeq(preroll: Bool = true, clear: Bool = true){

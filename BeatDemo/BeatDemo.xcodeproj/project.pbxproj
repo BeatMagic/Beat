@@ -25,6 +25,11 @@
 		7C2E982B21316C3C00BBCD75 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2E982A21316C3C00BBCD75 /* Section.swift */; };
 		7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */; };
 		7C44D9DD214211090063F77E /* StaticConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C44D9DC214211090063F77E /* StaticConfigurationModel.swift */; };
+		7C4DEFDB214760BA00D06D76 /* 噪音层节奏变种套路1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */; };
+		7C4DEFDC214760BA00D06D76 /* 噪音层节奏基础套路1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */; };
+		7C4DEFE12147E15000D06D76 /* bass_drum_C1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFDE2147E15000D06D76 /* bass_drum_C1.wav */; };
+		7C4DEFE22147E15000D06D76 /* closed_hi_hat_F#1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFDF2147E15000D06D76 /* closed_hi_hat_F#1.wav */; };
+		7C4DEFE32147E15000D06D76 /* snare_D1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFE02147E15000D06D76 /* snare_D1.wav */; };
 		7C76988E213AE189006350D3 /* ProgressButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76988D213AE189006350D3 /* ProgressButtonManager.swift */; };
 		7C842665212F979C0070FD69 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842664212F979C0070FD69 /* EditViewController.swift */; };
 		7C84266B212FB1230070FD69 /* NoteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842668212FB1230070FD69 /* NoteEvent.swift */; };
@@ -79,6 +84,11 @@
 		7C2E982A21316C3C00BBCD75 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "输入伴奏.mp3"; sourceTree = "<group>"; };
 		7C44D9DC214211090063F77E /* StaticConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticConfigurationModel.swift; sourceTree = "<group>"; };
+		7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "噪音层节奏变种套路1.xml"; sourceTree = "<group>"; };
+		7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "噪音层节奏基础套路1.xml"; sourceTree = "<group>"; };
+		7C4DEFDE2147E15000D06D76 /* bass_drum_C1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass_drum_C1.wav; sourceTree = "<group>"; };
+		7C4DEFDF2147E15000D06D76 /* closed_hi_hat_F#1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "closed_hi_hat_F#1.wav"; sourceTree = "<group>"; };
+		7C4DEFE02147E15000D06D76 /* snare_D1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare_D1.wav; sourceTree = "<group>"; };
 		7C76988D213AE189006350D3 /* ProgressButtonManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressButtonManager.swift; sourceTree = "<group>"; };
 		7C842664212F979C0070FD69 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		7C842668212FB1230070FD69 /* NoteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEvent.swift; sourceTree = "<group>"; };
@@ -245,11 +255,14 @@
 		7C1D7378212D4B1E00144822 /* AboutApp */ = {
 			isa = PBXGroup;
 			children = (
+				7C1D7363212D470B00144822 /* AppDelegate.swift */,
 				7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */,
 				7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */,
 				7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */,
 				7CB4330D21424FFD006F367A /* 四部和声midi.xml */,
-				7C1D7363212D470B00144822 /* AppDelegate.swift */,
+				7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */,
+				7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */,
+				7C4DEFDD2147DE9200D06D76 /* Drums */,
 				7C1D736D212D470C00144822 /* Assets.xcassets */,
 				7C1D736F212D470C00144822 /* LaunchScreen.storyboard */,
 				7C1D7372212D470C00144822 /* Info.plist */,
@@ -277,6 +290,16 @@
 			children = (
 			);
 			path = LocalFramework;
+			sourceTree = "<group>";
+		};
+		7C4DEFDD2147DE9200D06D76 /* Drums */ = {
+			isa = PBXGroup;
+			children = (
+				7C4DEFDE2147E15000D06D76 /* bass_drum_C1.wav */,
+				7C4DEFE02147E15000D06D76 /* snare_D1.wav */,
+				7C4DEFDF2147E15000D06D76 /* closed_hi_hat_F#1.wav */,
+			);
+			path = Drums;
 			sourceTree = "<group>";
 		};
 		7C842662212F977D0070FD69 /* BuildViewController */ = {
@@ -378,13 +401,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C4DEFDB214760BA00D06D76 /* 噪音层节奏变种套路1.xml in Resources */,
 				7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */,
 				7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */,
 				7C1D736E212D470C00144822 /* Assets.xcassets in Resources */,
+				7C4DEFE22147E15000D06D76 /* closed_hi_hat_F#1.wav in Resources */,
 				7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */,
+				7C4DEFE12147E15000D06D76 /* bass_drum_C1.wav in Resources */,
 				7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */,
+				7C4DEFE32147E15000D06D76 /* snare_D1.wav in Resources */,
 				7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */,
 				7C1D7369212D470B00144822 /* Main.storyboard in Resources */,
+				7C4DEFDC214760BA00D06D76 /* 噪音层节奏基础套路1.xml in Resources */,
 				7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -234,7 +234,25 @@ class DataStandard: NSObject {
         
         return array
     }()
+    
+    
+    /// 噪音层节奏基础套路1模型
+    static let noiseBeatRoutine: [String: [Int]] = [
+        "36": [1, 8, 9, 11, 16],
+        "38": [5, 13],
+        "42": [3, 7, 9, 15],
+        ]
+    
+    /// 噪音层节奏变异套路1模型
+    static let noiseBeatVariationRoutine: [String: [Int]] = [
+        "36": [1, 8, 9, 11],
+        "38": [5, 13],
+        "42": [7, 9, 15],
+        ]
+    
 }
+
+
 
 extension DataStandard {
     /// 输入时间(Double)返回拍子数

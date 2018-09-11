@@ -109,6 +109,8 @@ class ArrangingMapFunc: NSObject {
         
     }// funcEnd
     
+    
+    
     /// 从XML文件中提取和声信息数组
     static func getHarmonyMessageArray(_ fileName: String) -> [HarmonyMessage] {
         let filePath = Bundle.main.path(forResource: fileName, ofType: nil)
@@ -161,9 +163,9 @@ class ArrangingMapFunc: NSObject {
                             }
                             
                             // 获得音符
-                            var tmpMidiNote = self.getMidiNote(scaleName, octaveCount: octaveCount, isRising: isRising)
+                            let tmpMidiNote = self.getMidiNote(scaleName, octaveCount: octaveCount, isRising: isRising)
                             
-                            let midiNote = tmpMidiNote + 24
+                            let midiNote = tmpMidiNote
                             item.scale.append(midiNote)
                             
                         }
@@ -179,6 +181,10 @@ class ArrangingMapFunc: NSObject {
         
         return array
     }// funcEnd
+    
+    
+
+    
     
 
     
@@ -232,10 +238,10 @@ class ArrangingMapFunc: NSObject {
         }
         
         if isRising != true {
-            return tmpScale + octaveCount * 12
+            return tmpScale + octaveCount * 12 + 24
             
         }else {
-            return tmpScale + octaveCount * 12 + 1
+            return tmpScale + octaveCount * 12 + 1 + 24
             
         }
         
