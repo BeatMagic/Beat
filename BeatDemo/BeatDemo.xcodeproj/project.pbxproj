@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C3396F40E3708E8D004DB38 /* Pods_BeatDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690775DCC4F41B88F16A2F75 /* Pods_BeatDemo.framework */; };
 		7C0FDF5D21369994000200E2 /* BasicSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5C21369994000200E2 /* BasicSequencer.swift */; };
 		7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */; };
 		7C15E120212D4CC800077573 /* BasicKnowledge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C15E11C212D4CC800077573 /* BasicKnowledge.swift */; };
@@ -27,9 +26,6 @@
 		7C44D9DD214211090063F77E /* StaticConfigurationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C44D9DC214211090063F77E /* StaticConfigurationModel.swift */; };
 		7C4DEFDB214760BA00D06D76 /* 噪音层节奏变种套路1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */; };
 		7C4DEFDC214760BA00D06D76 /* 噪音层节奏基础套路1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */; };
-		7C4DEFE12147E15000D06D76 /* bass_drum_C1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFDE2147E15000D06D76 /* bass_drum_C1.wav */; };
-		7C4DEFE22147E15000D06D76 /* closed_hi_hat_F#1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFDF2147E15000D06D76 /* closed_hi_hat_F#1.wav */; };
-		7C4DEFE32147E15000D06D76 /* snare_D1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DEFE02147E15000D06D76 /* snare_D1.wav */; };
 		7C76988E213AE189006350D3 /* ProgressButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C76988D213AE189006350D3 /* ProgressButtonManager.swift */; };
 		7C842665212F979C0070FD69 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842664212F979C0070FD69 /* EditViewController.swift */; };
 		7C84266B212FB1230070FD69 /* NoteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C842668212FB1230070FD69 /* NoteEvent.swift */; };
@@ -45,7 +41,6 @@
 		7CA6445B21366BD00062CA58 /* VariousSetFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */; };
 		7CB119132140BAAA005A5ABE /* ReferenceTrackMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB119122140BAAA005A5ABE /* ReferenceTrackMessage.swift */; };
 		7CB119152140FC77005A5ABE /* ArrangingMapFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB119142140FC77005A5ABE /* ArrangingMapFunc.swift */; };
-		7CB432F821422604006F367A /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432F721422604006F367A /* SVProgressHUD.framework */; };
 		7CB432FA21422629006F367A /* ButtonProgressBar_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432F921422629006F367A /* ButtonProgressBar_iOS.framework */; };
 		7CB432FC2142265E006F367A /* ChameleonFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432FB2142265E006F367A /* ChameleonFramework.framework */; };
 		7CB432FE2142265E006F367A /* HandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB432FD2142265E006F367A /* HandyJSON.framework */; };
@@ -58,6 +53,11 @@
 		7CB4330C21424B09006F367A /* SwiftyXMLParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */; };
 		7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7CB4330D21424FFD006F367A /* 四部和声midi.xml */; };
 		7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */; };
+		7CDC546B2148E55A002A31D7 /* bass_drum_C1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC54682148E55A002A31D7 /* bass_drum_C1.wav */; };
+		7CDC546C2148E55A002A31D7 /* closed_hi_hat_F#1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC54692148E55A002A31D7 /* closed_hi_hat_F#1.wav */; };
+		7CDC546D2148E55A002A31D7 /* snare_D1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC546A2148E55A002A31D7 /* snare_D1.wav */; };
+		7CDC546F2148ECEE002A31D7 /* GeneralUserPiano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC546E2148ECEE002A31D7 /* GeneralUserPiano.sf2 */; };
+		7CDC54722148FEA6002A31D7 /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDC54712148FEA6002A31D7 /* SVProgressHUD.framework */; };
 		7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */; };
 /* End PBXBuildFile section */
 
@@ -86,9 +86,6 @@
 		7C44D9DC214211090063F77E /* StaticConfigurationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticConfigurationModel.swift; sourceTree = "<group>"; };
 		7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "噪音层节奏变种套路1.xml"; sourceTree = "<group>"; };
 		7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "噪音层节奏基础套路1.xml"; sourceTree = "<group>"; };
-		7C4DEFDE2147E15000D06D76 /* bass_drum_C1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass_drum_C1.wav; sourceTree = "<group>"; };
-		7C4DEFDF2147E15000D06D76 /* closed_hi_hat_F#1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "closed_hi_hat_F#1.wav"; sourceTree = "<group>"; };
-		7C4DEFE02147E15000D06D76 /* snare_D1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare_D1.wav; sourceTree = "<group>"; };
 		7C76988D213AE189006350D3 /* ProgressButtonManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressButtonManager.swift; sourceTree = "<group>"; };
 		7C842664212F979C0070FD69 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		7C842668212FB1230070FD69 /* NoteEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEvent.swift; sourceTree = "<group>"; };
@@ -120,6 +117,12 @@
 		7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyXMLParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB4330D21424FFD006F367A /* 四部和声midi.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "四部和声midi.xml"; sourceTree = "<group>"; };
 		7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_普通.mp3"; sourceTree = "<group>"; };
+		7CDC54682148E55A002A31D7 /* bass_drum_C1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass_drum_C1.wav; sourceTree = "<group>"; };
+		7CDC54692148E55A002A31D7 /* closed_hi_hat_F#1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "closed_hi_hat_F#1.wav"; sourceTree = "<group>"; };
+		7CDC546A2148E55A002A31D7 /* snare_D1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare_D1.wav; sourceTree = "<group>"; };
+		7CDC546E2148ECEE002A31D7 /* GeneralUserPiano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = GeneralUserPiano.sf2; sourceTree = "<group>"; };
+		7CDC54712148FEA6002A31D7 /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CDC54732148FF37002A31D7 /* Pods_BeatDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_BeatDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_摇滚.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CDC54722148FEA6002A31D7 /* SVProgressHUD.framework in Frameworks */,
 				7CB4330C21424B09006F367A /* SwiftyXMLParser.framework in Frameworks */,
 				7CB432FC2142265E006F367A /* ChameleonFramework.framework in Frameworks */,
 				7CB432FE2142265E006F367A /* HandyJSON.framework in Frameworks */,
@@ -138,8 +142,6 @@
 				7CB433082142265E006F367A /* Timepiece.framework in Frameworks */,
 				7CB4330A2142265E006F367A /* XLActionController.framework in Frameworks */,
 				7CB432FA21422629006F367A /* ButtonProgressBar_iOS.framework in Frameworks */,
-				7CB432F821422604006F367A /* SVProgressHUD.framework in Frameworks */,
-				3C3396F40E3708E8D004DB38 /* Pods_BeatDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,11 +264,11 @@
 				7CB4330D21424FFD006F367A /* 四部和声midi.xml */,
 				7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */,
 				7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */,
+				7CDC54702148ED03002A31D7 /* Sf2File */,
 				7C4DEFDD2147DE9200D06D76 /* Drums */,
 				7C1D736D212D470C00144822 /* Assets.xcassets */,
 				7C1D736F212D470C00144822 /* LaunchScreen.storyboard */,
 				7C1D7372212D470C00144822 /* Info.plist */,
-				7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */,
 				7C1D736A212D470B00144822 /* BeatDemo.xcdatamodeld */,
 				7C888E7A212E47DC0094DC85 /* BeatDemo-Bridging-Header.h */,
 			);
@@ -295,9 +297,9 @@
 		7C4DEFDD2147DE9200D06D76 /* Drums */ = {
 			isa = PBXGroup;
 			children = (
-				7C4DEFDE2147E15000D06D76 /* bass_drum_C1.wav */,
-				7C4DEFE02147E15000D06D76 /* snare_D1.wav */,
-				7C4DEFDF2147E15000D06D76 /* closed_hi_hat_F#1.wav */,
+				7CDC54682148E55A002A31D7 /* bass_drum_C1.wav */,
+				7CDC546A2148E55A002A31D7 /* snare_D1.wav */,
+				7CDC54692148E55A002A31D7 /* closed_hi_hat_F#1.wav */,
 			);
 			path = Drums;
 			sourceTree = "<group>";
@@ -318,9 +320,20 @@
 			path = EditViewController;
 			sourceTree = "<group>";
 		};
+		7CDC54702148ED03002A31D7 /* Sf2File */ = {
+			isa = PBXGroup;
+			children = (
+				7C0FDF5F21369B0C000200E2 /* GeneralUser.sf2 */,
+				7CDC546E2148ECEE002A31D7 /* GeneralUserPiano.sf2 */,
+			);
+			path = Sf2File;
+			sourceTree = "<group>";
+		};
 		A1E6A2DF3EF7B207B633A981 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7CDC54732148FF37002A31D7 /* Pods_BeatDemo.framework */,
+				7CDC54712148FEA6002A31D7 /* SVProgressHUD.framework */,
 				7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */,
 				7CB432FB2142265E006F367A /* ChameleonFramework.framework */,
 				7CB432FD2142265E006F367A /* HandyJSON.framework */,
@@ -402,18 +415,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C4DEFDB214760BA00D06D76 /* 噪音层节奏变种套路1.xml in Resources */,
+				7CDC546F2148ECEE002A31D7 /* GeneralUserPiano.sf2 in Resources */,
 				7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */,
 				7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */,
 				7C1D736E212D470C00144822 /* Assets.xcassets in Resources */,
-				7C4DEFE22147E15000D06D76 /* closed_hi_hat_F#1.wav in Resources */,
+				7CDC546C2148E55A002A31D7 /* closed_hi_hat_F#1.wav in Resources */,
 				7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */,
-				7C4DEFE12147E15000D06D76 /* bass_drum_C1.wav in Resources */,
+				7CDC546B2148E55A002A31D7 /* bass_drum_C1.wav in Resources */,
 				7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */,
-				7C4DEFE32147E15000D06D76 /* snare_D1.wav in Resources */,
 				7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */,
 				7C1D7369212D470B00144822 /* Main.storyboard in Resources */,
 				7C4DEFDC214760BA00D06D76 /* 噪音层节奏基础套路1.xml in Resources */,
 				7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */,
+				7CDC546D2148E55A002A31D7 /* snare_D1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

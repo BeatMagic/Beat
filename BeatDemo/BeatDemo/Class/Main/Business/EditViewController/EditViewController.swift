@@ -74,65 +74,7 @@ class EditViewController: UIViewController {
     /// 测试播放
     @IBAction func testPlay(_ sender: Any) {
         
-        // 生成四部和声midi
-        let harmonyMessageArray = ArrangingMapFunc.getHarmonyMessageArray("四部和声midi.xml")
-
-        let model = ReferenceTrackMessage.init()
-        model.harmonyMessageArray = harmonyMessageArray
         
-        let padNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.padInstrumentRange)
-        
-        
-        let pianoFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.pianoInstrumentRange)
-        
-        let pianoSecondNoteArray = StaticConfigurationModel.getPainoNoteArray(pianoFirstNoteArray, model: model)
-        
-        
-        let bassFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(
-            harmonyMessageArray,
-            instrumentRangeModel: StaticConfigurationModel.bassInstrumentRange
-        )
-        
-        let bassSecondNoteArray: [NoteEvent] = StaticConfigurationModel.getBassNoteArray(bassFirstNoteArray, model: model)
-        
-
-        
-        let tmpArray = [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "zy",
-            "zy",
-            "zy",
-            "zyf",
-            "zy",
-            "zy",
-            "zyf",
-            "zyf",
-            "zyf",
-        ]
-        
-        
-        let dragNoteArray = StaticConfigurationModel.getNoiseDrummNoteArray(tmpModelArray: tmpArray)
-
-        self.basicSequencer.setupBgmTracks()
-        
-        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.pad.rawValue, noteEventSeq: padNoteArray)
-        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.paino1.rawValue, noteEventSeq: pianoSecondNoteArray)
-        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.bass.rawValue, noteEventSeq: bassSecondNoteArray)
-        
-        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.drum.rawValue, noteEventSeq: dragNoteArray)
-        
-        
-        
-        
-        self.basicSequencer.playBGM()
         
         
     }
@@ -248,6 +190,7 @@ extension EditViewController {
             localMusicPlayer!.currentTime = 0
             
             self.basicSequencer.stopPlayMelody()
+            self.basicSequencer.bgmSequencer.stop()
             DelayTask.cancelAllWorkItems()
             
         }else {
@@ -256,27 +199,34 @@ extension EditViewController {
             self.clickPauseTime += 1
             
             var messageDict: Dictionary<String, Any> = Dictionary<String, Any>()
+            var delayTime: Double = 0
             
-            switch self.clickPauseTime % 2 {
+            switch self.clickPauseTime % 3 {
+                
+            case 0:
+                self.playMidiAccompaniment()
+                delayTime = 0
+
+                
+            case 2:
+                messageDict = DataStandard.MusicFileMessage["Edit_Rock"]!
+                self.playLocalAccompaniment(messageDict)
+                delayTime = Double.init(messageDict["delayTime"] as! Int)
                 
             case 1:
                 messageDict = DataStandard.MusicFileMessage["Edit_Normal"]!
+                self.playLocalAccompaniment(messageDict)
+                delayTime = Double.init(messageDict["delayTime"] as! Int)
                 
-            case 0:
-                messageDict = DataStandard.MusicFileMessage["Edit_Rock"]!
                 
             default:
                 print("???")
             }
             
-            self.localMusicPlayer = VariousOperateFunc.initOnePlayer(messageDict["fileName"] as! String)
-            
-            localMusicPlayer!.play()
             
             VariousOperateFunc.playMIDI(
-                totalDelayTime: Double.init(messageDict["delayTime"] as! Int),
+                totalDelayTime: delayTime,
                 basicSequencer: self.basicSequencer)
-            
             
         }
     }// funcEnd
@@ -286,6 +236,77 @@ extension EditViewController {
         navigationController?.popViewController(animated: true)
     }// funcEnd
     
+}
+
+
+extension EditViewController {
+    /// 根据文件信息数组播放本地伴奏文件
+    func playLocalAccompaniment(_ messageDict: Dictionary<String, Any>) -> Void {
+        
+        self.localMusicPlayer = VariousOperateFunc.initOnePlayer(messageDict["fileName"] as! String)
+        self.localMusicPlayer!.play()
+        
+    }// funcEnd
+    
+    
+    /// 播放Midi伴奏文件
+    func playMidiAccompaniment() -> Void {
+        // 生成四部和声midi
+        let harmonyMessageArray = ArrangingMapFunc.getHarmonyMessageArray("四部和声midi.xml")
+        
+        let model = ReferenceTrackMessage.init()
+        model.harmonyMessageArray = harmonyMessageArray
+        
+        let padNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.padInstrumentRange)
+        
+        
+        let pianoFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.pianoInstrumentRange)
+        
+        let pianoSecondNoteArray = StaticConfigurationModel.getPainoNoteArray(pianoFirstNoteArray, model: model)
+        
+        
+        let bassFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(
+            harmonyMessageArray,
+            instrumentRangeModel: StaticConfigurationModel.bassInstrumentRange
+        )
+        
+        let bassSecondNoteArray: [NoteEvent] = StaticConfigurationModel.getBassNoteArray(bassFirstNoteArray, model: model)
+        
+        
+        
+        let tmpArray = [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "zy",
+            "zy",
+            "zy",
+            "zyf",
+            "zy",
+            "zy",
+            "zyf",
+            "zyf",
+            "zyf",
+            ]
+        
+        
+        let dragNoteArray = StaticConfigurationModel.getNoiseDrummNoteArray(tmpModelArray: tmpArray)
+        
+        self.basicSequencer.setupBgmTracks()
+        
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.pad.rawValue, noteEventSeq: padNoteArray)
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.paino1.rawValue, noteEventSeq: pianoSecondNoteArray)
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.bass.rawValue, noteEventSeq: bassSecondNoteArray)
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.drum.rawValue, noteEventSeq: dragNoteArray)
+        
+        self.basicSequencer.playBGM()
+    }// funcEnd
 }
 
 extension EditViewController: MusicKeyDelegate {

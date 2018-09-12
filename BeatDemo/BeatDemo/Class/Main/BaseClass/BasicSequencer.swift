@@ -73,13 +73,18 @@ class BasicSequencer: NSObject{
         
         
         //bgm 音色
-        try! paino1Sampler.loadMelodicSoundFont("GeneralUser", preset: 2)
+        try! paino1Sampler.loadMelodicSoundFont("GeneralUserPiano", preset: 0)
         try! padSampler.loadMelodicSoundFont("GeneralUser", preset: 89)
         try! bassSampler.loadMelodicSoundFont("GeneralUser", preset: 32)
         
-        
+        paino1Sampler.volume = 0.8
+        padSampler.volume = 0.6
+        bassSampler.volume = 0.9
+        drumSampler.volume = 1.0
+
         
         [inputSampler,midiCompresser,paino1Sampler,padSampler,bassSampler, drumSampler] >>> mixer
+        
         
         reverb = AKReverb(mixer)
         reverbMixer = AKDryWetMixer(mixer, reverb)

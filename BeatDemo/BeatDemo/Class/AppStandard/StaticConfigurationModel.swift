@@ -221,6 +221,10 @@ class StaticConfigurationModel: NSObject {
             case "zy":
                 if probablyCount == 2 {
                     dramModelDict = DataStandard.noiseBeatVariationRoutine
+                    
+                }else {
+                    dramModelDict = DataStandard.noiseBeatRoutine
+                    
                 }
 
             case "zyf":
@@ -239,7 +243,7 @@ class StaticConfigurationModel: NSObject {
                     for beatIndex in dramModelDict![dramToneKey]! {
                         
                         let note = NoteEvent.init(
-                            startNoteNumber: 56,
+                            startNoteNumber: UInt8(Int(dramToneKey)!),
                             startTime: Double.init(sectionIndex * 3) + Double.init(beatIndex - 1) * 3 / 16,
                             endTime:  Double.init(sectionIndex * 3) + Double.init(beatIndex) * 3 / 16,
                             passedNotes: nil)
@@ -268,6 +272,12 @@ class StaticConfigurationModel: NSObject {
                     startTime: note.startTime,
                     endTime: note.endTime,
                     passedNotes: nil)
+                
+//                let noteEvent = NoteEvent.init(
+//                    startNoteNumber: note.startNoteNumber - 12,
+//                    startTime: note.startTime - 27,
+//                    endTime: note.endTime - 27,
+//                    passedNotes: nil)
                 
                 dragNoteArray.append(noteEvent)
 
