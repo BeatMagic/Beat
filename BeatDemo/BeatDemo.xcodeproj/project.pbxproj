@@ -53,11 +53,11 @@
 		7CB4330C21424B09006F367A /* SwiftyXMLParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */; };
 		7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7CB4330D21424FFD006F367A /* 四部和声midi.xml */; };
 		7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */; };
-		7CDC546B2148E55A002A31D7 /* bass_drum_C1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC54682148E55A002A31D7 /* bass_drum_C1.wav */; };
-		7CDC546C2148E55A002A31D7 /* closed_hi_hat_F#1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC54692148E55A002A31D7 /* closed_hi_hat_F#1.wav */; };
-		7CDC546D2148E55A002A31D7 /* snare_D1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC546A2148E55A002A31D7 /* snare_D1.wav */; };
 		7CDC546F2148ECEE002A31D7 /* GeneralUserPiano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC546E2148ECEE002A31D7 /* GeneralUserPiano.sf2 */; };
 		7CDC54722148FEA6002A31D7 /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CDC54712148FEA6002A31D7 /* SVProgressHUD.framework */; };
+		7CDC5478214912EE002A31D7 /* bass_drum_C1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC5475214912ED002A31D7 /* bass_drum_C1.wav */; };
+		7CDC5479214912EE002A31D7 /* closed_hi_hat_F#1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC5476214912EE002A31D7 /* closed_hi_hat_F#1.wav */; };
+		7CDC547A214912EE002A31D7 /* snare_D1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7CDC5477214912EE002A31D7 /* snare_D1.wav */; };
 		7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */; };
 /* End PBXBuildFile section */
 
@@ -117,12 +117,12 @@
 		7CB4330B21424B09006F367A /* SwiftyXMLParser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyXMLParser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB4330D21424FFD006F367A /* 四部和声midi.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "四部和声midi.xml"; sourceTree = "<group>"; };
 		7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_普通.mp3"; sourceTree = "<group>"; };
-		7CDC54682148E55A002A31D7 /* bass_drum_C1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass_drum_C1.wav; sourceTree = "<group>"; };
-		7CDC54692148E55A002A31D7 /* closed_hi_hat_F#1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "closed_hi_hat_F#1.wav"; sourceTree = "<group>"; };
-		7CDC546A2148E55A002A31D7 /* snare_D1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare_D1.wav; sourceTree = "<group>"; };
 		7CDC546E2148ECEE002A31D7 /* GeneralUserPiano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = GeneralUserPiano.sf2; sourceTree = "<group>"; };
 		7CDC54712148FEA6002A31D7 /* SVProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SVProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDC54732148FF37002A31D7 /* Pods_BeatDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_BeatDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CDC5475214912ED002A31D7 /* bass_drum_C1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bass_drum_C1.wav; sourceTree = "<group>"; };
+		7CDC5476214912EE002A31D7 /* closed_hi_hat_F#1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "closed_hi_hat_F#1.wav"; sourceTree = "<group>"; };
+		7CDC5477214912EE002A31D7 /* snare_D1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snare_D1.wav; sourceTree = "<group>"; };
 		7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "播放伴奏_摇滚.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -297,9 +297,9 @@
 		7C4DEFDD2147DE9200D06D76 /* Drums */ = {
 			isa = PBXGroup;
 			children = (
-				7CDC54682148E55A002A31D7 /* bass_drum_C1.wav */,
-				7CDC546A2148E55A002A31D7 /* snare_D1.wav */,
-				7CDC54692148E55A002A31D7 /* closed_hi_hat_F#1.wav */,
+				7CDC5475214912ED002A31D7 /* bass_drum_C1.wav */,
+				7CDC5477214912EE002A31D7 /* snare_D1.wav */,
+				7CDC5476214912EE002A31D7 /* closed_hi_hat_F#1.wav */,
 			);
 			path = Drums;
 			sourceTree = "<group>";
@@ -417,17 +417,17 @@
 				7C4DEFDB214760BA00D06D76 /* 噪音层节奏变种套路1.xml in Resources */,
 				7CDC546F2148ECEE002A31D7 /* GeneralUserPiano.sf2 in Resources */,
 				7C1D7371212D470C00144822 /* LaunchScreen.storyboard in Resources */,
+				7CDC5478214912EE002A31D7 /* bass_drum_C1.wav in Resources */,
 				7CD3F9AF213AEA0700F7A795 /* 播放伴奏_普通.mp3 in Resources */,
+				7CDC5479214912EE002A31D7 /* closed_hi_hat_F#1.wav in Resources */,
 				7C1D736E212D470C00144822 /* Assets.xcassets in Resources */,
-				7CDC546C2148E55A002A31D7 /* closed_hi_hat_F#1.wav in Resources */,
+				7CDC547A214912EE002A31D7 /* snare_D1.wav in Resources */,
 				7C0FDF6021369B0C000200E2 /* GeneralUser.sf2 in Resources */,
-				7CDC546B2148E55A002A31D7 /* bass_drum_C1.wav in Resources */,
 				7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */,
 				7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */,
 				7C1D7369212D470B00144822 /* Main.storyboard in Resources */,
 				7C4DEFDC214760BA00D06D76 /* 噪音层节奏基础套路1.xml in Resources */,
 				7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */,
-				7CDC546D2148E55A002A31D7 /* snare_D1.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

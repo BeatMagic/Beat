@@ -42,11 +42,11 @@ class StaticConfigurationModel: NSObject {
         return tmpModel
     }()
     
-    
+// MARK: - 根基
     /// 根据乐器生成和声节奏层音符数组
     static func getRhythmLayerNoteArray(_ harmonyMessageArray: [HarmonyMessage], instrumentRangeModel: InstrumentRange) -> [NoteEvent] {
         
-        // 生成pad的四部和声音符数组
+        // 生成的四部和声音符数组
         var padNoteEventArray: [NoteEvent] = []
         
         for beatIndex in 0 ..< 18 {
@@ -75,32 +75,50 @@ class StaticConfigurationModel: NSObject {
         
     }// funcEnd
     
+// MARK: - 根基的二次加工
+    /// 生成pad复杂节奏层音符数组 []
+    static func getPadNoteArray(_ padFirstNoteArray: [NoteEvent], padSectionStructureArray: [String]) -> [NoteEvent] {
+        var array: [NoteEvent] = []
+        
+        var sectionIndex = 0
+        
+        for padSectionStructure in padSectionStructureArray {
+            
+            let padNoteIndex = 4 * sectionIndex
+            
+            switch padSectionStructure {
+            case "pad":
+                array.append(padFirstNoteArray[padNoteIndex])
+                array.append(padFirstNoteArray[padNoteIndex + 1])
+                array.append(padFirstNoteArray[padNoteIndex + 2])
+                array.append(padFirstNoteArray[padNoteIndex + 3])
+                
+            default:
+                print("无音符在此小节")
+            }
+            
+            sectionIndex += 1
+            
+        }
+        
+        return array
+        
+    }
+    
+    
+    
+    
     
     /// 生成钢琴复杂节奏层音符数组 [钢琴和声节奏层音符数组]
-    static func getPainoNoteArray(_ pianoFirstNoteArray: [NoteEvent],model: ReferenceTrackMessage) -> [NoteEvent] {
+    static func getPainoNoteArray(_ pianoFirstNoteArray: [NoteEvent], model: ReferenceTrackMessage, painoSectionStructureArray: [String]) -> [NoteEvent] {
         
-        /*
-         // 生成四部和声midi
-         let harmonyMessageArray = ArrangingMapFunc.getHarmonyMessageArray("四部和声midi.xml")
-         
-         let model = ReferenceTrackMessage.init()
-         model.harmonyMessageArray = harmonyMessageArray
-         
-         var pianoFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(
-         harmonyMessageArray,
-         instrumentRangeModel: StaticConfigurationModel.pianoInstrumentRange
-         )
-         
-         var pianoSecondNoteArray: [NoteEvent] = []
-         */
-        
-        
-        var pianoSecondNoteArray: [NoteEvent] = []
+        // 普通节奏层钢琴数组
+        var pianoSecondNoteArray: [[NoteEvent]] = []
+        // 最终的数组
+        var pianoThirdNoteArray: [NoteEvent] = []
         
         for index in 0 ..< 18 {
-            if index == 17 {
-                break
-            }
+            pianoSecondNoteArray.append([])
             
             // 当前小组Beat分布
             let sectionBeatConstitutionType = model.beatConstitutionTypeArray[index]
@@ -126,46 +144,70 @@ class StaticConfigurationModel: NSObject {
                     endTime: Double.init(tmpSimpleNote.endBeat) / 16 * 3 + Double.init(index * 3),
                     passedNotes: nil)
                 
-                pianoSecondNoteArray.append(finalNote)
+                pianoSecondNoteArray[index].append(finalNote)
                 
             }
             
         }
         
-        
-        for index in (pianoFirstNoteArray.count - 4) ..< pianoFirstNoteArray.count  {
-            pianoSecondNoteArray.append(pianoFirstNoteArray[index])
-        }
-        
-        
-        
+        // 复杂节奏层钢琴数组全部
         let complexRhythmNoteArray = ArrangingMapFunc.generateComplexRhythmLevel(model, instrumentRange: StaticConfigurationModel.pianoInstrumentRange)
-        var tmpComplexRhythmNoteArray: [NoteEvent] = []
         
-        
-        for note in complexRhythmNoteArray {
-            if note.endTime <= 3 {
-                tmpComplexRhythmNoteArray.append(note)
+
+        var sectionIndex = 0
+        for painoSectionStructure in painoSectionStructureArray {
+            
+            switch painoSectionStructure {
+            case "fjz":
+                pianoThirdNoteArray += pianoSecondNoteArray[sectionIndex]
                 
-            }else {
-                break
+                for note in complexRhythmNoteArray {
+                    if note.startTime >= Double.init(sectionIndex * 3)
+                        &&
+                        note.endTime <= Double.init(sectionIndex * 3 + 3) {
+                        pianoThirdNoteArray.append(note)
+                        
+                    }else if note.endTime > Double.init(sectionIndex * 3 + 3) {
+                        break
+                        
+                    }
+                    
+                }
+
+            case "jz":
+                pianoThirdNoteArray += pianoSecondNoteArray[sectionIndex]
                 
+            case "pad":
+                pianoThirdNoteArray.append(pianoFirstNoteArray[sectionIndex * 4])
+                pianoThirdNoteArray.append(pianoFirstNoteArray[sectionIndex * 4 + 1])
+                pianoThirdNoteArray.append(pianoFirstNoteArray[sectionIndex * 4 + 2])
+                pianoThirdNoteArray.append(pianoFirstNoteArray[sectionIndex * 4 + 3])
+                
+            default:
+                print("无音符在此小节")
             }
+            
+            
+            
+            sectionIndex += 1
         }
         
         
-        return tmpComplexRhythmNoteArray + pianoSecondNoteArray
+        return pianoThirdNoteArray
         
     }// funcEnd
     
     
     /// 生成bass副旋律音符数组
-    static func getBassNoteArray(_ bassFirstNoteArray: [NoteEvent], model: ReferenceTrackMessage) -> [NoteEvent] {
+    static func getBassNoteArray(_ bassFirstNoteArray: [NoteEvent], model: ReferenceTrackMessage, bassSectionStructureArray: [String]) -> [NoteEvent] {
         
         var bassSecondNoteArray: [NoteEvent] = []
         
         for index in 0 ..< 18 {
-            if index > 0 && index < 17 {
+            let bassSectionStructure = bassSectionStructureArray[index]
+            
+            switch bassSectionStructure {
+            case "f":
                 // 当前小组Beat分布
                 let sectionBeatConstitutionType = model.beatConstitutionTypeArray[index]
                 // 概率
@@ -181,16 +223,15 @@ class StaticConfigurationModel: NSObject {
                     endTime: Double.init(tmpSimpleNote.endBeat) / 16 * 3 + Double.init(index * 3),
                     passedNotes: nil)
                 
-                
-                
                 bassSecondNoteArray.append(note)
-                
-                
+
+            default:
+                print("无音符在此小节")
             }
-            
+
+
             
         }
-        
         
         
         

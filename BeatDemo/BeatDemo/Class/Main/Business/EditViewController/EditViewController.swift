@@ -257,24 +257,69 @@ extension EditViewController {
         let model = ReferenceTrackMessage.init()
         model.harmonyMessageArray = harmonyMessageArray
         
-        let padNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.padInstrumentRange)
-        
-        
+        // 没什么变化的pad
+        let padFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.padInstrumentRange)
+
+        // 钢琴
         let pianoFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: StaticConfigurationModel.pianoInstrumentRange)
         
-        let pianoSecondNoteArray = StaticConfigurationModel.getPainoNoteArray(pianoFirstNoteArray, model: model)
+        let tmpPianoArray = [
+            "fjz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "jz",
+            "pad",
+            ]
         
+        let pianoSecondNoteArray = StaticConfigurationModel.getPainoNoteArray(pianoFirstNoteArray, model: model, painoSectionStructureArray: tmpPianoArray)
         
+        // 贝斯
         let bassFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(
             harmonyMessageArray,
             instrumentRangeModel: StaticConfigurationModel.bassInstrumentRange
         )
         
-        let bassSecondNoteArray: [NoteEvent] = StaticConfigurationModel.getBassNoteArray(bassFirstNoteArray, model: model)
+        let tmpBassArray = [
+            "",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            "f",
+            " ",
+            ]
         
         
         
-        let tmpArray = [
+        let bassSecondNoteArray: [NoteEvent] = StaticConfigurationModel.getBassNoteArray(bassFirstNoteArray, model: model, bassSectionStructureArray: tmpBassArray)
+        
+        
+        
+        let tmpDragArray = [
             "",
             "",
             "",
@@ -295,12 +340,11 @@ extension EditViewController {
             "zyf",
             ]
         
-        
-        let dragNoteArray = StaticConfigurationModel.getNoiseDrummNoteArray(tmpModelArray: tmpArray)
+        let dragNoteArray = StaticConfigurationModel.getNoiseDrummNoteArray(tmpModelArray: tmpDragArray)
         
         self.basicSequencer.setupBgmTracks()
         
-        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.pad.rawValue, noteEventSeq: padNoteArray)
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.pad.rawValue, noteEventSeq: padFirstNoteArray)
         self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.paino1.rawValue, noteEventSeq: pianoSecondNoteArray)
         self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.bass.rawValue, noteEventSeq: bassSecondNoteArray)
         self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.drum.rawValue, noteEventSeq: dragNoteArray)
