@@ -38,6 +38,7 @@
 		7C888E75212D69730094DC85 /* EnumStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E74212D69730094DC85 /* EnumStandard.swift */; };
 		7C888E77212D6D3B0094DC85 /* MusicKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */; };
 		7C888E7E212E53D70094DC85 /* DataStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C888E7D212E53D70094DC85 /* DataStandard.swift */; };
+		7C9510A8214A137D00615E8B /* 编曲图谱修改版0.2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7C9510A7214A137C00615E8B /* 编曲图谱修改版0.2.xml */; };
 		7CA6445B21366BD00062CA58 /* VariousSetFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */; };
 		7CB119132140BAAA005A5ABE /* ReferenceTrackMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB119122140BAAA005A5ABE /* ReferenceTrackMessage.swift */; };
 		7CB119152140FC77005A5ABE /* ArrangingMapFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB119142140FC77005A5ABE /* ArrangingMapFunc.swift */; };
@@ -99,6 +100,7 @@
 		7C888E76212D6D3B0094DC85 /* MusicKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKeyBoard.swift; sourceTree = "<group>"; };
 		7C888E7A212E47DC0094DC85 /* BeatDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BeatDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		7C888E7D212E53D70094DC85 /* DataStandard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStandard.swift; sourceTree = "<group>"; };
+		7C9510A7214A137C00615E8B /* 编曲图谱修改版0.2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "编曲图谱修改版0.2.xml"; sourceTree = "<group>"; };
 		7CA6445A21366BD00062CA58 /* VariousSetFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariousSetFunc.swift; sourceTree = "<group>"; };
 		7CB119122140BAAA005A5ABE /* ReferenceTrackMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceTrackMessage.swift; sourceTree = "<group>"; };
 		7CB119142140FC77005A5ABE /* ArrangingMapFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangingMapFunc.swift; sourceTree = "<group>"; };
@@ -261,9 +263,7 @@
 				7C38ED26213BB678009A56FA /* 输入伴奏.mp3 */,
 				7CD3F9AD213AEA0700F7A795 /* 播放伴奏_普通.mp3 */,
 				7CE5C123213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 */,
-				7CB4330D21424FFD006F367A /* 四部和声midi.xml */,
-				7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */,
-				7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */,
+				7C9510A4214A03C600615E8B /* XML */,
 				7CDC54702148ED03002A31D7 /* Sf2File */,
 				7C4DEFDD2147DE9200D06D76 /* Drums */,
 				7C1D736D212D470C00144822 /* Assets.xcassets */,
@@ -318,6 +318,17 @@
 				7C842664212F979C0070FD69 /* EditViewController.swift */,
 			);
 			path = EditViewController;
+			sourceTree = "<group>";
+		};
+		7C9510A4214A03C600615E8B /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				7CB4330D21424FFD006F367A /* 四部和声midi.xml */,
+				7C9510A7214A137C00615E8B /* 编曲图谱修改版0.2.xml */,
+				7C4DEFDA214760BA00D06D76 /* 噪音层节奏基础套路1.xml */,
+				7C4DEFD9214760BA00D06D76 /* 噪音层节奏变种套路1.xml */,
+			);
+			path = XML;
 			sourceTree = "<group>";
 		};
 		7CDC54702148ED03002A31D7 /* Sf2File */ = {
@@ -426,6 +437,7 @@
 				7CE5C124213C2DE4000B7E9D /* 播放伴奏_摇滚.mp3 in Resources */,
 				7CB4330E21424FFD006F367A /* 四部和声midi.xml in Resources */,
 				7C1D7369212D470B00144822 /* Main.storyboard in Resources */,
+				7C9510A8214A137D00615E8B /* 编曲图谱修改版0.2.xml in Resources */,
 				7C4DEFDC214760BA00D06D76 /* 噪音层节奏基础套路1.xml in Resources */,
 				7C38ED27213BB678009A56FA /* 输入伴奏.mp3 in Resources */,
 			);

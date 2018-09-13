@@ -73,8 +73,12 @@ class EditViewController: UIViewController {
     
     /// 测试播放
     @IBAction func testPlay(_ sender: Any) {
+//        编曲图谱修改版0.2.xml
         
+//        let string = "编曲图谱修改版"
+//        let stringHead = ToolClass.cutStringWithPlaces(string, startPlace: string.count - 1, endPlace: string.count)
         
+        self.playBGMFromArrangingMapFrom("编曲图谱修改版0.2.xml")
         
         
     }
@@ -201,9 +205,13 @@ extension EditViewController {
             var messageDict: Dictionary<String, Any> = Dictionary<String, Any>()
             var delayTime: Double = 0
             
-            switch self.clickPauseTime % 3 {
+            switch self.clickPauseTime % 4 {
                 
-            case 0:
+            case 4:
+                self.playBGMFromArrangingMapFrom("编曲图谱修改版0.2.xml")
+                delayTime = 0
+                
+            case 3:
                 self.playMidiAccompaniment()
                 delayTime = 0
 
@@ -351,6 +359,121 @@ extension EditViewController {
         
         self.basicSequencer.playBGM()
     }// funcEnd
+    
+
+    /// 根据任意XML编曲图谱文件的文件名字生成BGM
+    func playBGMFromArrangingMapFrom(_ fileName: String) -> Void {
+        var arrangingMapDict = ArrangingMapFunc.getArrangingMapDictFrom(fileName)
+        // 音域字典
+        var instrumentRangeDict: [String: InstrumentRange] = [String: InstrumentRange]()
+        // 音符数组字典
+        var instrumentNoteEventDict: [String: [NoteEvent]] =  [String: [NoteEvent]]()
+        
+        for key in arrangingMapDict.keys {
+            let array = arrangingMapDict[key]
+            
+            switch key {
+                
+            // 算出具有音域的乐器音域
+            case EnumStandard.XMLFileKey.Pad.rawValue,
+                 EnumStandard.XMLFileKey.Piano.rawValue,
+                 EnumStandard.XMLFileKey.Bass.rawValue:
+                
+                let lowestNoteString = array![1]
+                let highestNoteString = array![2]
+                
+                let instrumentRange = InstrumentRange.init()
+                instrumentRange.name = key
+                instrumentRange.lowestMidiNum = ArrangingMapFunc.getMidiNoteFromString(lowestNoteString)
+                instrumentRange.highestMidiNum = ArrangingMapFunc.getMidiNoteFromString(highestNoteString)
+                    
+                instrumentRangeDict[key] = instrumentRange
+
+                
+            default:
+                print("暂时用不到")
+            }
+            
+            // 去除不必要的信息(前三列)
+            arrangingMapDict[key]!.removeSubrange(0 ..< 3)
+            
+        }
+        
+        // 基础四部和声midi
+        let harmonyMessageArray = ArrangingMapFunc.getHarmonyMessageArray("四部和声midi.xml")
+        
+        let model = ReferenceTrackMessage.init()
+        model.harmonyMessageArray = harmonyMessageArray
+        
+        
+        
+        
+        for key in arrangingMapDict.keys {
+            switch key {
+                
+            case EnumStandard.XMLFileKey.Pad.rawValue:
+                let padFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: instrumentRangeDict[key]!)
+                
+                let padSecondNoteArray = StaticConfigurationModel.getPadNoteArray(
+                    padFirstNoteArray,
+                    padSectionStructureArray: arrangingMapDict[key]!,
+                    model: model,
+                    instrumentRangeModel: instrumentRangeDict[key]!)
+                
+                instrumentNoteEventDict[key] = padSecondNoteArray
+                
+            case EnumStandard.XMLFileKey.Piano.rawValue:
+                // 钢琴和声数组
+                let pianoHarmonyNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(
+                    harmonyMessageArray, instrumentRangeModel: instrumentRangeDict[key]!
+                )
+                
+                // 钢琴复杂节奏层数组
+                let pianoComplexNoteArray = StaticConfigurationModel.getPainoNoteArray(
+                    pianoHarmonyNoteArray,
+                    model: model,
+                    painoSectionStructureArray: arrangingMapDict[key]!
+                )
+                
+                instrumentNoteEventDict[key] = pianoComplexNoteArray
+                
+                
+            case EnumStandard.XMLFileKey.Drum.rawValue:
+                let drumHarmonyNoteArray = StaticConfigurationModel.getNoiseDrummNoteArray(tmpModelArray: arrangingMapDict[key]!)
+                
+                instrumentNoteEventDict[key] = drumHarmonyNoteArray
+                
+            case EnumStandard.XMLFileKey.Bass.rawValue:
+                let bassFirstNoteArray = StaticConfigurationModel.getRhythmLayerNoteArray(harmonyMessageArray, instrumentRangeModel: instrumentRangeDict[key]!)
+                
+                
+                let bassSecondNoteArray = StaticConfigurationModel.getBassNoteArray(bassFirstNoteArray, model: model, bassSectionStructureArray: arrangingMapDict[key]!)
+                
+                instrumentNoteEventDict[key] = bassSecondNoteArray
+                
+                
+            default:
+                print("什么都不做")
+
+                
+            }
+        }
+        
+
+        self.basicSequencer.setupBgmTracks()
+        
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.pad.rawValue, noteEventSeq: instrumentNoteEventDict[EnumStandard.XMLFileKey.Pad.rawValue]!)
+        
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.paino1.rawValue, noteEventSeq: instrumentNoteEventDict[EnumStandard.XMLFileKey.Piano.rawValue]!)
+//
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.bass.rawValue, noteEventSeq: instrumentNoteEventDict[EnumStandard.XMLFileKey.Bass.rawValue]!)
+//
+        self.basicSequencer.SetBgmNoteEventSeq(index: Sequence.drum.rawValue, noteEventSeq: instrumentNoteEventDict[EnumStandard.XMLFileKey.Drum.rawValue]!)
+        
+        self.basicSequencer.playBGM()
+        
+    }// funcEnd
+
 }
 
 extension EditViewController: MusicKeyDelegate {

@@ -77,10 +77,12 @@ class StaticConfigurationModel: NSObject {
     
 // MARK: - 根基的二次加工
     /// 生成pad复杂节奏层音符数组 []
-    static func getPadNoteArray(_ padFirstNoteArray: [NoteEvent], padSectionStructureArray: [String]) -> [NoteEvent] {
+    static func getPadNoteArray(_ padFirstNoteArray: [NoteEvent], padSectionStructureArray: [String], model: ReferenceTrackMessage, instrumentRangeModel: InstrumentRange) -> [NoteEvent] {
         var array: [NoteEvent] = []
         
         var sectionIndex = 0
+        
+        let complexRhythmNoteArray = ArrangingMapFunc.generateComplexRhythmLevel(model, instrumentRange: instrumentRangeModel)
         
         for padSectionStructure in padSectionStructureArray {
             
@@ -92,6 +94,22 @@ class StaticConfigurationModel: NSObject {
                 array.append(padFirstNoteArray[padNoteIndex + 1])
                 array.append(padFirstNoteArray[padNoteIndex + 2])
                 array.append(padFirstNoteArray[padNoteIndex + 3])
+                
+            case "f":
+                
+                for note in complexRhythmNoteArray {
+                    if note.startTime >= Double.init(sectionIndex * 3)
+                        &&
+                        note.endTime <= Double.init(sectionIndex * 3 + 3) {
+                        array.append(note)
+                        
+                    }else if note.endTime > Double.init(sectionIndex * 3 + 3) {
+                        break
+                        
+                    }
+                    
+                }
+                
                 
             default:
                 print("无音符在此小节")
@@ -105,10 +123,7 @@ class StaticConfigurationModel: NSObject {
         
     }
     
-    
-    
-    
-    
+
     /// 生成钢琴复杂节奏层音符数组 [钢琴和声节奏层音符数组]
     static func getPainoNoteArray(_ pianoFirstNoteArray: [NoteEvent], model: ReferenceTrackMessage, painoSectionStructureArray: [String]) -> [NoteEvent] {
         
@@ -173,6 +188,20 @@ class StaticConfigurationModel: NSObject {
                     }
                     
                 }
+                
+            case "f":
+                for note in complexRhythmNoteArray {
+                    if note.startTime >= Double.init(sectionIndex * 3)
+                        &&
+                        note.endTime <= Double.init(sectionIndex * 3 + 3) {
+                        pianoThirdNoteArray.append(note)
+                        
+                    }else if note.endTime > Double.init(sectionIndex * 3 + 3) {
+                        break
+                        
+                    }
+                    
+                }
 
             case "jz":
                 pianoThirdNoteArray += pianoSecondNoteArray[sectionIndex]
@@ -203,6 +232,7 @@ class StaticConfigurationModel: NSObject {
         
         var bassSecondNoteArray: [NoteEvent] = []
         
+        
         for index in 0 ..< 18 {
             let bassSectionStructure = bassSectionStructureArray[index]
             
@@ -215,6 +245,7 @@ class StaticConfigurationModel: NSObject {
                 // 和声节奏层套路模型
                 let rhythmLayerRoutineModel = DataStandard.RhythmLayerRoutinesArray[sectionBeatConstitutionType.rawValue * 2]
                 
+                
                 let tmpSimpleNote = rhythmLayerRoutineModel.noteArray[probability]
                 
                 let note = NoteEvent.init(
@@ -224,6 +255,27 @@ class StaticConfigurationModel: NSObject {
                     passedNotes: nil)
                 
                 bassSecondNoteArray.append(note)
+                // 测试
+//                for tmpSimpleNote in rhythmLayerRoutineModel.noteArray {
+//                    let note = NoteEvent.init(
+//                        startNoteNumber: bassFirstNoteArray[index * 4 + tmpSimpleNote.scaleIndex].startNoteNumber,
+//                        startTime: Double.init(tmpSimpleNote.startBeat) / 16 * 3 + Double.init(index * 3),
+//                        endTime: Double.init(tmpSimpleNote.endBeat) / 16 * 3 + Double.init(index * 3),
+//                        passedNotes: nil)
+//
+//                    bassSecondNoteArray.append(note)
+//                }
+                
+                
+                
+                
+                
+                
+            case "pad":
+                bassSecondNoteArray.append(bassFirstNoteArray[index * 4])
+                bassSecondNoteArray.append(bassFirstNoteArray[index * 4 + 1])
+                bassSecondNoteArray.append(bassFirstNoteArray[index * 4 + 2])
+                bassSecondNoteArray.append(bassFirstNoteArray[index * 4 + 3])
 
             default:
                 print("无音符在此小节")

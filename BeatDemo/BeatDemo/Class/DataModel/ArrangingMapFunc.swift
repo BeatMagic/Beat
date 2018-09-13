@@ -182,6 +182,56 @@ class ArrangingMapFunc: NSObject {
         return array
     }// funcEnd
     
+    /// 从XMl文件中获取编曲图谱字典
+    static func getArrangingMapDictFrom(_ xmlFileName: String) -> [String: [String]] {
+        let filePath = Bundle.main.path(forResource: xmlFileName, ofType: nil)
+        var resultDict = [String: [String]]()
+
+        if filePath == nil {
+            return resultDict
+            
+        }
+        
+        let xml = try! XML.parse(Data.init(contentsOf: URL.init(fileURLWithPath: filePath!)))
+        var rowsElementArray: [XML.Element] = []
+        
+        for firstElement in xml.element!.childElements {
+            if firstElement.name == "Workbook" {
+                
+                for secondElement in firstElement.childElements {
+                    if secondElement.name == "Worksheet" {
+                        
+                        for thirdElement in secondElement.childElements {
+                            if thirdElement.name == "Table" {
+                                rowsElementArray = thirdElement.childElements
+                            }
+                        }
+                        
+                    }
+                }
+                
+            }
+        }
+        
+        
+        for rowsElement in rowsElementArray {
+            let rowTitle = rowsElement.childElements.first!.childElements.first!.text!
+            resultDict[rowTitle] = []
+            
+            // 在一行中的每一个单元格(Cell)
+            for cellElement in rowsElement.childElements {
+                resultDict[rowTitle]!.append(cellElement.childElements.first!.text!)
+                
+            }
+
+        }
+
+        // TODO: 初步数组进行二次处理
+        
+        
+        
+        return resultDict
+    }// funcEnd
     
 
     
@@ -246,6 +296,30 @@ class ArrangingMapFunc: NSObject {
         }
         
     }// funcEnd
+    
+    /// 扩展: 通过一个字符串获取midi音符数字
+    static func getMidiNoteFromString(_ noteString: String) -> Int {
+        let scale = ToolClass.cutStringWithPlaces(
+            noteString, startPlace: 0, endPlace: 1
+        )
+        
+        let octaveCountString = ToolClass.cutStringWithPlaces(
+            noteString, startPlace: noteString.count - 1, endPlace: noteString.count
+        )
+        
+        let isRising: Bool = {
+            if noteString.range(of: "#") == nil {
+                return false
+                
+            }
+            
+            return true
+            
+        }()
+        
+        return self.getMidiNote(scale, octaveCount: Int(octaveCountString)!, isRising: isRising)
+        
+    }
     
     /// 给定一个音域与一个确定的音高, 返回在该音域内的一个音符 [乐器]
     static func getMidiNoteFrom(_ scale: Int, highestMidiNum: Int, lowestMidiNum: Int) -> Int {

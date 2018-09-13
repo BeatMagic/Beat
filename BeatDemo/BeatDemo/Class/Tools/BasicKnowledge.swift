@@ -79,11 +79,5 @@ class BasicKnowledge: NSObject {
         return [string.count, string.lengthOfBytes(using: .utf8)]
     }
     
-    /// 3.2 字符串的剪切与拼接
-    static func cutStringWithPlaces(_ dealString: String, startPlace: Int, endPlace: Int) -> String {
-        let startIndex = dealString.index(dealString.startIndex, offsetBy: startPlace)
-        let endIndex = dealString.index(startIndex, offsetBy: endPlace - startPlace)
-        
-        return String(dealString[startIndex ... endIndex])
-    }
+
 }

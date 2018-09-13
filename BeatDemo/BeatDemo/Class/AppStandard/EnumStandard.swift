@@ -69,5 +69,23 @@ class EnumStandard: NSObject {
         case mainMusicKey = "main_note"
     }
     
+    /// XML文件Key枚举
+    enum XMLFileKey: String {
+        /// 曲式
+        case MusicalStyle = "曲式"
+        
+        /// Pad
+        case Pad = "Pad"
+        
+        /// 钢琴
+        case Piano = "Piano"
+        
+        /// 鼓
+        case Drum = "Drum"
+        
+        /// 贝斯
+        case Bass = "Bass"
+
+    }
     
 }
